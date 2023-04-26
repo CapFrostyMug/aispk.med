@@ -11,8 +11,16 @@ class PersonalFileController extends Controller
         return view('personal-files.search');
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        if ($request->isMethod('post')) {
+
+            dump($request->except('_token'));
+            $request->flash();
+            //return redirect()->route('personal-file.create');
+            //return view('personal-files.form');
+
+        }
         return view('personal-files.form');
     }
 
