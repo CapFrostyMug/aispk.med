@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+    @parent Редактирование профиля
+@endsection
+
 @section('personal-files.menu')
     @include('personal-files.menu')
 @endsection

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+    @parent Главная
+@endsection
+
 @section('personal-files.menu')
     @include('personal-files.menu')
 @endsection
