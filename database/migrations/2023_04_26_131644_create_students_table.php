@@ -23,14 +23,14 @@ return new class extends Migration
                 ->constrained('passports')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            /*$table->string('phone', 30)->nullable();
+            $table->string('phone', 30)->nullable();
             $table->string('email', 50)->nullable();
             $table->foreignId('language_id')
                 ->nullable(false)
                 ->constrained('languages')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->text('about_me')->nullable();*/
+            $table->text('about_me')->nullable();
             $table->timestamps();
         });
     }

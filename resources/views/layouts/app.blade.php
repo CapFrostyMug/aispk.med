@@ -16,7 +16,7 @@
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
 </head>
-<body>
+<body class="bg-secondary bg-opacity-10">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -79,7 +79,7 @@
             </div>
         </nav>
 
-        <div class="container">
+        <div class="container shadow-sm bg-body rounded-0 px-5 pb-5">
             <main class="py-4">
                 @yield('content')
             </main>
