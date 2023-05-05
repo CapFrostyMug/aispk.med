@@ -20,5 +20,16 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        /**
+         * Таблицы категорий
+         */
+        $this->call(LanguagesSeeder::class);
+        $this->call(NationalitySeeder::class);
+        $this->call(EducationalInstitutionTypesSeeder::class);
+        $this->call(EducationalDocTypesSeeder::class);
+
+        $this->call(PassportsSeeder::class);
+        $this->call(StudentsSeeder::class);
+        $this->call(EducationalSeeder::class);
     }
 }

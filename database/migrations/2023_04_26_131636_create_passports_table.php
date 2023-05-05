@@ -17,8 +17,7 @@ return new class extends Migration
             $table->id();
             $table->date('birthday')->nullable(false);
             $table->string('birthplace', 150)->nullable(false);
-            $table->string('series', 10)->nullable(false);
-            $table->string('number', 15)->nullable(false);
+            $table->string('number', 20)->nullable(false);
             $table->string('gender', 7)->nullable(false);
             $table->foreignId('nationality_id')
                 ->nullable(false)
