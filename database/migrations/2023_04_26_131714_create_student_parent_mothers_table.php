@@ -15,6 +15,15 @@ return new class extends Migration
     {
         Schema::create('student_parent_mothers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')
+                ->nullable()
+                ->constrained('students')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->string('name', 30)->nullable();
+            $table->string('surname', 30)->nullable();
+            $table->string('patronymic', 30)->nullable();
+            $table->string('phone', 30)->nullable();
             $table->timestamps();
         });
     }

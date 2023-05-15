@@ -15,6 +15,22 @@ return new class extends Migration
     {
         Schema::create('information_for_admission', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')
+                ->nullable(false)
+                ->constrained('students')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('faculty_id')
+                ->nullable(false)
+                ->constrained('faculties')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('financing_type_id')
+                ->nullable(false)
+                ->constrained('financing_types')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->boolean('is_original_docs')->nullable(false);
             $table->timestamps();
         });
     }

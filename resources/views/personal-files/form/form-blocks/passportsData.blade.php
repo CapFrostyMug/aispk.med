@@ -80,8 +80,8 @@
         </div>
     </div>
     <div class="col-2">
-        <label for="issue-date-1" class="form-label">Дата выдачи*</label>
-        <input id="issue-date-1" class="form-control" name="issueDate" value="{{ old('issueDate') }}"
+        <label for="issue-date-passport-1" class="form-label">Дата выдачи*</label>
+        <input id="issue-date-passport-1" class="form-control" name="issueDatePassport" value="{{ old('issueDate') }}"
                type="date" required>
         <div class="invalid-feedback">
             Пожалуйста, выберите дату.

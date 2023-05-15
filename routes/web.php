@@ -30,12 +30,10 @@ Route::get('/', function () {
 Route::prefix('personal-file')->name('personal-file.')->group(function () {
 
     Route::match(['get', 'post'], '/create', [PersonalFileController::class, 'create'])->name('create');
+    Route::match(['get', 'post'], '/edit/file/{id}', [PersonalFileController::class, 'edit'])->name('edit-file');
+    //Route::match(['get', 'post'], '/', [])->name();
 
     Route::match(['get', 'post'], '/edit/search', [PersonalFileController::class, 'search'])->name('edit-search');
-    Route::get('/edit/file/{id}', [PersonalFileController::class, 'edit'])->name('edit-file');
-
-    Route::get('/view/search', [PersonalFileController::class, 'search'])->name('view-search');
-    Route::get('/view/file/{id}', [PersonalFileController::class, 'view'])->name('view-file');
 
 });
 

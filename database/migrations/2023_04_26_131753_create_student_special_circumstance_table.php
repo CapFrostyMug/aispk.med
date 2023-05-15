@@ -15,6 +15,17 @@ return new class extends Migration
     {
         Schema::create('student_special_circumstance', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')
+                ->nullable(false)
+                ->constrained('students')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('special_circumstance_id')
+                ->nullable(false)
+                ->constrained('special_circumstances')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->boolean('circumstance')->nullable(false);
             $table->timestamps();
         });
     }

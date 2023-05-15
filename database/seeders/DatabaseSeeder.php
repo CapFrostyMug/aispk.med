@@ -27,9 +27,27 @@ class DatabaseSeeder extends Seeder
         $this->call(NationalitySeeder::class);
         $this->call(EducationalInstitutionTypesSeeder::class);
         $this->call(EducationalDocTypesSeeder::class);
+        $this->call(FinancingTypesSeeder::class);
+        $this->call(FacultiesSeeder::class);
+        $this->call(DecreesSeeder::class);
+        $this->call(SpecialCircumstancesSeeder::class);
 
+        /**
+         * Главная и второстепенные таблицы
+         */
         $this->call(PassportsSeeder::class);
         $this->call(StudentsSeeder::class);
+
         $this->call(EducationalSeeder::class);
+        $this->call(SenioritySeeder::class);
+        $this->call(StudentParentFathersSeeder::class);
+        $this->call(StudentParentMothersSeeder::class);
+        $this->call(EnrollmentSeeder::class);
+
+        /**
+         * Сводные таблицы
+         */
+        $this->call(InformationForAdmissionSeeder::class);
+        $this->call(StudentSpecialCircumstanceSeeder::class);
     }
 }
