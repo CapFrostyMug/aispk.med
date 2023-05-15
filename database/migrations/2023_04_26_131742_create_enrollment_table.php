@@ -15,6 +15,22 @@ return new class extends Migration
     {
         Schema::create('enrollment', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')
+                ->nullable()
+                ->constrained('students')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('faculty_id')
+                ->nullable()
+                ->constrained('faculties')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('decree_id')
+                ->nullable()
+                ->constrained('decrees')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->boolean('is_pickup_docs')->nullable();
             $table->timestamps();
         });
     }

@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EducationalInstitutionType extends Model
+class Decree extends Model
 {
     use HasFactory;
 
-    protected $table = 'educational_institution_types';
+    protected $table = 'decrees';
 
     public $timestamps = false;
 
@@ -17,11 +17,11 @@ class EducationalInstitutionType extends Model
         'name',
     ];
 
-    public function educational()
+    public function enrollment()
     {
         return $this->hasMany(
-            Educational::class,
-            'ed_institution_type_id',
+            Enrollment::class,
+            'decree_id',
             'id'
         );
     }

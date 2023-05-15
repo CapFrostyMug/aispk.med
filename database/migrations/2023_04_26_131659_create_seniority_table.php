@@ -15,6 +15,15 @@ return new class extends Migration
     {
         Schema::create('seniority', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')
+                ->nullable()
+                ->constrained('students')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->string('place_work', 100)->nullable();
+            $table->string('profession', 75)->nullable();
+            $table->year('years')->nullable();
+            $table->integer('months')->nullable();
             $table->timestamps();
         });
     }

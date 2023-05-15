@@ -3,9 +3,9 @@
 </li>
 
 <li>
-    <a href="{{ route('personal-file.edit-search') }}">Редактировать личное дело</a>
+    <a href="{{ route('personal-file.edit-search') }}">Редактирование личного дела</a>
 </li>
 
-<li>
-    <a href="{{ route('personal-file.view-search') }}">Просмотр личного дела</a>
-</li>
+{{--<li>
+    <a href="{{ route('personal-file.view-print-search') }}">Просмотр и печать личного дела</a>
+</li>--}}

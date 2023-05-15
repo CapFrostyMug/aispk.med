@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('decrees', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 10)
+                ->unique()
+                ->nullable(false);
             $table->timestamps();
         });
     }

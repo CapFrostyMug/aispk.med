@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('financing_types', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 20)
+                ->unique()
+                ->nullable(false);
             $table->timestamps();
         });
     }
