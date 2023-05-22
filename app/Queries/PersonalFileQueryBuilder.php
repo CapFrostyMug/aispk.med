@@ -3,14 +3,21 @@
 
 namespace App\Queries;
 
+use App\Models\Decree;
+use App\Models\Educational;
 use App\Models\EducationalDocType;
 use App\Models\EducationalInstitutionType;
+use App\Models\Enrollment;
 use App\Models\Faculty;
 use App\Models\FinancingType;
 use App\Models\Language;
 use App\Models\Nationality;
 use App\Models\Passport;
+use App\Models\Seniority;
+use App\Models\SpecialCircumstance;
 use App\Models\Student;
+use App\Models\StudentsParentFather;
+use App\Models\StudentsParentMother;
 use Illuminate\Http\Request;
 
 
@@ -22,6 +29,8 @@ final class PersonalFileQueryBuilder
     private FinancingType $financingType;
     private Faculty $faculty;
     private EducationalDocType $educationalDocType;
+    private Decree $decree;
+    private SpecialCircumstance $specialCircumstances;
 
     public function __construct
     (
@@ -31,6 +40,8 @@ final class PersonalFileQueryBuilder
         FinancingType $financingType,
         Faculty $faculty,
         EducationalDocType $educationalDocType,
+        Decree $decree,
+        SpecialCircumstance $specialCircumstances,
     )
     {
         $this->nationality = $nationality;
@@ -39,6 +50,8 @@ final class PersonalFileQueryBuilder
         $this->financingType = $financingType;
         $this->faculty = $faculty;
         $this->educationalDocType = $educationalDocType;
+        $this->decree = $decree;
+        $this->specialCircumstances = $specialCircumstances;
     }
 
     public function create(Request $request)
@@ -57,7 +70,7 @@ final class PersonalFileQueryBuilder
                 'issue_date' => $request->issueDatePassport,
                 'address_registered' => $request->addressRegistered,
                 'address_residential' => $request->addressResidential,
-            ],
+            ]
         );
 
         $student = Student::updateOrCreate
@@ -73,8 +86,89 @@ final class PersonalFileQueryBuilder
                 'email' => $request->email,
                 'language_id' => $request->language,
                 'about_me' => $request->aboutMe,
-            ],
+            ]
         );
+
+        $educational = Educational::updateOrCreate
+        (
+            [
+                'student_id' => $student->id,
+            ],
+            [
+                'ed_institution_type_id' => $request->educationalInstitutionType,
+                'ed_doc_type_id' => $request->educationalDocType,
+                'ed_doc_number' => $request->educationalDocNumber,
+                'ed_institution_name' => $request->educationalInstitutionName,
+                'is_first_spo' => $request->firstProfession,
+                'is_excellent_student' => $request->excellentStudent,
+                'avg_rating' => $request->avgRating,
+                'issue_date' => $request->issueDateEducationalDoc,
+            ]
+        );
+
+        $seniority = Seniority::updateOrCreate
+        (
+            [
+                'student_id' => $student->id,
+            ],
+            [
+                'place_work' => $request->placeWork,
+                'profession' => $request->profession,
+                'years' => $request->seniorityYears,
+                'months' => $request->seniorityMonths,
+            ]
+        );
+
+        $studentsParentFather = StudentsParentFather::updateOrCreate(
+            [
+                'student_id' => $student->id,
+            ],
+            [
+                'name' => $request->fatherName,
+                'surname' => $request->fatherSurname,
+                'patronymic' => $request->fatherPatronymic,
+                'phone' => $request->fatherPhone,
+            ]
+        );
+
+        $studentsParentMother = StudentsParentMother::updateOrCreate(
+            [
+                'student_id' => $student->id,
+            ],
+            [
+                'name' => $request->motherName,
+                'surname' => $request->motherSurname,
+                'patronymic' => $request->motherPatronymic,
+                'phone' => $request->motherPhone,
+            ]
+        );
+
+        $enrollment = Enrollment::updateOrCreate(
+            [
+                'student_id' => $student->id,
+            ],
+            [
+                'faculty_id' => $request->facultyAdmitted,
+                'decree_id' => $request->decree,
+                'is_pickup_docs' => $request->pickupDocs,
+            ]
+        );
+
+        /*$student->faculties()->attach($request->faculty, [
+                'student_id' => $student->id,
+                'financing_type_id' => $request->financing,
+                'is_original_docs' => $request->originalDocs,
+            ]
+        );*/
+
+        /*$student->specialCircumstances()->attach(
+            [
+                //
+            ],
+            [
+                //
+            ]
+        );*/
     }
 
     public function edit()
@@ -105,8 +199,10 @@ final class PersonalFileQueryBuilder
             'educationalInstitutionTypes' => $this->educationalInstitutionType::all(),
             'languages' => $this->language::all(),
             'financing' => $this->financingType::all(),
-            'faculty' => $this->faculty::all(),
-            'educationalDocType' => $this->educationalDocType::all(),
+            'faculties' => $this->faculty::all(),
+            'educationalDocTypes' => $this->educationalDocType::all(),
+            'decrees' => $this->decree::all(),
+            'specialCircumstances' => $this->specialCircumstances::all(),
         ];
     }
 }

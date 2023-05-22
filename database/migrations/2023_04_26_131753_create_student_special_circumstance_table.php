@@ -25,7 +25,7 @@ return new class extends Migration
                 ->constrained('special_circumstances')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->boolean('circumstance')->nullable(false);
+            $table->boolean('status')->nullable(false);
             $table->timestamps();
         });
     }

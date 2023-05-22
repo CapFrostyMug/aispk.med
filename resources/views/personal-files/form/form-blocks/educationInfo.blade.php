@@ -60,7 +60,7 @@
                     @if(!old('educationalDocType')) selected @endif
             >Выберите...
             </option>
-            @foreach($educationalDocType as $item)
+            @foreach($educationalDocTypes as $item)
                 <option
                     value="{{ $item->id }}"
                     @if($item->id == old('educationalDocType')) selected @endif
@@ -73,12 +73,18 @@
         </div>
         <div class="form-check">
             <label for="excellent-student-1" class="form-check-label">Окончил обучение с отличием</label>
-            <input id="excellent-student-1" class="form-check-input" name="excellentStudent" value="" type="checkbox">
+            <input id="excellent-student-1" type="hidden" name="excellentStudent" value="0">
+            <input id="excellent-student-1" class="form-check-input" name="excellentStudent" value="1" type="checkbox"
+                   @if (old('excellentStudent') == '1') checked @endif>
         </div>
     </div>
     <div class="col-3">
         <label for="educational-doc-number-1" class="form-label">Серия и номер документа*</label>
-        <input id="educational-doc-number-1" class="form-control" name="educationalDocNumber" value="" type="text"
+        <input id="educational-doc-number-1"
+               class="form-control"
+               name="educationalDocNumber"
+               value="{{ old('educationalDocNumber') }}"
+               type="text"
                required>
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.
@@ -86,7 +92,10 @@
     </div>
     <div class="col-2">
         <label for="issue-date-educational-doc-1" class="form-label">Дата выдачи*</label>
-        <input id="issue-date-educational-doc-1" class="form-control" name="issueDateEducationalDoc" value=""
+        <input id="issue-date-educational-doc-1"
+               class="form-control"
+               name="issueDateEducationalDoc"
+               value="{{ old('issueDateEducationalDoc') }}"
                type="date" required>
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.
@@ -94,7 +103,12 @@
     </div>
     <div class="col-2">
         <label for="avg-rating-1" class="form-label">Средний балл*</label>
-        <input id="avg-rating-1" class="form-control" name="avgRating" value="" type="number" required>
+        <input id="avg-rating-1"
+               class="form-control"
+               name="avgRating"
+               value="{{ old('avgRating') }}"
+               type="text"
+               required>
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.
         </div>
@@ -111,7 +125,7 @@
                        name="firstProfession"
                        value="1"
                        type="radio"
-                       checked=""
+                       checked
                        required>
                 <label for="first-profession-true-1" class="form-check-label">Да</label>
             </div>
@@ -121,7 +135,8 @@
                        name="firstProfession"
                        value="0"
                        type="radio"
-                       required>
+                       required
+                       @if (old('firstProfession') == '0') checked @endif>
                 <label for="first-profession-false-1" class="form-check-label">Нет</label>
             </div>
         </div>
