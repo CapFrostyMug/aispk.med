@@ -14,7 +14,7 @@ class SpecialCircumstance extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name',
+        'circumstances',
     ];
 
     public function students()

@@ -19,7 +19,7 @@
     <form method="POST" action="{{ route('personal-file.create') }}">
         @include('personal-files.form.form-blocks.index')
         <div class="d-grid gap-2 col-3 mx-auto">
-            <button class="btn btn-primary" type="submit">Сохранить</button>
+            <button class="btn btn-success" type="submit">Сохранить</button>
         </div>
     </form>
 @endsection

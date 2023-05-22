@@ -35,19 +35,19 @@ class DatabaseSeeder extends Seeder
         /**
          * Главная и второстепенные таблицы
          */
-        $this->call(PassportsSeeder::class);
+        /*$this->call(PassportsSeeder::class);
         $this->call(StudentsSeeder::class);
 
         $this->call(EducationalSeeder::class);
         $this->call(SenioritySeeder::class);
         $this->call(StudentParentFathersSeeder::class);
         $this->call(StudentParentMothersSeeder::class);
-        $this->call(EnrollmentSeeder::class);
+        $this->call(EnrollmentSeeder::class);*/
 
         /**
          * Сводные таблицы
          */
-        $this->call(InformationForAdmissionSeeder::class);
-        $this->call(StudentSpecialCircumstanceSeeder::class);
+        /*$this->call(InformationForAdmissionSeeder::class);
+        $this->call(StudentSpecialCircumstanceSeeder::class);*/
     }
 }

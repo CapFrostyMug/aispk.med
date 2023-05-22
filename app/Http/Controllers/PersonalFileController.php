@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use App\Queries\PersonalFileQueryBuilder;
 use Illuminate\Http\Request;
 
@@ -30,6 +31,8 @@ class PersonalFileController extends Controller
             //
         }
 
+        $student = Student::find(1);
+        dd($student->faculties);
         dump('Hello World!');
     }
 
