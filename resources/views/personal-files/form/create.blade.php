@@ -16,6 +16,9 @@
     <div class="py-5">
         <h2><strong>Форма создания личного дела</strong></h2>
     </div>
+
+    @include('personal-files.form.form-blocks.facultyBlockForCloning')
+
     <form method="POST" action="{{ route('personal-file.create') }}">
         @include('personal-files.form.form-blocks.index')
         <div class="d-grid gap-2 col-3 mx-auto">

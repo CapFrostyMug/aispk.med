@@ -1,0 +1,8 @@
+/* facultyBlockForCloning.blade.php */
+.display-none {
+    display: none;
+}
+
+.remove-block {
+    cursor: pointer;
+}
