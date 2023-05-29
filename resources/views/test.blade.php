@@ -16,13 +16,17 @@
     <div class="py-5">
         <h2><strong>Тестовая форма</strong></h2>
     </div>
+
+    @include('personal-files.form.form-blocks.facultyBlockForCloning')
+
     <form method="POST" action="{{ route('test') }}" id="my-form">
         @csrf
         <div class="row gy-3 faculty-block-parent">
+
             <div class="row mb-4 faculty-block-child">
                 <div class="col-6">
-                    <label for="faculty-123" class="form-label">Наименование специальности*</label>
-                    <select id="faculty-1" class="form-select test" name="faculty" required>
+                    <label for="faculty-1" class="form-label">Наименование специальности*</label>
+                    <select id="faculty-1" class="form-select test" name="data[faculty]" required>
                         <option value=""
                                 @if(!old('faculty')) selected @endif
                         >Выберите...
@@ -39,16 +43,17 @@
                         Пожалуйста, выберите вариант.
                     </div>
                     <div class="form-check">
-                        <input id="original-docs-1" type="hidden" name="originalDocs" value="0">
-                        <input id="original-docs-1" class="form-check-input" name="originalDocs" value="1" type="checkbox"
+                        <input id="original-docs-1" type="hidden" name="data[originalDocs]" value="0">
+                        <input id="original-docs-1" class="form-check-input parent-checkbox" name="data[originalDocs]"
+                               value="1" type="checkbox"
                                @if (old('originalDocs') == '1') checked @endif>
-                        <label for="original-docs-123" class="form-check-label">Оригиналы документов</label>
+                        <label for="original-docs-1" class="form-check-label">Оригиналы документов</label>
                     </div>
                 </div>
 
                 <div class="col-3">
-                    <label for="financing-123" class="form-label">Финансирование*</label>
-                    <select id="financing-1" class="form-select" name="financing" required>
+                    <label for="financing-1" class="form-label">Финансирование*</label>
+                    <select id="financing-1" class="form-select" name="data[financing]" required>
                         <option value=""
                                 @if(!old('financing')) selected @endif
                         >Выберите...

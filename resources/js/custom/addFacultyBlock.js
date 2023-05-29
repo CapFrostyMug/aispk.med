@@ -5,29 +5,60 @@ export default function addFacultyBlock() {
     let facultyBlockParent = document.querySelector('.faculty-block-parent');
     let facultyBlockChild = document.querySelector('.faculty-block-child');
 
-    //let count = 1;
+    let counter = 1;
 
     function handler() {
 
-        let count = 456;
+        // Объявляем массив искомых тегов
+        let searchedTags = ['label', 'select', 'input'];
 
-        // Клонируем элемент и сразу добавляем его в вёрстку
-        facultyBlockParent.append(facultyBlockChild.cloneNode(true));
+        // Объявляем массив искомых атрибутов
+        let searchedAttributes = ['for', 'id', 'name'];
 
-        // Находим последний дочерний элемент родителя (тот, что только что добавили)
-        let LastElemChild = facultyBlockParent.lastElementChild;
+        // Объявляем массив для найденных тегов
+        let foundTags = [];
 
-        // У последнего дочернего элемента родителя находим нужные теги и преобразуем полученную
-        // HTML-коллекцию в обычный массив
-        let LastElemChildLabel = Array.from(LastElemChild.getElementsByTagName('label'));
+        // Увеличиваем счётчик на единицу
+        ++counter;
 
-        // Проходимся циклом по массиву и присваиваем нужному тегу необходимое значение
-        for (let item of LastElemChildLabel) {
-            let attrValue = item.getAttribute('for');
-            item.setAttribute('for', attrValue.replace(attrValue.slice(attrValue.lastIndexOf('-')), `-${count}`));
+        // Клонируем элемент и удаляем унаследованный от родителя класс
+        let facultyBlockChildClone = facultyBlockChild.cloneNode(true);
+        facultyBlockChildClone.classList.remove('display-none');
+
+        // У клонированного элемента находим нужные теги, преобразовываем каждую HTML-коллекцию
+        // в обычный массив, а затем добавляем в общий массив foundTags
+        for (let searchedTagsItem of searchedTags) {
+            for (let item of [...facultyBlockChildClone.getElementsByTagName(searchedTagsItem)]) {
+                foundTags.push(item);
+            }
         }
 
-        count++;
+        // У каждого тега из массива searchedTags проверяем наличие нужного атрибута
+        // из массива searchedAttributes. Если атрибут есть, то изменяем его значение
+        foundTags.forEach((foundTagsItem) => {
+            for (let searchedAttributesItem of searchedAttributes) {
+
+                if (foundTagsItem.hasAttribute(searchedAttributesItem)) {
+
+                    let attributeFoundTagsItem = foundTagsItem.getAttribute(searchedAttributesItem);
+
+                    if (searchedAttributesItem === 'name') {
+                        foundTagsItem.setAttribute
+                        (
+                            searchedAttributesItem, `data[${attributeFoundTagsItem + counter}]`
+                        );
+                    } else {
+                        foundTagsItem.setAttribute
+                        (
+                            searchedAttributesItem, attributeFoundTagsItem + counter
+                        );
+                    }
+                }
+            }
+        });
+
+        // Добавляем клона в вёрстку, в конец родителя
+        facultyBlockParent.appendChild(facultyBlockChildClone);
     }
 
     button.addEventListener("click", handler);

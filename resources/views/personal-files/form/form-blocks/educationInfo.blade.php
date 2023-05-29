@@ -73,7 +73,7 @@
         </div>
         <div class="form-check">
             <label for="excellent-student-1" class="form-check-label">Окончил обучение с отличием</label>
-            <input id="excellent-student-1" type="hidden" name="excellentStudent" value="0">
+            <input id="" type="hidden" name="excellentStudent" value="0">
             <input id="excellent-student-1" class="form-check-input" name="excellentStudent" value="1" type="checkbox"
                    @if (old('excellentStudent') == '1') checked @endif>
         </div>
