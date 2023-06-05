@@ -93,7 +93,7 @@ class Student extends Model
             'information_for_admission',
             'student_id',
             'faculty_id'
-        )->withPivot('is_original_docs');
+        )->withPivot('is_original_docs', 'financing_type_id');
     }
 
     public function financingTypes()

@@ -19,44 +19,51 @@ use App\Models\Student;
 use App\Models\StudentsParentFather;
 use App\Models\StudentsParentMother;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 
 final class PersonalFileQueryBuilder
 {
-    private Nationality $nationality;
-    private EducationalInstitutionType $educationalInstitutionType;
-    private Language $language;
-    private FinancingType $financingType;
-    private Faculty $faculty;
-    private EducationalDocType $educationalDocType;
-    private Decree $decree;
-    private SpecialCircumstance $specialCircumstances;
+    private Builder $nationality;
+    private Builder $educationalInstitutionType;
+    private Builder $language;
+    private Builder $financingType;
+    private Builder $faculty;
+    private Builder $educationalDocType;
+    private Builder $decree;
+    private Builder $specialCircumstances;
 
-    public function __construct
-    (
-        Nationality $nationality,
-        EducationalInstitutionType $educationalInstitutionType,
-        Language $language,
-        FinancingType $financingType,
-        Faculty $faculty,
-        EducationalDocType $educationalDocType,
-        Decree $decree,
-        SpecialCircumstance $specialCircumstances,
-    )
+    private Builder $passport;
+    private Builder $student;
+    private Builder $educational;
+    private Builder $seniority;
+    private Builder $studentsParentFather;
+    private Builder $studentsParentMother;
+    private Builder $enrollment;
+
+    public function __construct()
     {
-        $this->nationality = $nationality;
-        $this->educationalInstitutionType = $educationalInstitutionType;
-        $this->language = $language;
-        $this->financingType = $financingType;
-        $this->faculty = $faculty;
-        $this->educationalDocType = $educationalDocType;
-        $this->decree = $decree;
-        $this->specialCircumstances = $specialCircumstances;
+        $this->nationality = Nationality::query();
+        $this->educationalInstitutionType = EducationalInstitutionType::query();
+        $this->language = Language::query();
+        $this->financingType = FinancingType::query();
+        $this->faculty = Faculty::query();
+        $this->educationalDocType = EducationalDocType::query();
+        $this->decree = Decree::query();
+        $this->specialCircumstances = SpecialCircumstance::query();
+
+        $this->passport = Passport::query();
+        $this->student = Student::query();
+        $this->educational = Educational::query();
+        $this->seniority = Seniority::query();
+        $this->studentsParentFather = StudentsParentFather::query();
+        $this->studentsParentMother = StudentsParentMother::query();
+        $this->enrollment = Enrollment::query();
     }
 
     public function create(Request $request)
     {
-        $passport = Passport::updateOrCreate
+        $passport = $this->passport->updateOrCreate
         (
             [
                 'number' => $request->passportNumber,
@@ -73,7 +80,7 @@ final class PersonalFileQueryBuilder
             ]
         );
 
-        $student = Student::updateOrCreate
+        $student = $this->student->updateOrCreate
         (
             [
                 'passport_id' => $passport->id,
@@ -89,7 +96,7 @@ final class PersonalFileQueryBuilder
             ]
         );
 
-        $educational = Educational::updateOrCreate
+        $educational = $this->educational->updateOrCreate
         (
             [
                 'student_id' => $student->id,
@@ -106,7 +113,7 @@ final class PersonalFileQueryBuilder
             ]
         );
 
-        $seniority = Seniority::updateOrCreate
+        $seniority = $this->seniority->updateOrCreate
         (
             [
                 'student_id' => $student->id,
@@ -119,7 +126,7 @@ final class PersonalFileQueryBuilder
             ]
         );
 
-        $studentsParentFather = StudentsParentFather::updateOrCreate(
+        $studentsParentFather = $this->studentsParentFather->updateOrCreate(
             [
                 'student_id' => $student->id,
             ],
@@ -131,7 +138,7 @@ final class PersonalFileQueryBuilder
             ]
         );
 
-        $studentsParentMother = StudentsParentMother::updateOrCreate(
+        $studentsParentMother = $this->studentsParentMother->updateOrCreate(
             [
                 'student_id' => $student->id,
             ],
@@ -143,7 +150,7 @@ final class PersonalFileQueryBuilder
             ]
         );
 
-        $enrollment = Enrollment::updateOrCreate(
+        $enrollment = $this->enrollment->updateOrCreate(
             [
                 'student_id' => $student->id,
             ],
@@ -154,12 +161,16 @@ final class PersonalFileQueryBuilder
             ]
         );
 
-        /*$student->faculties()->attach($request->faculty, [
-                'student_id' => $student->id,
-                'financing_type_id' => $request->financing,
-                'is_original_docs' => $request->originalDocs,
-            ]
-        );*/
+        $admissionInfo = $request->data;
+
+        foreach ($admissionInfo as $blockName => $blockContent) {
+            $student->faculties()->attach($blockContent['faculty_id'], [
+                    'student_id' => $student->id,
+                    'financing_type_id' => $blockContent['financing_type_id'],
+                    'is_original_docs' => $blockContent['is_original_docs'],
+                ]
+            );
+        }
 
         /*$student->specialCircumstances()->attach(
             [
@@ -171,9 +182,20 @@ final class PersonalFileQueryBuilder
         );*/
     }
 
-    public function edit()
+    public function edit($id)
     {
-        //
+        $student = $this->student->find($id);
+
+        $data = [];
+        $counter = 1;
+
+        foreach ($student->faculties as $faculty) {
+            $data['block' . $counter] = $faculty->pivot->getAttributes();
+            $counter++;
+        }
+
+        //dd($data);
+        return $data;
     }
 
     public function search($search)
@@ -195,14 +217,14 @@ final class PersonalFileQueryBuilder
     public function getRelatedModels(): array
     {
         return $models = [
-            'nationality' => $this->nationality::all(),
-            'educationalInstitutionTypes' => $this->educationalInstitutionType::all(),
-            'languages' => $this->language::all(),
-            'financing' => $this->financingType::all(),
-            'faculties' => $this->faculty::all(),
-            'educationalDocTypes' => $this->educationalDocType::all(),
-            'decrees' => $this->decree::all(),
-            'specialCircumstances' => $this->specialCircumstances::all(),
+            'nationality' => $this->nationality->get(),
+            'educationalInstitutionTypes' => $this->educationalInstitutionType->get(),
+            'languages' => $this->language->get(),
+            'financing' => $this->financingType->get(),
+            'faculties' => $this->faculty->get(),
+            'educationalDocTypes' => $this->educationalDocType->get(),
+            'decrees' => $this->decree->get(),
+            'specialCircumstances' => $this->specialCircumstances->get(),
         ];
     }
 }

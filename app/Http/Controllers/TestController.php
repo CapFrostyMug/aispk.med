@@ -12,7 +12,7 @@ class TestController extends Controller
     {
         if ($request->isMethod('post')) {
 
-            dd($request->except('_token'));
+            //dd($request->except('_token'));
 
             $request->flash();
 

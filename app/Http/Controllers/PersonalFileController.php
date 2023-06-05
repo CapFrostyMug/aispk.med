@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
 use App\Queries\PersonalFileQueryBuilder;
 use Illuminate\Http\Request;
 
@@ -25,15 +24,17 @@ class PersonalFileController extends Controller
         return view('personal-files.form.create', $relatedModels);
     }
 
-    public function edit(Request $request)
+    public function edit(Request $request, PersonalFileQueryBuilder $builder, $id)
     {
         if ($request->isMethod('post')) {
             //
         }
 
-        $student = Student::find(1);
-        dd($student->faculties);
-        dump('Hello World!');
+        $relatedModels = $builder->getRelatedModels();
+
+        $data = $builder->edit($id);
+
+        return view('personal-files.form.create', $relatedModels, ['data' => $data]);
     }
 
     public function search(Request $request, PersonalFileQueryBuilder $builder)

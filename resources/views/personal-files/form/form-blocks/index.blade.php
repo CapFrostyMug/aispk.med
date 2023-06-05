@@ -11,7 +11,7 @@
 
 <fieldset>
     <legend><h5><strong>Информация для поступления</strong></h5></legend>
-    @include('personal-files.form.form-blocks.admissionInfo')
+    @include('personal-files.form.form-blocks.admissionInfo2')
 </fieldset>
 
 <fieldset>
