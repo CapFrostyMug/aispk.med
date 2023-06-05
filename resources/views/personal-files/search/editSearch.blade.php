@@ -21,7 +21,7 @@
         @include('personal-files.search.search-blocks.index')
         <div>
             <button
-                class="btn btn-primary px-5"
+                class="btn btn-success px-5"
                 type="submit">Поиск
             </button>
         </div>

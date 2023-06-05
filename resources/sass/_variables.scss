@@ -1,5 +1,6 @@
 // Body
 $body-bg: #f8fafc;
+$app-main-color: #41A49E;
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
@@ -12,3 +13,76 @@ $container-max-widths: (
     lg: 960px,
     xl: 1140px,
 );
+
+// Убирает смещение страницы влево при появлении scrollbar-а
+html {
+    overflow-x: hidden;
+    margin-right: calc(-1 * (100vw - 100%));
+}
+
+// "Растяжка" блока с основным контентом во весь экран, "прижатие" футера
+html,
+body {
+    height: 100%;
+}
+
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.fullscreen {
+    min-height: 100vh;
+    display: flex;
+}
+
+.fullscreen-body {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    background-color: #BBBCBD;
+    text-align: center;
+}
+
+.footer-body {
+    width: 100%;
+    max-width: 1140px;
+    padding: 30px;
+    color: aliceblue;
+}
+
+// Стили, используемые кастомными функциями
+
+/* facultyBlockForCloning.blade.php */
+.display-none {
+    display: none;
+}
+
+/* facultyBlockForCloning.blade.php */
+.remove-block {
+    cursor: pointer;
+}
+
+// Прочие кастомные стили
+.custom-navbar-bg-color {
+    background-color: $app-main-color;
+}
+
+.custom-navbar-font {
+    font-size: 16px;
+}
+
+.custom-navbar-border-right {
+    border-right: 1px solid #CCCCCC;
+}
+
+.dropdown-item:active {
+    background-color: $app-main-color !important;
+}

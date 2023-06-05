@@ -1,9 +1,9 @@
 <li>
-    <a href="{{ route('personal-file.create') }}">Создать личное дело</a>
+    <a href="{{ route('personal-file.create') }}" class="dropdown-item">Создать личное дело</a>
 </li>
 
 <li>
-    <a href="{{ route('personal-file.edit-search') }}">Редактирование личного дела</a>
+    <a href="{{ route('personal-file.edit-search') }}" class="dropdown-item">Редактирование личного дела</a>
 </li>
 
 {{--<li>

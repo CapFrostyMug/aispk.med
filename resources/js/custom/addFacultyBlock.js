@@ -45,7 +45,7 @@ export default function addFacultyBlock() {
                     if (searchedAttributesItem === 'name') {
                         foundTagsItem.setAttribute
                         (
-                            searchedAttributesItem, `data[${attributeFoundTagsItem + counter}]`
+                            searchedAttributesItem, `data[block${counter}][${attributeFoundTagsItem}]`
                         );
                     } else {
                         foundTagsItem.setAttribute
