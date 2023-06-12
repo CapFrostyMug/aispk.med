@@ -1,11 +1,11 @@
 export default function removeFacultyBlock() {
 
-    document.querySelector('.faculty-block-parent').onclick = function (e) {
-        const btn = e.target.closest('.remove-block');
-        if (!btn) {
+    document.querySelector('.custom-faculty-block-parent').onclick = function (e) {
+        const button = e.target.closest('.custom-remove-block');
+        if (!button) {
             return;
         }
 
-        btn.closest('.faculty-block-child').remove();
+        button.closest('.custom-faculty-block-child').remove();
     }
 }

@@ -1,10 +1,10 @@
 export default function avgCalculator() {
 
-    let button = document.querySelector('.avg-calc');
+    let button = document.querySelector('.custom-avg-calc');
 
     function handler() {
 
-        let result;
+        let result = 0;
 
         let grade3 = Number(document.getElementById('grade-3').value);
         let grade4 = Number(document.getElementById('grade-4').value);

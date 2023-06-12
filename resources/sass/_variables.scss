@@ -60,13 +60,8 @@ body {
 
 // Стили, используемые кастомными функциями
 
-/* facultyBlockForCloning.blade.php */
-.display-none {
-    display: none;
-}
-
-/* facultyBlockForCloning.blade.php */
-.remove-block {
+/* facultyBlock.blade.php */
+.custom-delete-cart {
     cursor: pointer;
 }
 

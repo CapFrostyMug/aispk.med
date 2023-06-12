@@ -83,7 +83,7 @@ class Student extends Model
             'student_special_circumstance',
             'student_id',
             'special_circumstance_id'
-        );
+        )->withPivot('status');
     }
 
     public function faculties()

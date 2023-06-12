@@ -1,6 +1,7 @@
 import avgCalculator from './custom/avgCalculator';
 import addFacultyBlock from './custom/addFacultyBlock';
 import removeFacultyBlock from './custom/removeFacultyBlock';
+import WindowOnloadFunctions from './custom/windowOnloadFunctions';
 
 export const config = {
 
@@ -8,10 +9,17 @@ export const config = {
         avgCalculator,
         addFacultyBlock,
         removeFacultyBlock,
+        WindowOnloadFunctions,
+    ],
+
+    'personal-file/edit/file': [
+        avgCalculator,
+        addFacultyBlock,
+        removeFacultyBlock,
+        WindowOnloadFunctions,
     ],
 
     '/test': [
-        addFacultyBlock,
-        removeFacultyBlock,
+        //
     ],
 };
