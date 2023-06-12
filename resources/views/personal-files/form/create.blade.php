@@ -17,9 +17,11 @@
         <h2><strong>Форма создания личного дела</strong></h2>
     </div>
 
-    @include('personal-files.form.form-blocks.facultyBlockForCloning')
+    <div class="d-none">
+        @include('personal-files.form.form-blocks.facultyBlock')
+    </div>
 
-    <form method="POST" action="{{ route('personal-file.create') }}">
+    <form method="POST" action="{{ route('personal-file.store') }}">
         @include('personal-files.form.form-blocks.index')
         <div class="d-grid gap-2 col-3 mx-auto">
             <button class="btn btn-success" type="submit">Сохранить</button>

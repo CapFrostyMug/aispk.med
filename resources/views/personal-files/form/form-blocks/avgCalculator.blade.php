@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="col-3 d-flex justify-content-center align-items-end p-2 bg-primary bg-opacity-25">
-                <button type="button" class="btn btn-primary px-4 avg-calc">Рассчитать</button>
+                <button type="button" class="btn btn-primary px-4 custom-avg-calc">Рассчитать</button>
             </div>
         </div>
     </div>

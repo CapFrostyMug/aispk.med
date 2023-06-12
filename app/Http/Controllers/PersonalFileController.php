@@ -2,59 +2,82 @@
 
 namespace App\Http\Controllers;
 
-use App\Queries\PersonalFileQueryBuilder;
+use App\Facades\PersonalFileFacade;
 use Illuminate\Http\Request;
 
 class PersonalFileController extends Controller
 {
-    public function create(Request $request, PersonalFileQueryBuilder $builder)
+    public function index()
     {
-        if ($request->isMethod('post')) {
-
-            $request->flash();
-
-            $builder->create($request);
-
-            return redirect()->route('personal-file.create');
-
-        }
-
-        $relatedModels = $builder->getRelatedModels();
-
-        return view('personal-files.form.create', $relatedModels);
+        //
     }
 
-    public function edit(Request $request, PersonalFileQueryBuilder $builder, $id)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(PersonalFileFacade $personalFileFacade)
     {
-        if ($request->isMethod('post')) {
-            //
-        }
-
-        $relatedModels = $builder->getRelatedModels();
-
-        $data = $builder->edit($id);
-
-        return view('personal-files.form.create', $relatedModels, ['data' => $data]);
+        $secondaryModels = $personalFileFacade->create();
+        return view('personal-files.form.create', $secondaryModels);
     }
 
-    public function search(Request $request, PersonalFileQueryBuilder $builder)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request, PersonalFileFacade $personalFileFacade)
+    {
+        $request->flash();
+
+        if (!empty($personalFileFacade->store($request))) {
+            return back()->with('error', '');
+        }
+
+        return redirect()->route('admin.users-management.index')->with('success', '');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show()
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit()
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update()
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy()
+    {
+        //
+    }
+
+    public function search()
     {
         $student = null;
-
-        if ($request->isMethod('post')) {
-
-            $search = $request->input('search', '');
-
-            if (empty($search)) {
-                return redirect()->route('personal-file.edit-search');
-            }
-
-            $student = $builder->search($search);
-
-        }
 
         return view('personal-files.search.editSearch', [
             'student' => $student,
         ]);
+    }
+
+    public function find()
+    {
+        //
     }
 }

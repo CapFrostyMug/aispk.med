@@ -27,7 +27,7 @@ class StudentSpecialCircumstanceSeeder extends Seeder
             $data[] = [
                 'student_id' => fake()->numberBetween(1, 20),
                 'special_circumstance_id' => fake()->numberBetween(1, 5),
-                'circumstance' => fake()->numberBetween(0, 1),
+                'status' => fake()->numberBetween(0, 1),
             ];
         }
 

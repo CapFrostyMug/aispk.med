@@ -1,11 +1,13 @@
+import counterForFacultiesBlocks from './counterForFacultiesBlocks';
+
 export default function addFacultyBlock() {
 
-    let button = document.querySelector('.add-faculty');
+    let button = document.querySelector('.custom-add-faculty');
 
-    let facultyBlockParent = document.querySelector('.faculty-block-parent');
-    let facultyBlockChild = document.querySelector('.faculty-block-child');
+    let facultyBlockParent = document.querySelector('.custom-faculty-block-parent');
+    let facultyBlockChild = document.querySelector('.custom-faculty-block-child');
 
-    let counter = 1;
+    let counter = 0;
 
     function handler() {
 
@@ -18,41 +20,33 @@ export default function addFacultyBlock() {
         // Объявляем массив для найденных тегов
         let foundTags = [];
 
-        // Увеличиваем счётчик на единицу
-        ++counter;
-
         // Клонируем элемент и удаляем унаследованный от родителя класс
         let facultyBlockChildClone = facultyBlockChild.cloneNode(true);
-        facultyBlockChildClone.classList.remove('display-none');
+        facultyBlockChildClone.classList.remove('d-none');
 
         // У клонированного элемента находим нужные теги, преобразовываем каждую HTML-коллекцию
-        // в обычный массив, а затем добавляем в общий массив foundTags
+        // в обычный массив, а затем добавляем в ранее объявленный общий массив foundTags.
         for (let searchedTagsItem of searchedTags) {
             for (let item of [...facultyBlockChildClone.getElementsByTagName(searchedTagsItem)]) {
                 foundTags.push(item);
             }
         }
 
+        // Функция для подсчёта значения счётчика
+        counter = counterForFacultiesBlocks(facultyBlockParent, counter);
+
         // У каждого тега из массива searchedTags проверяем наличие нужного атрибута
-        // из массива searchedAttributes. Если атрибут есть, то изменяем его значение
+        // из массива searchedAttributes. Если атрибут есть, то изменяем его значение.
         foundTags.forEach((foundTagsItem) => {
             for (let searchedAttributesItem of searchedAttributes) {
-
                 if (foundTagsItem.hasAttribute(searchedAttributesItem)) {
 
-                    let attributeFoundTagsItem = foundTagsItem.getAttribute(searchedAttributesItem);
+                    let attributeValuesFoundTags = foundTagsItem.getAttribute(searchedAttributesItem);
 
-                    if (searchedAttributesItem === 'name') {
-                        foundTagsItem.setAttribute
-                        (
-                            searchedAttributesItem, `data[block${counter}][${attributeFoundTagsItem}]`
-                        );
-                    } else {
-                        foundTagsItem.setAttribute
-                        (
-                            searchedAttributesItem, attributeFoundTagsItem + counter
-                        );
-                    }
+                    foundTagsItem.setAttribute
+                    (
+                        searchedAttributesItem, attributeValuesFoundTags.replace('block_1', `block_${counter}`)
+                    );
                 }
             }
         });

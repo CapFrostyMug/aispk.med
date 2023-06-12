@@ -30,9 +30,11 @@ Route::get('/', function () {
  */
 Route::prefix('personal-file')->name('personal-file.')->group(function () {
 
-    Route::match(['get', 'post'], '/create', [PersonalFileController::class, 'create'])->name('create');
-    Route::match(['get', 'post'], '/edit/file/{id}', [PersonalFileController::class, 'edit'])->name('edit-file');
-    //Route::match(['get', 'post'], '/', [])->name();
+    Route::get('/create', [PersonalFileController::class, 'create'])->name('create');
+    Route::post('/create', [PersonalFileController::class, 'store'])->name('store');
+
+    Route::get('/edit/file/{id}', [PersonalFileController::class, 'edit'])->name('edit-file');
+    Route::post('/', [PersonalFileController::class, 'update'])->name('update-file');
 
     Route::match(['get', 'post'], '/edit/search', [PersonalFileController::class, 'search'])->name('edit-search');
 
@@ -68,4 +70,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 /**
  * Тестовый роут
  */
-Route::match(['get', 'post'], '/test', [TestController::class, 'index'])->name('test');
+Route::get('/test', [TestController::class, 'create'])->name('test-create');
+Route::post('/test', [TestController::class, 'store'])->name('test-store');

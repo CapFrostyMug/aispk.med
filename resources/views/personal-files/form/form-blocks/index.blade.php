@@ -1,17 +1,17 @@
 @csrf
 <fieldset>
     <legend><h5><strong>Паспортные данные</strong></h5></legend>
-    @include('personal-files.form.form-blocks.passportsData')
+    @include('personal-files.form.form-blocks.passportInfo')
 </fieldset>
 
 <fieldset>
     <legend><h5><strong>Контактная информация</strong></h5></legend>
-    @include('personal-files.form.form-blocks.contactsInfo')
+    @include('personal-files.form.form-blocks.contactInfo')
 </fieldset>
 
 <fieldset>
     <legend><h5><strong>Информация для поступления</strong></h5></legend>
-    @include('personal-files.form.form-blocks.admissionInfo2')
+    @include('personal-files.form.form-blocks.admissionInfo')
 </fieldset>
 
 <fieldset>
