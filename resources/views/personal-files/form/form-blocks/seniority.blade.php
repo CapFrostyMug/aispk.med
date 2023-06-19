@@ -1,14 +1,22 @@
 <div class="row mb-5 gy-3"> {{-- СВЕДЕНИЯ О ТРУДОВОМ СТАЖЕ --}}
     <div class="col-12">
         <label for="place-work-1" class="form-label">Место работы</label>
-        <input id="place-work-1" class="form-control" name="placeWork" value="{{ old('placeWork') }}" type="text">
+        <input id="place-work-1"
+               class="form-control"
+               name="placeWork"
+               value="{{ old('placeWork') ?? $seniority->place_work ?? '' }}"
+               type="text">
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.
         </div>
     </div>
     <div class="col-7">
         <label for="profession-1" class="form-label">Должность, специализация</label>
-        <input id="profession-1" class="form-control" name="profession" value="{{ old('profession') }}" type="text">
+        <input id="profession-1"
+               class="form-control"
+               name="profession"
+               value="{{ old('profession') ?? $seniority->profession ?? '' }}"
+               type="text">
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.
         </div>
@@ -18,7 +26,7 @@
         <input id="seniority-years-1"
                class="form-control"
                name="seniorityYears"
-               value="{{ old('seniorityYears') }}"
+               value="{{ old('seniorityYears') ?? $seniority->years ?? '' }}"
                type="number">
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.
@@ -29,7 +37,7 @@
         <input id="seniority-months-1"
                class="form-control"
                name="seniorityMonths"
-               value="{{ old('seniorityMonths') }}"
+               value="{{ old('seniorityMonths') ?? $seniority->months ?? '' }}"
                type="number">
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.

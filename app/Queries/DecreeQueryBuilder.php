@@ -20,7 +20,7 @@ final class DecreeQueryBuilder implements iQueryBuilder
         $this->model = Decree::query();
     }
 
-    public function getModel(Request $request): Model|null
+    public function getModel($data, $column = ''): Model|null
     {
         // TODO: Implement getModel() method.
     }

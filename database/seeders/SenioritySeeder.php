@@ -28,8 +28,8 @@ class SenioritySeeder extends Seeder
                 'student_id' => fake()->numberBetween(1, 20),
                 'place_work' => fake()->company(),
                 'profession' => fake()->jobTitle(),
-                'years' => fake()->year(),
-                'months' => fake()->month(),
+                'years' => fake()->randomNumber(2, false),
+                'months' => fake()->randomNumber(2, false),
             ];
         }
 

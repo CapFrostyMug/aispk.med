@@ -20,7 +20,7 @@ final class LanguageQueryBuilder implements iQueryBuilder
         $this->model = Language::query();
     }
 
-    public function getModel(Request $request): Model|null
+    public function getModel($data, $column = ''): Model|null
     {
         // TODO: Implement getModel() method.
     }

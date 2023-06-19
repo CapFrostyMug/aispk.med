@@ -4,7 +4,7 @@
         <input id="phone-1"
                class="form-control"
                name="phone"
-               value="{{ old('phone') }}"
+               value="{{ old('phone') ?? $student->phone ?? '' }}"
                type="tel"
                placeholder="+7 (999) 999-99-99">
         <div class="invalid-feedback">
@@ -17,7 +17,7 @@
             id="email-1"
             class="form-control"
             name="email"
-            value="{{ old('email') }}"
+            value="{{ old('email') ?? $student->email ?? '' }}"
             type="email">
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.

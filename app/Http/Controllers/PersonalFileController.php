@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Facades\PersonalFileFacade;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class PersonalFileController extends Controller
 {
@@ -46,9 +49,16 @@ class PersonalFileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit(PersonalFileFacade $personalFileFacade, $id)
     {
-        //
+        $primaryModels = $personalFileFacade->edit($id);
+        $secondaryModels = $personalFileFacade->getSecondaryModels();
+
+        if (is_null($primaryModels)) {
+            abort(404);
+        }
+
+        return view('personal-files.form.edit', $secondaryModels, $primaryModels);
     }
 
     /**
@@ -69,15 +79,19 @@ class PersonalFileController extends Controller
 
     public function search()
     {
-        $student = null;
+        return view('personal-files.search.editSearch');
+    }
+
+    public function find(Request $request, PersonalFileFacade $personalFileFacade): View|RedirectResponse
+    {
+        $student = $personalFileFacade->find($request);
+
+        if (is_null($student)) {
+            return back()->with('error', '');
+        }
 
         return view('personal-files.search.editSearch', [
             'student' => $student,
         ]);
-    }
-
-    public function find()
-    {
-        //
     }
 }

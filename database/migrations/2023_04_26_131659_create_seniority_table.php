@@ -22,7 +22,7 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->string('place_work', 100)->nullable();
             $table->string('profession', 75)->nullable();
-            $table->year('years')->nullable();
+            $table->integer('years')->nullable();
             $table->integer('months')->nullable();
             $table->timestamps();
         });

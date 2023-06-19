@@ -81,3 +81,13 @@ body {
 .dropdown-item:active {
     background-color: $app-main-color !important;
 }
+
+.custom-results-table-bg-color {
+    background-color: #99CCCC;
+}
+
+.custom-form-button-size {
+    width: 241px;
+    height: 38px;
+    padding: 6px 12px;
+}
