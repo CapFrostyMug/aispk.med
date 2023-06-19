@@ -1,12 +1,11 @@
 <div class="row mb-5 gy-3"> {{-- ИНФОРМАЦИЯ О РОДСТВЕННИКАХ --}}
-
     <p class="mb-0 mt-3"><strong>Отец</strong></p>
     <div class="col-4">
         <label for="father-surname-1" class="form-label">Фамилия</label>
         <input id="father-surname-1"
                class="form-control"
                name="fatherSurname"
-               value="{{ old('fatherSurname') }}"
+               value="{{ old('fatherSurname') ?? $studentsParentFather->surname ?? '' }}"
                type="text">
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.
@@ -17,7 +16,7 @@
         <input id="father-name-1"
                class="form-control"
                name="fatherName"
-               value="{{ old('fatherName') }}"
+               value="{{ old('fatherName') ?? $studentsParentFather->name ?? '' }}"
                type="text">
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.
@@ -28,7 +27,7 @@
         <input id="father-patronymic-1"
                class="form-control"
                name="fatherPatronymic"
-               value="{{ old('fatherPatronymic') }}"
+               value="{{ old('fatherPatronymic') ?? $studentsParentFather->patronymic ?? '' }}"
                type="text">
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.
@@ -39,7 +38,7 @@
         <input id="father-phone-1"
                class="form-control"
                name="fatherPhone"
-               value="{{ old('fatherPhone') }}"
+               value="{{ old('fatherPhone') ?? $studentsParentFather->phone ?? '' }}"
                type="tel"
                placeholder="+7 (999) 999-99-99">
         <div class="invalid-feedback">
@@ -53,7 +52,7 @@
         <input id="mother-surname-1"
                class="form-control"
                name="motherSurname"
-               value="{{ old('motherSurname') }}"
+               value="{{ old('motherSurname') ?? $studentsParentMother->surname ?? '' }}"
                type="text">
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.
@@ -64,7 +63,7 @@
         <input id="mother-name-1"
                class="form-control"
                name="motherName"
-               value="{{ old('motherName') }}"
+               value="{{ old('motherName') ?? $studentsParentMother->name ?? '' }}"
                type="text">
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.
@@ -75,7 +74,7 @@
         <input id="mother-patronymic-1"
                class="form-control"
                name="motherPatronymic"
-               value="{{ old('motherPatronymic') }}"
+               value="{{ old('motherPatronymic') ?? $studentsParentMother->patronymic ?? '' }}"
                type="text">
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.
@@ -86,12 +85,11 @@
         <input id="mother-phone-1"
                class="form-control"
                name="motherPhone"
-               value="{{ old('motherPhone') }}"
+               value="{{ old('motherPhone') ?? $studentsParentMother->phone ?? '' }}"
                type="tel"
                placeholder="+7 (999) 999-99-99">
         <div class="invalid-feedback">
             Пожалуйста, заполните поле.
         </div>
     </div>
-
 </div>

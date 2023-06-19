@@ -1,8 +1,8 @@
 @if(!empty($student))
-    <div class="pt-5">
+    <div class="mt-5">
         <table class="table table-bordered">
             <thead>
-            <tr class="table-primary">
+            <tr class="custom-results-table-bg-color">
                 <th scope="col" class="col-2 text-center">Номер дела</th>
                 <th scope="col" class="col-3 text-center">Фамилия</th>
                 <th scope="col" class="col-3 text-center">Имя</th>

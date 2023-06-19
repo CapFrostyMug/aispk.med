@@ -34,9 +34,10 @@ Route::prefix('personal-file')->name('personal-file.')->group(function () {
     Route::post('/create', [PersonalFileController::class, 'store'])->name('store');
 
     Route::get('/edit/file/{id}', [PersonalFileController::class, 'edit'])->name('edit-file');
-    Route::post('/', [PersonalFileController::class, 'update'])->name('update-file');
+    Route::post('/edit/file/{id}', [PersonalFileController::class, 'update'])->name('update-file');
 
-    Route::match(['get', 'post'], '/edit/search', [PersonalFileController::class, 'search'])->name('edit-search');
+    Route::get('/edit/search', [PersonalFileController::class, 'search'])->name('edit-search');
+    Route::post('/edit/search', [PersonalFileController::class, 'find'])->name('edit-find');
 
 });
 

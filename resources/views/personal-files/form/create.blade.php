@@ -23,8 +23,9 @@
 
     <form method="POST" action="{{ route('personal-file.store') }}">
         @include('personal-files.form.form-blocks.index')
-        <div class="d-grid gap-2 col-3 mx-auto">
-            <button class="btn btn-success" type="submit">Сохранить</button>
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-success me-5 custom-form-button-size" type="submit">Сохранить</button>
+            <button class="btn btn-secondary custom-form-button-size" type="reset">Очистить форму</button>
         </div>
     </form>
 @endsection

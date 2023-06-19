@@ -19,7 +19,7 @@ final class EnrollmentQueryBuilder implements iQueryBuilder
         $this->model = Enrollment::query();
     }
 
-    public function getModel(Request $request): Model|null
+    public function getModel($data, $column = ''): Model|null
     {
         // TODO: Implement getModel() method.
     }

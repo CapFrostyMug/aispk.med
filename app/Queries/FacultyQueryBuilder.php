@@ -20,7 +20,7 @@ final class FacultyQueryBuilder implements iQueryBuilder
         $this->model = Faculty::query();
     }
 
-    public function getModel(Request $request): Model|null
+    public function getModel($data, $column = ''): Model|null
     {
         // TODO: Implement getModel() method.
     }

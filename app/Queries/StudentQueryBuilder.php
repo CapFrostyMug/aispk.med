@@ -20,9 +20,9 @@ final class StudentQueryBuilder implements iQueryBuilder
         $this->model = Student::query();
     }
 
-    public function getModel(Request $request): Model
+    public function getModel($data, $column = ''): Model|null
     {
-        //
+        return $this->model->find($data);
     }
 
     public function getModels(): Collection
@@ -33,8 +33,8 @@ final class StudentQueryBuilder implements iQueryBuilder
     public function create(Request $request, $passport = 0): Model
     {
         return $this->model->create([
-            'name' => $request->firstName,
-            'surname' => $request->lastName,
+            'name' => $request->name,
+            'surname' => $request->surname,
             'patronymic' => $request->patronymic,
             'passport_id' => $passport->id,
             'phone' => $request->phone,

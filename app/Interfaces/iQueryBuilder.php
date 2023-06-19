@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 interface iQueryBuilder
 {
-    public function getModel(Request $request): Model|null;
+    public function getModel($data, $column): Model|null;
 
     public function getModels();
 

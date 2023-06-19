@@ -18,6 +18,7 @@ use App\Queries\StParentFatherQueryBuilder;
 use App\Queries\StParentMotherQueryBuilder;
 use App\Queries\StudentQueryBuilder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class PersonalFileFacade
 {
@@ -90,7 +91,7 @@ class PersonalFileFacade
      */
     public function store(Request $request)
     {
-        if (!empty($this->passport->getModel($request))) {
+        if (!empty($this->passport->getModel($request->passportNumber, 'number'))) {
             return collect();
         }
 
@@ -135,9 +136,33 @@ class PersonalFileFacade
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit($id)
     {
-        //
+        $student = $this->student->getModel($id);
+
+        if (is_null($student)) {
+            return null;
+        }
+
+        $facultiesBlocks = [];
+        $counterFacultiesBlocks = 1;
+
+        foreach ($student->faculties as $faculty) {
+            $facultiesBlocks['block_' . $counterFacultiesBlocks] = $faculty->pivot->getAttributes();
+            $counterFacultiesBlocks++;
+        }
+
+        return $primaryModels = [
+            'student' => $student,
+            'passport' => $student->passport,
+            'educational' => $student->educational,
+            'seniority' => $student->seniority,
+            'studentsParentFather' => $student->studentsParentFather,
+            'studentsParentMother' => $student->studentsParentMother,
+            'specialCircumstancesForEdit' => $student->specialCircumstances,
+            'enrollment' => $student->enrollment,
+            'facultiesBlocks' => $facultiesBlocks,
+        ];
     }
 
     /**
@@ -161,12 +186,22 @@ class PersonalFileFacade
         //
     }
 
-    public function find()
+    public function find(Request $request)
     {
-        //
+        if (empty($request->input('search'))) {
+            return null;
+        }
+
+        $passport = $this->passport->find($request);
+
+        if (!is_null($passport)) {
+            return $passport->student;
+        }
+
+        return '';
     }
 
-    private function getSecondaryModels(): array
+    public function getSecondaryModels(): array
     {
         return $secondaryModels = [
             'nationality' => $this->nationality->getModels(),

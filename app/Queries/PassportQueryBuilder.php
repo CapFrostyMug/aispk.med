@@ -20,9 +20,9 @@ final class PassportQueryBuilder implements iQueryBuilder
         $this->model = Passport::query();
     }
 
-    public function getModel(Request $request): Model|null
+    public function getModel($data, $column = ''): Model|null
     {
-        return $this->model->firstWhere('number', $request->passportNumber);
+        return $this->model->firstWhere($column, $data);
     }
 
     public function getModels(): Collection
@@ -43,5 +43,23 @@ final class PassportQueryBuilder implements iQueryBuilder
             'address_registered' => $request->addressRegistered,
             'address_residential' => $request->addressResidential,
         ]);
+    }
+
+    public function find(Request $request): Model|null
+    {
+        $search = $request->input('search' , '');
+
+        $search = iconv_substr($search, 0, 20);
+        $search = preg_replace('#[^0-9a-zA-ZА]#u', '', $search);
+        $search = preg_replace('#\s+#u', '', $search);
+        $search = strtoupper($search);
+
+        $passport = $this->getModel($search, 'number');
+
+        if (is_null($passport)) {
+            return null;
+        }
+
+        return $passport;
     }
 }

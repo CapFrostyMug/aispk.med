@@ -1,10 +1,10 @@
 @php
-    if (@old('data')) $data = @old('data');
+    if (@old('data')) $facultiesBlocks = @old('data');
 @endphp
 
 <div class="row gy-3 custom-faculty-block-parent">
-    @if(isset($data))
-        @foreach($data as $blockName => $blockContent)
+    @if(isset($facultiesBlocks))
+        @foreach($facultiesBlocks as $blockName => $blockContent)
             @include('personal-files.form.form-blocks.facultyBlock')
         @endforeach
     @else

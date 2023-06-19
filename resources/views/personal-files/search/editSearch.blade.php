@@ -16,9 +16,10 @@
     <div class="py-5">
         <h2><strong>Поиск анкеты</strong></h2>
     </div>
-    <p class="fs-5">Введите серию и номер паспорта без пробелов</p>
-    <form class="d-flex" method="POST" action="{{ route('personal-file.edit-search') }}">
-        @include('personal-files.search.search-blocks.index')
+    <p class="fs-5 mb-4">Введите серию и номер паспорта без пробелов</p>
+    <form class="d-flex" method="POST" action="{{ route('personal-file.edit-find') }}">
+        @csrf
+        @include('personal-files.search.search-blocks.searchline')
         <div>
             <button
                 class="btn btn-success px-5"
