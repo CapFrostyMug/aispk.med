@@ -21,11 +21,11 @@ class SenioritySeeder extends Seeder
     private function getData(): array
     {
         $data = [];
-        $count = 20;
+        $count = 500;
 
         for ($i = 1; $i <= $count; $i++) {
             $data[] = [
-                'student_id' => fake()->numberBetween(1, 20),
+                'student_id' => fake()->numberBetween(1, 500),
                 'place_work' => fake()->company(),
                 'profession' => fake()->jobTitle(),
                 'years' => fake()->randomNumber(2, false),
