@@ -4,14 +4,13 @@
 namespace App\Queries;
 
 
-use App\Interfaces\iQueryBuilder;
 use App\Models\Faculty;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
-final class FacultyQueryBuilder implements iQueryBuilder
+final class FacultyQueryBuilder
 {
     private Builder $model;
 
@@ -20,18 +19,15 @@ final class FacultyQueryBuilder implements iQueryBuilder
         $this->model = Faculty::query();
     }
 
-    public function getModel($data, $column = ''): Model|null
+    public function getModel($facultyId): Model|null
     {
-        // TODO: Implement getModel() method.
+        return $this->model
+            ->where('id', $facultyId)
+            ->first();
     }
 
     public function getModels(): Collection
     {
         return $this->model->get();
-    }
-
-    public function create(Request $request): Model
-    {
-        // TODO: Implement create() method.
     }
 }

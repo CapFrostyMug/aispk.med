@@ -21,7 +21,7 @@ class StudentsSeeder extends Seeder
     private function getData(): array
     {
         $data = [];
-        $count = 20;
+        $count = 500;
 
         for ($i = 1; $i <= $count; $i++) {
             $data[] = [

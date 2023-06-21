@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\PersonalFileController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\ListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +19,12 @@ use App\Http\Controllers\TestController;
 */
 
 /*Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });*/
 
-Route::get('/', function () {
-    return view('index');
-});
+Auth::routes();
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 /**
  * Работа с личными делами
@@ -37,7 +38,17 @@ Route::prefix('personal-file')->name('personal-file.')->group(function () {
     Route::post('/edit/file/{id}', [PersonalFileController::class, 'update'])->name('update-file');
 
     Route::get('/edit/search', [PersonalFileController::class, 'search'])->name('edit-search');
-    Route::post('/edit/search', [PersonalFileController::class, 'find'])->name('edit-find');
+    Route::post('/edit/search/result', [PersonalFileController::class, 'find'])->name('edit-find');
+
+});
+
+/**
+ * Работа со списками
+ */
+Route::prefix('students-lists')->name('students-lists.')->group(function () {
+
+    Route::get('/search', [ListController::class, 'search'])->name('search');
+    Route::post('/search/result', [ListController::class, 'find'])->name('find');
 
 });
 
@@ -62,11 +73,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
 });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 
 /**
  * Тестовый роут

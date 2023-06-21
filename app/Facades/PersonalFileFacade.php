@@ -18,7 +18,6 @@ use App\Queries\StParentFatherQueryBuilder;
 use App\Queries\StParentMotherQueryBuilder;
 use App\Queries\StudentQueryBuilder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 class PersonalFileFacade
 {
@@ -91,17 +90,17 @@ class PersonalFileFacade
      */
     public function store(Request $request)
     {
-        if (!empty($this->passport->getModel($request->passportNumber, 'number'))) {
+        if (!empty($this->passport->getModelByNumber($request->passportNumber, 'number'))) {
             return collect();
         }
 
         $this->passport = $this->passport->create($request);
         $this->student = $this->student->create($request, $this->passport);
-        $this->educational = $this->educational->create($request, $this->student);
-        $this->seniority = $this->seniority->create($request, $this->student);
-        $this->studentsParentFather = $this->studentsParentFather->create($request, $this->student);
-        $this->studentsParentMother = $this->studentsParentMother->create($request, $this->student);
-        $this->enrollment = $this->enrollment->create($request, $this->student);
+        $this->educational->create($request, $this->student);
+        $this->seniority->create($request, $this->student);
+        $this->studentsParentFather->create($request, $this->student);
+        $this->studentsParentMother->create($request, $this->student);
+        $this->enrollment->create($request, $this->student);
 
         $admissionInfo = $request->data;
 
@@ -128,9 +127,9 @@ class PersonalFileFacade
     /**
      * Display the specified resource.
      */
-    public function show(): array
+    public function show()
     {
-        return $this->getSecondaryModels();
+        //
     }
 
     /**
@@ -138,7 +137,7 @@ class PersonalFileFacade
      */
     public function edit($id)
     {
-        $student = $this->student->getModel($id);
+        $student = $this->student->getModelWithRelations($id);
 
         if (is_null($student)) {
             return null;
@@ -168,9 +167,24 @@ class PersonalFileFacade
     /**
      * Update the specified resource in storage.
      */
-    public function update()
+    public function update(Request $request, $studentId)
     {
-        //
+        $student = $this->student->getModel($studentId);
+        $passportId = $student->passport->id;
+
+        /*if (!empty($this->passport->getModel($request->passportNumber, 'number'))) {
+            return collect();
+        }*/
+
+        $this->passport->update($request, $passportId);
+        $this->student->update($request, $studentId, $passportId);
+        $this->educational->update($request, $studentId);
+        $this->seniority->update($request, $studentId);
+        $this->studentsParentFather->update($request, $studentId);
+        $this->studentsParentMother->update($request, $studentId);
+        $this->enrollment->update($request, $studentId);
+        $this->student->updateInformationForAdmissionTable($request, $student);
+        $this->student->updateStudentSpecialCircumstanceTable($request, $student);
     }
 
     /**

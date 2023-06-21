@@ -21,11 +21,11 @@ class InformationForAdmissionSeeder extends Seeder
     private function getData(): array
     {
         $data = [];
-        $count = 40;
+        $count = 1000;
 
         for ($i = 1; $i <= $count; $i++) {
             $data[] = [
-                'student_id' => fake()->numberBetween(1, 20),
+                'student_id' => fake()->numberBetween(1, 500),
                 'faculty_id' => fake()->numberBetween(1, 10),
                 'financing_type_id' => fake()->numberBetween(1, 3),
                 'is_original_docs' => fake()->numberBetween(0, 1),

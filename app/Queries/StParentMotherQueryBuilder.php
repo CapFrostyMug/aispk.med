@@ -1,16 +1,12 @@
 <?php
 
-
 namespace App\Queries;
 
-
-use App\Interfaces\iQueryBuilder;
 use App\Models\StudentsParentMother;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-final class StParentMotherQueryBuilder implements iQueryBuilder
+final class StParentMotherQueryBuilder
 {
     private Builder $model;
 
@@ -19,24 +15,27 @@ final class StParentMotherQueryBuilder implements iQueryBuilder
         $this->model = StudentsParentMother::query();
     }
 
-    public function getModel($data, $column = ''): Model|null
+    public function create(Request $request, $student): void
     {
-        // TODO: Implement getModel() method.
-    }
-
-    public function getModels()
-    {
-        // TODO: Implement getModels() method.
-    }
-
-    public function create(Request $request, $student = 0): Model
-    {
-        return $this->model->create([
+        $this->model->create([
             'student_id' => $student->id,
             'name' => $request->motherName,
             'surname' => $request->motherSurname,
             'patronymic' => $request->motherPatronymic,
             'phone' => $request->motherPhone,
         ]);
+    }
+
+    public function update(Request $request, $studentId)
+    {
+        $this->model
+            ->where('student_id', $studentId)
+            ->update([
+                'student_id' => $studentId,
+                'name' => $request->fatherName,
+                'surname' => $request->fatherSurname,
+                'patronymic' => $request->fatherPatronymic,
+                'phone' => $request->fatherPhone,
+            ]);
     }
 }
