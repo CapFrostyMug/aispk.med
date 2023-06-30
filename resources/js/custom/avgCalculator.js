@@ -17,4 +17,4 @@ export default function avgCalculator() {
     }
 
     button.addEventListener("click", handler);
-}
+};

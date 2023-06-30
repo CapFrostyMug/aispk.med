@@ -30,7 +30,8 @@ return new class extends Migration
                 ->constrained('financing_types')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->boolean('is_original_docs')->nullable(false);
+            $table->boolean('is_original_docs')
+                ->nullable(false);
             $table->timestamps();
         });
     }

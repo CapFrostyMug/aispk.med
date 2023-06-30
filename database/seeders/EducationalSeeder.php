@@ -21,11 +21,11 @@ class EducationalSeeder extends Seeder
     private function getData(): array
     {
         $data = [];
-        $count = 500;
+        $count = 20;
 
         for ($i = 1; $i <= $count; $i++) {
             $data[] = [
-                'student_id' => fake()->numberBetween(1, 500),
+                'student_id' => fake()->numberBetween(1, 20),
                 'ed_institution_type_id' => fake()->numberBetween(1, 4),
                 'ed_doc_type_id' => fake()->numberBetween(1, 5),
                 'ed_doc_number' => fake()->randomNumber(7, true),

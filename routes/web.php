@@ -77,5 +77,4 @@ Route::prefix('admin')->name('admin.')->group(function () {
 /**
  * Тестовый роут
  */
-Route::get('/test', [TestController::class, 'create'])->name('test-create');
-Route::post('/test', [TestController::class, 'store'])->name('test-store');
+Route::match(['get', 'post'], '/test', [TestController::class, 'index'])->name('test-index');
