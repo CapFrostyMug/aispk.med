@@ -31,85 +31,83 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-            @if(Auth::user())
-                    <div>
-                        <ul class="nav nav-pills">
-                            <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
-                                <a class="nav-link dropdown-toggle text-white"
-                                   data-bs-toggle="dropdown"
-                                   href="#"
-                                   role="button"
-                                   aria-expanded="false">Личные дела
-                                </a>
-                                <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
-                                    @yield('personal-files.menu')
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="nav nav-pills">
-                            <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
-                                <a class="nav-link dropdown-toggle text-white"
-                                   data-bs-toggle="dropdown"
-                                   href="#"
-                                   role="button"
-                                   aria-expanded="false">Списки
-                                </a>
-                                <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
-                                    @yield('lists.menu')
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="nav nav-pills">
-                            <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
-                                <a class="nav-link dropdown-toggle text-white"
-                                   data-bs-toggle="dropdown"
-                                   href="#"
-                                   role="button"
-                                   aria-expanded="false">Журналы регистрации
-                                </a>
-                                <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
-                                    @yield('registration-logs.menu')
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="nav nav-pills">
-                            <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
-                                <a class="nav-link dropdown-toggle text-white"
-                                   data-bs-toggle="dropdown"
-                                   href="#"
-                                   role="button"
-                                   aria-expanded="false">Отчётность
-                                </a>
-                                <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
-                                    @yield('reports.menu')
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="nav nav-pills">
-                            <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
-                                <a class="nav-link dropdown-toggle text-white"
-                                   data-bs-toggle="dropdown"
-                                   href="#"
-                                   role="button"
-                                   aria-expanded="false">Админка
-                                </a>
-                                <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
-                                    @yield('admin.menu')
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-            @endif
+                <div>
+                    <ul class="nav nav-pills">
+                        <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
+                            <a class="nav-link dropdown-toggle text-white"
+                               data-bs-toggle="dropdown"
+                               href="#"
+                               role="button"
+                               aria-expanded="false">Личные дела
+                            </a>
+                            <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
+                                @yield('personal-files.menu')
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="nav nav-pills">
+                        <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
+                            <a class="nav-link dropdown-toggle text-white"
+                               data-bs-toggle="dropdown"
+                               href="#"
+                               role="button"
+                               aria-expanded="false">Списки
+                            </a>
+                            <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
+                                @yield('lists.menu')
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="nav nav-pills">
+                        <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
+                            <a class="nav-link dropdown-toggle text-white"
+                               data-bs-toggle="dropdown"
+                               href="#"
+                               role="button"
+                               aria-expanded="false">Журналы регистрации
+                            </a>
+                            <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
+                                @yield('registration-logs.menu')
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="nav nav-pills">
+                        <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
+                            <a class="nav-link dropdown-toggle text-white"
+                               data-bs-toggle="dropdown"
+                               href="#"
+                               role="button"
+                               aria-expanded="false">Отчётность
+                            </a>
+                            <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
+                                @yield('reports.menu')
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="nav nav-pills">
+                        <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
+                            <a class="nav-link dropdown-toggle text-white"
+                               data-bs-toggle="dropdown"
+                               href="#"
+                               role="button"
+                               aria-expanded="false">Админка
+                            </a>
+                            <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
+                                @yield('admin.menu')
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
 
-            <!-- Right Side Of Navbar -->
+                <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
                     @guest
@@ -119,14 +117,15 @@
                             </li>
                         @endif
 
-                        {{--@if (Route::has('register'))
+                        @if (Route::has('register'))
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
-                        @endif--}}
+                        @endif
                     @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle custom-username-color" href="#" role="button"
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle custom-username-color" href="#"
+                               role="button"
                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
                             </a>

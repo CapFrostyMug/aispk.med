@@ -12,4 +12,4 @@ export default function counterForFacultiesBlocks(facultyBlockParent, counter) {
     }
 
     return counter;
-}
+};

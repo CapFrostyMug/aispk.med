@@ -1,9 +1,11 @@
-export default function WindowOnloadFunctions() {
+import hideTrashBasketIcon from './hideTrashBasketIcon';
+import checkboxFlagHandler from './checkboxFlagHandler';
+import {removeFacultyBlock} from './removeFacultyBlock';
 
-    // Скрывает иконку корзины у первого потомка блока 'custom-faculty-block-parent'
+export default function WindowOnloadFunctions() {
     window.onload = function () {
-        let facultyBlockParent = document.querySelector('.custom-faculty-block-parent');
-        let test = facultyBlockParent.firstElementChild.querySelector('.custom-remove-block');
-        test.classList.add('d-none');
+        hideTrashBasketIcon();
+        checkboxFlagHandler();
+        removeFacultyBlock();
     }
-}
+};

@@ -21,11 +21,11 @@ class EnrollmentSeeder extends Seeder
     private function getData(): array
     {
         $data = [];
-        $count = 500;
+        $count = 20;
 
         for ($i = 1; $i <= $count; $i++) {
             $data[] = [
-                'student_id' => fake()->numberBetween(1, 500),
+                'student_id' => fake()->numberBetween(1, 20),
                 'faculty_id' => fake()->numberBetween(1, 10),
                 'decree_id' => fake()->numberBetween(1, 6),
                 'is_pickup_docs' => fake()->boolean(),

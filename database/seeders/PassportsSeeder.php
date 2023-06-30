@@ -21,7 +21,7 @@ class PassportsSeeder extends Seeder
     private function getData(): array
     {
         $data = [];
-        $count = 500;
+        $count = 20;
 
         for ($i = 1; $i <= $count; $i++) {
             $data[] = [

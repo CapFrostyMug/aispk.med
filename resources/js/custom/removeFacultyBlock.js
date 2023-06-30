@@ -1,11 +1,18 @@
-export default function removeFacultyBlock() {
+import checkboxFlagHandler from './checkboxFlagHandler';
+export {clickHandler, removeFacultyBlock};
 
-    document.querySelector('.custom-faculty-block-parent').onclick = function (e) {
-        const button = e.target.closest('.custom-remove-block');
-        if (!button) {
-            return;
-        }
+function clickHandler() {
+    document.querySelector('.custom-add-faculty').addEventListener("click", removeFacultyBlock);
+}
 
-        button.closest('.custom-faculty-block-child').remove();
-    }
+function removeFacultyBlock() {
+
+    let trashBaskets = document.querySelectorAll('.custom-delete-cart');
+
+    trashBaskets.forEach((item) => {
+        item.addEventListener('click', () => {
+            item.closest('.custom-faculty-block-child').remove();
+            checkboxFlagHandler();
+        })
+    });
 }

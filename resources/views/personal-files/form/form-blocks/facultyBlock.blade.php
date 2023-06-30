@@ -54,7 +54,7 @@
                         @else
                             original_docs_block_1
                         @endif"
-                   class="form-check-input"
+                   class="form-check-input custom-input-original-docs"
                    name="@if (isset($facultiesBlocks) && isset($blockName))
                             data[{{ $blockName }}][is_original_docs]
                          @else

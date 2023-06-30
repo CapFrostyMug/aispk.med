@@ -56,4 +56,4 @@ export default function addFacultyBlock() {
     }
 
     button.addEventListener("click", handler);
-}
+};
