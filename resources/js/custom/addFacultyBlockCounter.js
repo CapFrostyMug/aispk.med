@@ -1,4 +1,4 @@
-export default function counterForFacultiesBlocks(facultyBlockParent, counter) {
+export default function addFacultyBlockCounter(facultyBlockParent, counter) {
 
     // Получаем предпоследнего потомка блока 'custom-faculty-block-parent'
     let penultimateChild = facultyBlockParent.children[facultyBlockParent.children.length - 1];

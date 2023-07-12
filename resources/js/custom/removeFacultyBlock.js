@@ -1,4 +1,4 @@
-import checkboxFlagHandler from './checkboxFlagHandler';
+import checkboxHandlerFlag from './checkboxHandlerFlag';
 export {clickHandler, removeFacultyBlock};
 
 function clickHandler() {
@@ -12,7 +12,7 @@ function removeFacultyBlock() {
     trashBaskets.forEach((item) => {
         item.addEventListener('click', () => {
             item.closest('.custom-faculty-block-child').remove();
-            checkboxFlagHandler();
+            checkboxHandlerFlag();
         })
     });
 }

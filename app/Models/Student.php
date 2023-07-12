@@ -114,4 +114,39 @@ class Student extends Model
             'id'
         );
     }
+
+    public function updateInformationForAdmissionTable($validatedData, $student)
+    {
+        $student = $this->find($student->id);
+
+        $student->faculties()->detach();
+
+        $admissionInfo = $validatedData['data'];
+
+        foreach ($admissionInfo as $blockName => $blockContent) {
+            $student->faculties()->attach($blockContent['faculty_id'], [
+                    'student_id' => $student->id,
+                    'financing_type_id' => $blockContent['financing_type_id'],
+                    'is_original_docs' => $blockContent['is_original_docs'],
+                ]
+            );
+        }
+    }
+
+    public function updateStudentSpecialCircumstanceTable($validatedData, $student)
+    {
+        $student = $this->find($student->id);
+
+        $student->specialCircumstances()->detach();
+
+        $specialCircumstance = $validatedData['circumstance'];
+
+        foreach ($specialCircumstance as $circumstanceId => $circumstanceValue) {
+            $student->specialCircumstances()->attach($circumstanceId, [
+                    'student_id' => $student->id,
+                    'status' => $circumstanceValue,
+                ]
+            );
+        }
+    }
 }

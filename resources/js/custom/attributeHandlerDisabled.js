@@ -1,4 +1,4 @@
-export default function attributeDisabledHandler(flag) {
+export default function attributeHandlerDisabled(flag) {
 
     let checkboxes = document.querySelectorAll('.custom-input-original-docs');
 

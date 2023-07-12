@@ -31,7 +31,7 @@
             </tbody>
         </table>
     </div>
-@elseif(isset($student))
+@elseif(isset($student) || !empty($errors->all()))
     <div>
         <p class="pt-5 fs-5 text-danger">Ничего не найдено</p>
     </div>

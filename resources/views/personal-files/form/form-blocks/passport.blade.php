@@ -2,32 +2,46 @@
     <div class="col-4">
         <label for="lastName-1" class="form-label">Фамилия*</label>
         <input id="lastName-1"
-               class="form-control"
+               class="form-control @error('surname') is-invalid @enderror"
                name="surname"
                value="{{ old('surname') ?? $student->surname ?? '' }}"
-               type="text" required>
-        <div class="invalid-feedback">
-            Пожалуйста, заполните поле.
+               type="text"
+               required
+               aria-describedby="lastName-1-validation">
+        @error('surname')
+        <div id="lastName-1-validation" class="invalid-feedback">
+            {{ $message }}
         </div>
+        @enderror
     </div>
     <div class="col-4">
         <label for="firstName-1" class="form-label">Имя*</label>
         <input id="firstName-1"
-               class="form-control"
+               class="form-control @error('name') is-invalid @enderror"
                name="name"
                value="{{ old('name') ?? $student->name ?? '' }}"
-               type="text" required>
-        <div class="invalid-feedback">
-            Пожалуйста, заполните поле.
+               type="text"
+               required
+               aria-describedby="firstName-1-validation">
+        @error('name')
+        <div id="firstName-1-validation" class="invalid-feedback">
+            {{ $message }}
         </div>
+        @enderror
     </div>
     <div class="col-4">
         <label for="patronymic-1" class="form-label">Отчество</label>
         <input id="patronymic-1"
-               class="form-control"
+               class="form-control @error('patronymic') is-invalid @enderror"
                name="patronymic"
                value="{{ old('patronymic') ?? $student->patronymic ?? '' }}"
-               type="text">
+               type="text"
+               aria-describedby="patronymic-1-validation">
+        @error('patronymic')
+        <div id="patronymic-1-validation" class="invalid-feedback">
+            {{ $message }}
+        </div>
+        @enderror
     </div>
     <div class="col-4">
         <p>Пол</p>
@@ -49,13 +63,18 @@
     <div class="col-2">
         <label for="birthday-1" class="form-label">Дата рождения*</label>
         <input id="birthday-1"
-               class="form-control"
+               class="form-control @error('birthday') is-invalid @enderror"
                name="birthday"
                value="{{ old('birthday') ?? $passport->birthday ?? '' }}"
-               type="date" required>
-        <div class="invalid-feedback">
-            Пожалуйста, выберите дату.
+               type="date"
+               min="1923-01-01" max="2023-01-01"
+               required
+               aria-describedby="birthday-1-validation">
+        @error('birthday')
+        <div id="birthday-1-validation" class="invalid-feedback">
+            {{ $message }}
         </div>
+        @enderror
     </div>
     <div class="col-4 offset-2">
         <label for="nationality-1" class="form-label">Гражданство*</label>
@@ -69,26 +88,27 @@
                     value="{{ $item->id }}"
                     @if($item->id == old('nationality') ||
                     (isset($passport) && ($passport->nationality_id) == $item->id))
-                        selected
+                    selected
                     @endif>
-                        {{ $item->name }}
+                    {{ $item->name }}
                 </option>
             @endforeach
         </select>
-        <div class="invalid-feedback">
-            Пожалуйста, выберите вариант.
-        </div>
     </div>
     <div class="col-12">
         <label for="birthplace-1" class="form-label">Место рождения*</label>
         <input id="birthplace-1"
-               class="form-control"
+               class="form-control @error('birthplace') is-invalid @enderror"
                name="birthplace"
                value="{{ old('birthplace') ?? $passport->birthplace ?? '' }}"
-               type="text" required>
-        <div class="invalid-feedback">
-            Пожалуйста, заполните поле.
+               type="text"
+               required
+               aria-describedby="birthplace-validation">
+        @error('birthplace')
+        <div id="birthplace-validation" class="invalid-feedback">
+            {{ $message }}
         </div>
+        @enderror
     </div>
 </div>
 
@@ -96,35 +116,48 @@
     <div class="col-4">
         <label for="passport-number-1" class="form-label">Серия и номер паспорта*</label>
         <input id="passport-number-1"
-               class="form-control"
+               class="form-control @error('passportNumber') is-invalid @enderror"
                name="passportNumber"
                value="{{ old('passportNumber') ?? $passport->number ?? '' }}"
-               type="text" required>
-        <div class="invalid-feedback">
-            Пожалуйста, заполните поле.
+               type="text"
+               required
+               aria-describedby="passport-number-1-validation">
+        @error('passportNumber')
+        <div id="passport-number-1-validation" class="invalid-feedback">
+            {{ $message }}
         </div>
+        @enderror
     </div>
     <div class="col-2">
         <label for="issue-date-passport-1" class="form-label">Дата выдачи*</label>
         <input id="issue-date-passport-1"
-               class="form-control"
+               class="form-control @error('issueDatePassport') is-invalid @enderror"
                name="issueDatePassport"
                value="{{ old('issueDatePassport') ?? $passport->issue_date ?? '' }}"
-               type="date" required>
-        <div class="invalid-feedback">
-            Пожалуйста, выберите дату.
+               type="date"
+               min="1923-01-01" max="2023-01-01"
+               required
+               aria-describedby="issue-date-passport-1-validation">
+        @error('issueDatePassport')
+        <div id="issue-date-passport-1-validation" class="invalid-feedback">
+            {{ $message }}
         </div>
+        @enderror
     </div>
     <div class="col-12">
         <label for="issue-by-1" class="form-label">Паспорт выдан*</label>
         <input id="issue-by-1"
-               class="form-control"
+               class="form-control @error('issueBy') is-invalid @enderror"
                name="issueBy"
                value="{{ old('issueBy') ?? $passport->issue_by ?? '' }}"
-               type="text" required>
-        <div class="invalid-feedback">
-            Пожалуйста, заполните поле.
+               type="text"
+               required
+               aria-describedby="issue-by-1-validation">
+        @error('issueBy')
+        <div id="issue-by-1-validation" class="invalid-feedback">
+            {{ $message }}
         </div>
+        @enderror
     </div>
 </div>
 
@@ -132,23 +165,31 @@
     <div class="col-12">
         <label for="address-registered-1" class="form-label">Адрес по прописке*</label>
         <input id="address-registered-1"
-               class="form-control"
+               class="form-control @error('addressRegistered') is-invalid @enderror"
                name="addressRegistered"
                value="{{ old('addressRegistered') ?? $passport->address_registered ?? '' }}"
-               type="text" required>
-        <div class="invalid-feedback">
-            Пожалуйста, заполните поле.
+               type="text"
+               required
+               aria-describedby="address-registered-1-validation">
+        @error('addressRegistered')
+        <div id="address-registered-1-validation" class="invalid-feedback">
+            {{ $message }}
         </div>
+        @enderror
     </div>
     <div class="col-12">
         <label for="address-residential-1" class="form-label">Адрес проживания*</label>
         <input id="address-residential-1"
-               class="form-control"
+               class="form-control @error('addressResidential') is-invalid @enderror"
                name="addressResidential"
                value="{{ old('addressResidential') ?? $passport->address_residential ?? '' }}"
-               type="text" required>
-        <div class="invalid-feedback">
-            Пожалуйста, заполните поле.
+               type="text"
+               required
+               aria-describedby="address-residential-1-validation">
+        @error('addressResidential')
+        <div id="address-residential-1-validation" class="invalid-feedback">
+            {{ $message }}
         </div>
+        @enderror
     </div>
 </div>
