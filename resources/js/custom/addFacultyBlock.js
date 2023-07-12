@@ -1,4 +1,4 @@
-import counterForFacultiesBlocks from './counterForFacultiesBlocks';
+import addFacultyBlockCounter from './addFacultyBlockCounter';
 
 export default function addFacultyBlock() {
 
@@ -33,7 +33,7 @@ export default function addFacultyBlock() {
         }
 
         // Функция для подсчёта значения счётчика
-        counter = counterForFacultiesBlocks(facultyBlockParent, counter);
+        counter = addFacultyBlockCounter(facultyBlockParent, counter);
 
         // У каждого тега из массива searchedTags проверяем наличие нужного атрибута
         // из массива searchedAttributes. Если атрибут есть, то изменяем его значение.

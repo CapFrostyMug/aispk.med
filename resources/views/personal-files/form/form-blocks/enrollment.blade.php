@@ -1,7 +1,9 @@
 <div class="row mb-5 gy-3"> {{-- ИНФОРМАЦИЯ О ЗАЧИСЛЕНИИ --}}
     <div class="col-6">
         <label for="faculty-admitted-1" class="form-label">Зачислен на специальность</label>
-        <select id="faculty-admitted-1" class="form-select" name="facultyAdmitted">
+        <select id="faculty-admitted-1"
+                class="form-select"
+                name="facultyAdmitted">
             <option value="" @if(!old('facultyAdmitted') || !isset($enrollment)) selected @endif>Выберите...</option>
             @foreach($faculties as $item)
                 <option
@@ -14,13 +16,12 @@
                 </option>
             @endforeach
         </select>
-        <div class="invalid-feedback">
-            Пожалуйста, выберите вариант.
-        </div>
     </div>
     <div class="col-2">
         <label for="decree-1" class="form-label">Номер приказа</label>
-        <select id="decree-1" class="form-select" name="decree">
+        <select id="decree-1"
+                class="form-select"
+                name="decree">
             <option value="" @if(!old('decree') || !isset($enrollment)) selected @endif>Выберите...</option>
             @foreach($decrees as $item)
                 <option
@@ -33,9 +34,6 @@
                 </option>
             @endforeach
         </select>
-        <div class="invalid-feedback">
-            Пожалуйста, выберите вариант.
-        </div>
     </div>
     <div class="col-12">
         <p class="mt-2 mb-2">Абитуриент забрал документы</p>

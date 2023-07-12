@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Facades\PersonalFileFacade;
+use App\Http\Requests\CreateFormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class PersonalFileController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         //
@@ -16,40 +22,56 @@ class PersonalFileController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
+     * @param PersonalFileFacade $personalFileFacade
+     * @return View
      */
     public function create(PersonalFileFacade $personalFileFacade)
     {
-        // TODO Переименовать $secondaryModels на что-то абстрактное (например, $data)
         $secondaryModels = $personalFileFacade->create();
         return view('personal-files.form.create', $secondaryModels);
     }
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param CreateFormRequest $createFormRequest
+     * @param PersonalFileFacade $personalFileFacade
+     * @return RedirectResponse
      */
-    public function store(Request $request, PersonalFileFacade $personalFileFacade): RedirectResponse
+    public function store(CreateFormRequest $createFormRequest, PersonalFileFacade $personalFileFacade)
     {
-        // TODO Добавить валидацию
+        $personalFileFacade->store($createFormRequest->validated());
 
-        $request->flash();
+        /*if () {
+            return redirect()
+                ->route('students-lists.search')
+                ->with('success', '');
+        } else {
+            return back()
+                ->with('error', '');
+        }*/
 
-        if (!empty($personalFileFacade->store($request))) {
-            return back()->with('error', '');
-        }
-
-        return redirect()->route('admin.users-management.index')->with('success', '');
+        return redirect()->route('students-lists.search');
     }
 
     /**
      * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param PersonalFileFacade $personalFileFacade
+     * @param int $id
+     * @return View
      */
     public function edit(PersonalFileFacade $personalFileFacade, $id)
     {
@@ -60,44 +82,68 @@ class PersonalFileController extends Controller
             abort(404);
         }
 
-        return view('personal-files.form.edit', $secondaryModels, $primaryModels);
+        return view('personal-files.form.create', $secondaryModels, $primaryModels);
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param CreateFormRequest $createFormRequest
+     * @param PersonalFileFacade $personalFileFacade
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function update(Request $request, PersonalFileFacade $personalFileFacade, $studentId)
+    public function update(CreateFormRequest $createFormRequest, PersonalFileFacade $personalFileFacade, $id)
     {
-        // TODO Добавить валидацию
+        $personalFileFacade->update($createFormRequest->validated(), $id);
 
-        $request->flash();
+        /*if () {
+            return redirect()
+                ->route('students-lists.search')
+                ->with('success', '');
+        } else {
+            return back()
+                ->with('error', '');
+        }*/
 
-        // TODO Добавить проверку на успешную/неуспешную операцию
-        $personalFileFacade->update($request, $studentId);
-
-        return redirect()->route('admin.users-management.index')->with('success', '');
+        return redirect()->route('students-lists.search');
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy($id)
     {
         //
     }
 
+    /**
+     * [Method description].
+     *
+     * @return View
+     */
     public function search()
     {
         return view('personal-files.search.index');
     }
 
-    public function find(Request $request, PersonalFileFacade $personalFileFacade): View|RedirectResponse
+    /**
+     * [Method description].
+     *
+     * @param Request $request
+     * @param PersonalFileFacade $personalFileFacade
+     * @return View
+     */
+    public function find(Request $request, PersonalFileFacade $personalFileFacade)
     {
-        $student = $personalFileFacade->find($request);
+        $validatedData = $request->validate([
+            'search' => 'alpha_num',
+        ]);
 
-        if (is_null($student)) {
-            return back()->with('error', '');
-        }
+        $student = $personalFileFacade->find($validatedData);
 
         return view('personal-files.search.index', [
             'student' => $student,

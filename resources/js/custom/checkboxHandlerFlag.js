@@ -1,6 +1,6 @@
-import attributeDisabledHandler from './attributeDisabledHandler';
+import attributeHandlerDisabled from './attributeHandlerDisabled';
 
-export default function checkboxFlagHandler() {
+export default function checkboxHandlerFlag() {
 
     let checkboxes = document.querySelectorAll('.custom-input-original-docs');
     let flag = 0;
@@ -12,5 +12,5 @@ export default function checkboxFlagHandler() {
         }
     }
 
-    attributeDisabledHandler(flag);
+    attributeHandlerDisabled(flag);
 };

@@ -3,18 +3,24 @@
         <label for="educationalInstitutionName-1" class="form-label">Наименование учебного заведения*</label>
         <input
             id="educationalInstitutionName-1"
-            class="form-control"
+            class="form-control @error('educationalInstitutionName') is-invalid @enderror"
             name="educationalInstitutionName"
             value="{{ old('educationalInstitutionName') ?? $educational->ed_institution_name ?? '' }}"
             type="text"
-            required>
-        <div class="invalid-feedback">
-            Пожалуйста, заполните поле.
+            required
+            aria-describedby="educationalInstitutionName-1-validation">
+        @error('educationalInstitutionName')
+        <div id="educationalInstitutionName-1-validation" class="invalid-feedback">
+            {{ $message }}
         </div>
+        @enderror
     </div>
     <div class="col-4">
         <label for="educationalInstitutionType-1" class="form-label">Тип учебного заведения*</label>
-        <select id="educationalInstitutionType-1" class="form-select" name="educationalInstitutionType" required>
+        <select id="educationalInstitutionType-1"
+                class="form-select"
+                name="educationalInstitutionType"
+                required>
             <option
                 value=""
                 @if(!old('educationalInstitutionType') || !isset($educational)) selected @endif>Выберите...
@@ -24,19 +30,19 @@
                     value="{{ $item->id }}"
                     @if($item->id == old('educationalInstitutionType') ||
                     (isset($educational) && ($educational->ed_institution_type_id == $item->id)))
-                        selected
+                    selected
                     @endif>
-                        {{ $item->name }}
+                    {{ $item->name }}
                 </option>
             @endforeach
         </select>
-        <div class="invalid-feedback">
-            Пожалуйста, выберите вариант.
-        </div>
     </div>
     <div class="col-3">
         <label for="language-1" class="form-label">Иностранный язык*</label>
-        <select id="language-1" class="form-select" name="language" required>
+        <select id="language-1"
+                class="form-select"
+                name="language"
+                required>
             <option value=""
                     @if(!old('language') || !isset($student)) selected @endif>Выберите...
             </option>
@@ -45,22 +51,22 @@
                     value="{{ $item->id }}"
                     @if($item->id == old('language') ||
                     (isset($student) && $student->language_id == $item->id))
-                        selected
+                    selected
                     @endif>
-                        {{ $item->name }}
+                    {{ $item->name }}
                 </option>
             @endforeach
         </select>
-        <div class="invalid-feedback">
-            Пожалуйста, выберите вариант.
-        </div>
     </div>
 </div>
 
 <div class="row mb-5 gy-3"> {{--СВЕДЕНИЯ ОБ ОБРАЗОВАНИИ: БЛОК 2--}}
     <div class="col-4">
         <label for="educational-doc-type-1" class="form-label">Тип документа об образовании*</label>
-        <select id="educational-doc-type-1" class="form-select" name="educationalDocType" required>
+        <select id="educational-doc-type-1"
+                class="form-select"
+                name="educationalDocType"
+                required>
             <option value=""
                     @if(!old('educationalDocType') || !isset($educational)) selected @endif>Выберите...
             </option>
@@ -69,17 +75,14 @@
                     value="{{ $item->id }}"
                     @if($item->id == old('educationalDocType') ||
                     (isset($educational) && $educational->ed_doc_type_id == $item->id))
-                        selected
+                    selected
                     @endif>
-                        {{ $item->name }}
+                    {{ $item->name }}
                 </option>
             @endforeach
         </select>
-        <div class="invalid-feedback">
-            Пожалуйста, выберите вариант.
-        </div>
-        <div class="form-check">
-            <label for="excellent-student-1" class="form-check-label">Окончил обучение с отличием</label>
+        <div class="form-check mt-1">
+            <label for="excellent-student-1" class="form-check-label"><strong>Окончил обучение с отличием</strong></label>
             <input id="" type="hidden" name="excellentStudent" value="0">
             <input id="excellent-student-1" class="form-check-input" name="excellentStudent" value="1" type="checkbox"
                    @if (old('excellentStudent') == '1' ||
@@ -87,40 +90,54 @@
                    checked @endif>
         </div>
     </div>
+
     <div class="col-3">
         <label for="educational-doc-number-1" class="form-label">Серия и номер документа*</label>
         <input id="educational-doc-number-1"
-               class="form-control"
+               class="form-control @error('educationalDocNumber') is-invalid @enderror"
                name="educationalDocNumber"
                value="{{ old('educationalDocNumber') ?? $educational->ed_doc_number ?? '' }}"
                type="text"
-               required>
-        <div class="invalid-feedback">
-            Пожалуйста, заполните поле.
+               required
+               aria-describedby="educational-doc-number-1-validation">
+        @error('educationalDocNumber')
+        <div id="educational-doc-number-1-validation" class="invalid-feedback">
+            {{ $message }}
         </div>
+        @enderror
     </div>
+
     <div class="col-2">
         <label for="issue-date-educational-doc-1" class="form-label">Дата выдачи*</label>
         <input id="issue-date-educational-doc-1"
-               class="form-control"
+               class="form-control @error('issueDateEducationalDoc') is-invalid @enderror"
                name="issueDateEducationalDoc"
                value="{{ old('issueDateEducationalDoc') ?? $educational->issue_date ?? '' }}"
-               type="date" required>
-        <div class="invalid-feedback">
-            Пожалуйста, заполните поле.
+               type="date"
+               min="1923-01-01" max="2023-01-01"
+               required
+               aria-describedby="issue-date-educational-doc-1-validation">
+        @error('issueDateEducationalDoc')
+        <div id="issue-date-educational-doc-1-validation" class="invalid-feedback">
+            {{ $message }}
         </div>
+        @enderror
     </div>
+
     <div class="col-2">
         <label for="avg-rating-1" class="form-label">Средний балл*</label>
         <input id="avg-rating-1"
-               class="form-control"
+               class="form-control @error('avgRating') is-invalid @enderror"
                name="avgRating"
                value="{{ old('avgRating') ?? $educational->avg_rating ?? '' }}"
                type="text"
-               required>
-        <div class="invalid-feedback">
-            Пожалуйста, заполните поле.
+               required
+               aria-describedby="avg-rating-1-validation">
+        @error('avgRating')
+        <div id="avg-rating-1-validation" class="invalid-feedback">
+            {{ $message }}
         </div>
+        @enderror
     </div>
 
     @include('personal-files.form.form-blocks.avgCalculator')

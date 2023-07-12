@@ -35,10 +35,12 @@ Route::prefix('personal-file')->name('personal-file.')->group(function () {
     Route::post('/create', [PersonalFileController::class, 'store'])->name('store');
 
     Route::get('/edit/file/{id}', [PersonalFileController::class, 'edit'])->name('edit-file');
-    Route::post('/edit/file/{id}', [PersonalFileController::class, 'update'])->name('update-file');
+    Route::put('/edit/file/{id}', [PersonalFileController::class, 'update'])->name('update-file');
 
     Route::get('/edit/search', [PersonalFileController::class, 'search'])->name('edit-search');
-    Route::post('/edit/search/result', [PersonalFileController::class, 'find'])->name('edit-find');
+    Route::match(['get', 'post'], '/edit/search/result', [PersonalFileController::class, 'find'])->name('edit-find');
+
+    //Route::delete();
 
 });
 

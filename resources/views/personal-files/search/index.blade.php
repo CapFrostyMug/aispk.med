@@ -23,7 +23,7 @@
                         value=""
                         type="search"
                         required
-                        placeholder="Поиск">
+                        placeholder="РKAZ145359130">
                 </div>
                 <div class="col-2 ms-2">
                     <button

@@ -150,6 +150,16 @@
     <div class="wrapper container shadow-sm bg-body rounded-0 px-5 pb-5">
         <div class="fullscreen">
             <main class="fullscreen-body py-4">
+                @if (session('success'))
+                    <div class="container">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Закрыть">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                @endif
                 @yield('content')
             </main>
         </div>

@@ -42,4 +42,26 @@ class Passport extends Model
             'id'
         );
     }
+
+    public function find($validatedData)
+    {
+        if (!isset($validatedData['search'])) {
+            return null;
+        }
+
+        $search = $validatedData['search'];
+
+        $search = iconv_substr($search, 0, 20);
+        $search = preg_replace('#[^0-9a-zA-ZА]#u', '', $search);
+        $search = preg_replace('#\s+#u', '', $search);
+        $search = strtoupper($search);
+
+        $passport = $this::firstWhere('number', $search);
+
+        if (is_null($passport)) {
+            return null;
+        }
+
+        return $passport;
+    }
 }

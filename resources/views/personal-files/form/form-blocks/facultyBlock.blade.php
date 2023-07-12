@@ -26,14 +26,11 @@
 
             @foreach($faculties as $item)
                 <option value="{{ $item->id }}"
-                    @if(isset($facultiesBlocks) && isset($blockContent) && ($item->id == $blockContent['faculty_id'])) selected @endif>{{ $item->name }}
+                    @if(isset($facultiesBlocks) && isset($blockContent) && ($item->id == $blockContent['faculty_id'])) selected @endif>
+                    {{ $item->name }}
                 </option>
             @endforeach
         </select>
-
-        <div class="invalid-feedback">
-            Пожалуйста, выберите вариант.
-        </div>
 
         <div class="form-check">
             <input id="@if (isset($facultiesBlocks) && isset($blockName))
@@ -101,14 +98,11 @@
 
             @foreach($financing as $item)
                 <option value="{{ $item->id }}"
-                    @if(isset($facultiesBlocks) && isset($blockContent) && ($item->id == $blockContent['financing_type_id'])) selected @endif>{{ $item->name }}
+                    @if(isset($facultiesBlocks) && isset($blockContent) && ($item->id == $blockContent['financing_type_id'])) selected @endif>
+                    {{ $item->name }}
                 </option>
             @endforeach
         </select>
-
-        <div class="invalid-feedback">
-            Пожалуйста, выберите вариант.
-        </div>
     </div>
 
     <div class="col-1

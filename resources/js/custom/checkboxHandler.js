@@ -1,4 +1,4 @@
-import attributeDisabledHandler from './attributeDisabledHandler';
+import attributeHandlerDisabled from './attributeHandlerDisabled';
 
 export default function checkboxHandler() {
 
@@ -9,12 +9,12 @@ export default function checkboxHandler() {
         if (e.target.className === checkboxClassName && !e.target.hasAttribute('checked')) {
 
             e.target.setAttribute('checked', 'checked');
-            attributeDisabledHandler(1);
+            attributeHandlerDisabled(1);
 
         } else if (e.target.className === checkboxClassName && e.target.hasAttribute('checked')) {
 
             e.target.removeAttribute('checked');
-            attributeDisabledHandler(0);
+            attributeHandlerDisabled(0);
         }
     }
 };
