@@ -20,6 +20,7 @@ use App\Models\Student;
 use App\Models\StudentsParentFather;
 use App\Models\StudentsParentMother;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 final class PersonalFileFacade
 {
@@ -99,95 +100,103 @@ final class PersonalFileFacade
      * Store a newly created resource in storage.
      *
      * @param array $validatedData
-     * @return void
+     * @return string
      */
     public function store($validatedData)
     {
-        $this->passport = $this->passport->create([
-            'birthday' => $validatedData['birthday'],
-            'birthplace' => $validatedData['birthplace'],
-            'number' => $validatedData['passportNumber'],
-            'gender' => $validatedData['gender'],
-            'nationality_id' => $validatedData['nationality'],
-            'issue_by' => $validatedData['issueBy'],
-            'issue_date' => $validatedData['issueDatePassport'],
-            'address_registered' => $validatedData['addressRegistered'],
-            'address_residential' => $validatedData['addressResidential'],
-        ]);
+        try {
+            DB::transaction(function() use ($validatedData) {
 
-        $this->student = $this->student->create([
-            'name' => $validatedData['name'],
-            'surname' => $validatedData['surname'],
-            'patronymic' => $validatedData['patronymic'],
-            'passport_id' => $this->passport->id,
-            'phone' => $validatedData['phone'],
-            'email' => $validatedData['email'],
-            'language_id' => $validatedData['language'],
-            'about_me' => $validatedData['aboutMe'],
-        ]);
+                $this->passport = $this->passport->create([
+                    'birthday' => $validatedData['birthday'],
+                    'birthplace' => $validatedData['birthplace'],
+                    'number' => strtoupper($validatedData['passportNumber']),
+                    'gender' => $validatedData['gender'],
+                    'nationality_id' => $validatedData['nationality'],
+                    'issue_by' => $validatedData['issueBy'],
+                    'issue_date' => $validatedData['issueDatePassport'],
+                    'address_registered' => $validatedData['addressRegistered'],
+                    'address_residential' => $validatedData['addressResidential'],
+                ]);
 
-        $this->educational->create([
-            'student_id' => $this->student->id,
-            'ed_institution_type_id' => $validatedData['educationalInstitutionType'],
-            'ed_doc_type_id' => $validatedData['educationalDocType'],
-            'ed_doc_number' => $validatedData['educationalDocNumber'],
-            'ed_institution_name' => $validatedData['educationalInstitutionName'],
-            'is_first_spo' => $validatedData['firstProfession'],
-            'is_excellent_student' => $validatedData['excellentStudent'],
-            'avg_rating' => $validatedData['avgRating'],
-            'issue_date' => $validatedData['issueDateEducationalDoc'],
-        ]);
+                $this->student = $this->student->create([
+                    'name' => $validatedData['name'],
+                    'surname' => $validatedData['surname'],
+                    'patronymic' => $validatedData['patronymic'],
+                    'passport_id' => $this->passport->id,
+                    'phone' => $validatedData['phone'],
+                    'email' => $validatedData['email'],
+                    'language_id' => $validatedData['language'],
+                    'about_me' => $validatedData['aboutMe'],
+                ]);
 
-        $this->seniority->create([
-            'student_id' => $this->student->id,
-            'place_work' => $validatedData['placeWork'],
-            'profession' => $validatedData['profession'],
-            'years' => $validatedData['seniorityYears'],
-            'months' => $validatedData['seniorityMonths'],
-        ]);
-
-        $this->studentsParentFather->create([
-            'student_id' => $this->student->id,
-            'name' => $validatedData['fatherName'],
-            'surname' => $validatedData['fatherSurname'],
-            'patronymic' => $validatedData['fatherPatronymic'],
-            'phone' => $validatedData['fatherPhone'],
-        ]);
-
-        $this->studentsParentMother->create([
-            'student_id' => $this->student->id,
-            'name' => $validatedData['motherName'],
-            'surname' => $validatedData['motherSurname'],
-            'patronymic' => $validatedData['motherPatronymic'],
-            'phone' => $validatedData['motherPhone'],
-        ]);
-
-        $this->enrollment->create([
-            'student_id' => $this->student->id,
-            'faculty_id' => $validatedData['facultyAdmitted'],
-            'decree_id' => $validatedData['decree'],
-            'is_pickup_docs' => $validatedData['pickupDocs'],
-        ]);
-
-        $admissionInfo = $validatedData['data'];
-
-        foreach ($admissionInfo as $blockName => $blockContent) {
-            $this->student->faculties()->attach($blockContent['faculty_id'], [
+                $this->educational->create([
                     'student_id' => $this->student->id,
-                    'financing_type_id' => $blockContent['financing_type_id'],
-                    'is_original_docs' => $blockContent['is_original_docs'],
-                ]
-            );
-        }
+                    'ed_institution_type_id' => $validatedData['educationalInstitutionType'],
+                    'ed_doc_type_id' => $validatedData['educationalDocType'],
+                    'ed_doc_number' => strtoupper($validatedData['educationalDocNumber']),
+                    'ed_institution_name' => $validatedData['educationalInstitutionName'],
+                    'is_first_spo' => $validatedData['firstProfession'],
+                    'is_excellent_student' => $validatedData['excellentStudent'],
+                    'avg_rating' => $validatedData['avgRating'],
+                    'issue_date' => $validatedData['issueDateEducationalDoc'],
+                ]);
 
-        $specialCircumstance = $validatedData['circumstance'];
-
-        foreach ($specialCircumstance as $circumstanceId => $circumstanceValue) {
-            $this->student->specialCircumstances()->attach($circumstanceId, [
+                $this->seniority->create([
                     'student_id' => $this->student->id,
-                    'status' => $circumstanceValue,
-                ]
-            );
+                    'place_work' => $validatedData['placeWork'],
+                    'profession' => $validatedData['profession'],
+                    'years' => $validatedData['seniorityYears'],
+                    'months' => $validatedData['seniorityMonths'],
+                ]);
+
+                $this->studentsParentFather->create([
+                    'student_id' => $this->student->id,
+                    'name' => $validatedData['fatherName'],
+                    'surname' => $validatedData['fatherSurname'],
+                    'patronymic' => $validatedData['fatherPatronymic'],
+                    'phone' => $validatedData['fatherPhone'],
+                ]);
+
+                $this->studentsParentMother->create([
+                    'student_id' => $this->student->id,
+                    'name' => $validatedData['motherName'],
+                    'surname' => $validatedData['motherSurname'],
+                    'patronymic' => $validatedData['motherPatronymic'],
+                    'phone' => $validatedData['motherPhone'],
+                ]);
+
+                $this->enrollment->create([
+                    'student_id' => $this->student->id,
+                    'faculty_id' => $validatedData['facultyAdmitted'],
+                    'decree_id' => $validatedData['decree'],
+                    'is_pickup_docs' => $validatedData['pickupDocs'],
+                ]);
+
+                $admissionInfo = $validatedData['data'];
+
+                foreach ($admissionInfo as $blockName => $blockContent) {
+                    $this->student->faculties()->attach($blockContent['faculty_id'], [
+                            'student_id' => $this->student->id,
+                            'financing_type_id' => $blockContent['financing_type_id'],
+                            'is_original_docs' => $blockContent['is_original_docs'],
+                        ]
+                    );
+                }
+
+                $specialCircumstance = $validatedData['circumstance'];
+
+                foreach ($specialCircumstance as $circumstanceId => $circumstanceValue) {
+                    $this->student->specialCircumstances()->attach($circumstanceId, [
+                            'student_id' => $this->student->id,
+                            'status' => $circumstanceValue,
+                        ]
+                    );
+                }
+
+            }, 3);
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
         }
     }
 
@@ -250,86 +259,102 @@ final class PersonalFileFacade
      *
      * @param array $validatedData
      * @param int $id
-     * @return void
+     * @return string
      */
     public function update($validatedData, $id)
     {
         $student = $this->student->find($id);
         $passportId = $student->passport->id;
 
-        $this->passport->where('id', $passportId)->update([
-            'birthday' => $validatedData['birthday'],
-            'birthplace' => $validatedData['birthplace'],
-            'number' => $validatedData['passportNumber'],
-            'gender' => $validatedData['gender'],
-            'nationality_id' => $validatedData['nationality'],
-            'issue_by' => $validatedData['issueBy'],
-            'issue_date' => $validatedData['issueDatePassport'],
-            'address_registered' => $validatedData['addressRegistered'],
-            'address_residential' => $validatedData['addressResidential'],
-        ]);
+        try {
+            DB::transaction(function() use ($student, $passportId, $validatedData) {
 
-        $this->student->where('id', $student->id)->update([
-            'name' => $validatedData['name'],
-            'surname' => $validatedData['surname'],
-            'patronymic' => $validatedData['patronymic'],
-            'phone' => $validatedData['phone'],
-            'email' => $validatedData['email'],
-            'language_id' => $validatedData['language'],
-            'about_me' => $validatedData['aboutMe'],
-        ]);
+                $this->passport->where('id', $passportId)->update([
+                    'birthday' => $validatedData['birthday'],
+                    'birthplace' => $validatedData['birthplace'],
+                    'number' => strtoupper($validatedData['passportNumber']),
+                    'gender' => $validatedData['gender'],
+                    'nationality_id' => $validatedData['nationality'],
+                    'issue_by' => $validatedData['issueBy'],
+                    'issue_date' => $validatedData['issueDatePassport'],
+                    'address_registered' => $validatedData['addressRegistered'],
+                    'address_residential' => $validatedData['addressResidential'],
+                ]);
 
-        $this->educational->where('student_id', $student->id)->update([
-            'ed_institution_type_id' => $validatedData['educationalInstitutionType'],
-            'ed_doc_type_id' => $validatedData['educationalDocType'],
-            'ed_doc_number' => $validatedData['educationalDocNumber'],
-            'ed_institution_name' => $validatedData['educationalInstitutionName'],
-            'is_first_spo' => $validatedData['firstProfession'],
-            'is_excellent_student' => $validatedData['excellentStudent'],
-            'avg_rating' => $validatedData['avgRating'],
-            'issue_date' => $validatedData['issueDateEducationalDoc'],
-        ]);
+                $this->student->where('id', $student->id)->update([
+                    'name' => $validatedData['name'],
+                    'surname' => $validatedData['surname'],
+                    'patronymic' => $validatedData['patronymic'],
+                    'phone' => $validatedData['phone'],
+                    'email' => $validatedData['email'],
+                    'language_id' => $validatedData['language'],
+                    'about_me' => $validatedData['aboutMe'],
+                ]);
 
-        $this->seniority->where('student_id', $student->id)->update([
-            'place_work' => $validatedData['placeWork'],
-            'profession' => $validatedData['profession'],
-            'years' => $validatedData['seniorityYears'],
-            'months' => $validatedData['seniorityMonths'],
-        ]);
+                $this->educational->where('student_id', $student->id)->update([
+                    'ed_institution_type_id' => $validatedData['educationalInstitutionType'],
+                    'ed_doc_type_id' => $validatedData['educationalDocType'],
+                    'ed_doc_number' => strtoupper($validatedData['educationalDocNumber']),
+                    'ed_institution_name' => $validatedData['educationalInstitutionName'],
+                    'is_first_spo' => $validatedData['firstProfession'],
+                    'is_excellent_student' => $validatedData['excellentStudent'],
+                    'avg_rating' => $validatedData['avgRating'],
+                    'issue_date' => $validatedData['issueDateEducationalDoc'],
+                ]);
 
-        $this->studentsParentFather->where('student_id', $student->id)->update([
-            'name' => $validatedData['fatherName'],
-            'surname' => $validatedData['fatherSurname'],
-            'patronymic' => $validatedData['fatherPatronymic'],
-            'phone' => $validatedData['fatherPhone'],
-        ]);
+                $this->seniority->where('student_id', $student->id)->update([
+                    'place_work' => $validatedData['placeWork'],
+                    'profession' => $validatedData['profession'],
+                    'years' => $validatedData['seniorityYears'],
+                    'months' => $validatedData['seniorityMonths'],
+                ]);
 
-        $this->studentsParentMother->where('student_id', $student->id)->update([
-            'name' => $validatedData['motherName'],
-            'surname' => $validatedData['motherSurname'],
-            'patronymic' => $validatedData['motherPatronymic'],
-            'phone' => $validatedData['motherPhone'],
-        ]);
+                $this->studentsParentFather->where('student_id', $student->id)->update([
+                    'name' => $validatedData['fatherName'],
+                    'surname' => $validatedData['fatherSurname'],
+                    'patronymic' => $validatedData['fatherPatronymic'],
+                    'phone' => $validatedData['fatherPhone'],
+                ]);
 
-        $this->enrollment->where('student_id', $student->id)->update([
-            'faculty_id' => $validatedData['facultyAdmitted'],
-            'decree_id' => $validatedData['decree'],
-            'is_pickup_docs' => $validatedData['pickupDocs'],
-        ]);
+                $this->studentsParentMother->where('student_id', $student->id)->update([
+                    'name' => $validatedData['motherName'],
+                    'surname' => $validatedData['motherSurname'],
+                    'patronymic' => $validatedData['motherPatronymic'],
+                    'phone' => $validatedData['motherPhone'],
+                ]);
 
-        $this->student->updateInformationForAdmissionTable($validatedData, $student);
-        $this->student->updateStudentSpecialCircumstanceTable($validatedData, $student);
+                $this->enrollment->where('student_id', $student->id)->update([
+                    'faculty_id' => $validatedData['facultyAdmitted'],
+                    'decree_id' => $validatedData['decree'],
+                    'is_pickup_docs' => $validatedData['pickupDocs'],
+                ]);
+
+                $this->student->updateInformationForAdmissionTable($validatedData, $student);
+                $this->student->updateStudentSpecialCircumstanceTable($validatedData, $student);
+
+            }, 3);
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function destroy($id)
     {
-        //
+        try {
+            $student = $this->student->find($id);
+            $passport = $student->passport;
+
+            $student->delete();
+            $passport->delete();
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
     }
 
     /**

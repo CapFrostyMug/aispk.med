@@ -21,8 +21,8 @@
                        name="circumstance[{{ $circumstance->id }}]"
                        value="1"
                        type="radio"
-                       @if (old('circumstance') == 1 ||
-                       (isset($circumstance->pivot->status) && $circumstance->pivot->status == 1)) checked @endif>
+                       @if (@old('circumstance')[$circumstance->id] === '1' ||
+                       (isset($circumstance->pivot->status) && $circumstance->pivot->status === 1)) checked @endif>
                 <label for="circumstance-{{ $circumstance->id }}-true" class="form-check-label">Да</label>
             </div>
         </div>
@@ -36,6 +36,6 @@
 <div class="row mb-5 gy-3">
     <div class="col-6">
         <label for="about-me-1" class="form-label">О себе</label>
-        <textarea id="about-me-1" class="form-control" name="aboutMe" rows="4">{{ old('aboutMe') ?? $student->about_me ?? '' }}</textarea>
+        <textarea id="about-me-1" class="form-control custom-capslock-none" name="aboutMe" rows="4">{{ old('aboutMe') ?? $student->about_me ?? '' }}</textarea>
     </div>
 </div>

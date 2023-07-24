@@ -34,13 +34,20 @@ Route::prefix('personal-file')->name('personal-file.')->group(function () {
     Route::get('/create', [PersonalFileController::class, 'create'])->name('create');
     Route::post('/create', [PersonalFileController::class, 'store'])->name('store');
 
-    Route::get('/edit/file/{id}', [PersonalFileController::class, 'edit'])->name('edit-file');
-    Route::put('/edit/file/{id}', [PersonalFileController::class, 'update'])->name('update-file');
+    Route::prefix('manage')->name('management.')->group(function () {
 
-    Route::get('/edit/search', [PersonalFileController::class, 'search'])->name('edit-search');
-    Route::match(['get', 'post'], '/edit/search/result', [PersonalFileController::class, 'find'])->name('edit-find');
+        Route::get('/search', [PersonalFileController::class, 'search'])->name('search');
+        Route::match(['get', 'post'],'/search/result', [PersonalFileController::class, 'find'])->name('find');
 
-    //Route::delete();
+        Route::get('/view/file/{id}', [PersonalFileController::class, 'show'])->name('show');
+
+        Route::get('/edit/file/{id}', [PersonalFileController::class, 'edit'])->name('edit');
+        Route::put('/edit/file/{id}', [PersonalFileController::class, 'update'])->name('update');
+
+        Route::get('/print/file/{id}', [PersonalFileController::class, 'print'])->name('print');
+
+        Route::get('/delete/file/{id}', [PersonalFileController::class, 'destroy'])->name('destroy');
+    });
 
 });
 

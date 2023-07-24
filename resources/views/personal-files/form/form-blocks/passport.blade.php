@@ -2,7 +2,7 @@
     <div class="col-4">
         <label for="lastName-1" class="form-label">Фамилия*</label>
         <input id="lastName-1"
-               class="form-control @error('surname') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('surname') is-invalid @enderror"
                name="surname"
                value="{{ old('surname') ?? $student->surname ?? '' }}"
                type="text"
@@ -17,7 +17,7 @@
     <div class="col-4">
         <label for="firstName-1" class="form-label">Имя*</label>
         <input id="firstName-1"
-               class="form-control @error('name') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('name') is-invalid @enderror"
                name="name"
                value="{{ old('name') ?? $student->name ?? '' }}"
                type="text"
@@ -32,7 +32,7 @@
     <div class="col-4">
         <label for="patronymic-1" class="form-label">Отчество</label>
         <input id="patronymic-1"
-               class="form-control @error('patronymic') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('patronymic') is-invalid @enderror"
                name="patronymic"
                value="{{ old('patronymic') ?? $student->patronymic ?? '' }}"
                type="text"
@@ -56,7 +56,7 @@
                    name="gender"
                    value="female"
                    type="radio"
-                   @if (old('gender') == 'female' || (isset($passport) && ($passport->gender) == 'female')) checked @endif>
+                   @if (old('gender') === 'female' || (isset($passport) && ($passport->gender) === 'female')) checked @endif>
             <label for="genderFemale-1" class="form-check-label">Женский</label>
         </div>
     </div>
@@ -98,7 +98,7 @@
     <div class="col-12">
         <label for="birthplace-1" class="form-label">Место рождения*</label>
         <input id="birthplace-1"
-               class="form-control @error('birthplace') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('birthplace') is-invalid @enderror"
                name="birthplace"
                value="{{ old('birthplace') ?? $passport->birthplace ?? '' }}"
                type="text"
@@ -120,6 +120,7 @@
                name="passportNumber"
                value="{{ old('passportNumber') ?? $passport->number ?? '' }}"
                type="text"
+               placeholder="Т-АТZ0825000"
                required
                aria-describedby="passport-number-1-validation">
         @error('passportNumber')
@@ -147,7 +148,7 @@
     <div class="col-12">
         <label for="issue-by-1" class="form-label">Паспорт выдан*</label>
         <input id="issue-by-1"
-               class="form-control @error('issueBy') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('issueBy') is-invalid @enderror"
                name="issueBy"
                value="{{ old('issueBy') ?? $passport->issue_by ?? '' }}"
                type="text"
@@ -165,7 +166,7 @@
     <div class="col-12">
         <label for="address-registered-1" class="form-label">Адрес по прописке*</label>
         <input id="address-registered-1"
-               class="form-control @error('addressRegistered') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('addressRegistered') is-invalid @enderror"
                name="addressRegistered"
                value="{{ old('addressRegistered') ?? $passport->address_registered ?? '' }}"
                type="text"
@@ -180,7 +181,7 @@
     <div class="col-12">
         <label for="address-residential-1" class="form-label">Адрес проживания*</label>
         <input id="address-residential-1"
-               class="form-control @error('addressResidential') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('addressResidential') is-invalid @enderror"
                name="addressResidential"
                value="{{ old('addressResidential') ?? $passport->address_residential ?? '' }}"
                type="text"

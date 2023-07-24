@@ -3,7 +3,7 @@
         <label for="educationalInstitutionName-1" class="form-label">Наименование учебного заведения*</label>
         <input
             id="educationalInstitutionName-1"
-            class="form-control @error('educationalInstitutionName') is-invalid @enderror"
+            class="form-control custom-capslock-none @error('educationalInstitutionName') is-invalid @enderror"
             name="educationalInstitutionName"
             value="{{ old('educationalInstitutionName') ?? $educational->ed_institution_name ?? '' }}"
             type="text"
@@ -85,8 +85,8 @@
             <label for="excellent-student-1" class="form-check-label"><strong>Окончил обучение с отличием</strong></label>
             <input id="" type="hidden" name="excellentStudent" value="0">
             <input id="excellent-student-1" class="form-check-input" name="excellentStudent" value="1" type="checkbox"
-                   @if (old('excellentStudent') == '1' ||
-                   (isset($educational) && $educational->is_excellent_student == 1))
+                   @if (old('excellentStudent') === '1' ||
+                   (isset($educational) && $educational->is_excellent_student === 1))
                    checked @endif>
         </div>
     </div>
@@ -162,8 +162,8 @@
                        value="0"
                        type="radio"
                        required
-                       @if (old('firstProfession') == '0' ||
-                       (isset($educational) && $educational->is_first_spo == 1)) checked @endif>
+                       @if (old('firstProfession') === '0' ||
+                       isset($educational) && $educational->is_first_spo === 0) checked @endif>
                 <label for="first-profession-false-1" class="form-check-label">Нет</label>
             </div>
         </div>

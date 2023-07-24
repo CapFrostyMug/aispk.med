@@ -3,7 +3,7 @@
     <div class="col-4">
         <label for="father-surname-1" class="form-label">Фамилия</label>
         <input id="father-surname-1"
-               class="form-control @error('fatherSurname') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('fatherSurname') is-invalid @enderror"
                name="fatherSurname"
                value="{{ old('fatherSurname') ?? $studentsParentFather->surname ?? '' }}"
                type="text"
@@ -17,7 +17,7 @@
     <div class="col-4">
         <label for="father-name-1" class="form-label">Имя</label>
         <input id="father-name-1"
-               class="form-control @error('fatherName') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('fatherName') is-invalid @enderror"
                name="fatherName"
                value="{{ old('fatherName') ?? $studentsParentFather->name ?? '' }}"
                type="text"
@@ -31,7 +31,7 @@
     <div class="col-4">
         <label for="father-patronymic-1" class="form-label">Отчество</label>
         <input id="father-patronymic-1"
-               class="form-control @error('fatherPatronymic') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('fatherPatronymic') is-invalid @enderror"
                name="fatherPatronymic"
                value="{{ old('fatherPatronymic') ?? $studentsParentFather->patronymic ?? '' }}"
                type="text"
@@ -62,7 +62,7 @@
     <div class="col-4">
         <label for="mother-surname-1" class="form-label">Фамилия</label>
         <input id="mother-surname-1"
-               class="form-control @error('motherSurname') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('motherSurname') is-invalid @enderror"
                name="motherSurname"
                value="{{ old('motherSurname') ?? $studentsParentMother->surname ?? '' }}"
                type="text"
@@ -76,7 +76,7 @@
     <div class="col-4">
         <label for="mother-name-1" class="form-label">Имя</label>
         <input id="mother-name-1"
-               class="form-control @error('motherName') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('motherName') is-invalid @enderror"
                name="motherName"
                value="{{ old('motherName') ?? $studentsParentMother->name ?? '' }}"
                type="text"
@@ -90,7 +90,7 @@
     <div class="col-4">
         <label for="mother-patronymic-1" class="form-label">Отчество</label>
         <input id="mother-patronymic-1"
-               class="form-control @error('motherPatronymic') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('motherPatronymic') is-invalid @enderror"
                name="motherPatronymic"
                value="{{ old('motherPatronymic') ?? $studentsParentMother->patronymic ?? '' }}"
                type="text"

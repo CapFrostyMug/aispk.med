@@ -2,7 +2,7 @@
     <div class="col-12">
         <label for="place-work-1" class="form-label">Место работы</label>
         <input id="place-work-1"
-               class="form-control @error('placeWork') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('placeWork') is-invalid @enderror"
                name="placeWork"
                value="{{ old('placeWork') ?? $seniority->place_work ?? '' }}"
                type="text"
@@ -16,7 +16,7 @@
     <div class="col-7">
         <label for="profession-1" class="form-label">Должность, специализация</label>
         <input id="profession-1"
-               class="form-control @error('profession') is-invalid @enderror"
+               class="form-control custom-capslock-none @error('profession') is-invalid @enderror"
                name="profession"
                value="{{ old('profession') ?? $seniority->profession ?? '' }}"
                type="text"
@@ -34,7 +34,9 @@
                name="seniorityYears"
                value="{{ old('seniorityYears') ?? $seniority->years ?? '' }}"
                type="number"
-               aria-describedby="seniority-years-1-validation">
+               aria-describedby="seniority-years-1-validation"
+               min="0"
+               max="100">
         @error('seniorityYears')
         <div id="seniority-years-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -48,7 +50,9 @@
                name="seniorityMonths"
                value="{{ old('seniorityMonths') ?? $seniority->months ?? '' }}"
                type="number"
-               aria-describedby="seniority-months-1-validation">
+               aria-describedby="seniority-months-1-validation"
+               min="0"
+               max="12">
         @error('seniorityMonths')
         <div id="seniority-months-1-validation" class="invalid-feedback">
             {{ $message }}

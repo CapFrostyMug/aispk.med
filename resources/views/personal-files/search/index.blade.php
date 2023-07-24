@@ -11,8 +11,8 @@
         <div class="col-12 py-5">
             <h2><strong>Поиск анкеты</strong></h2>
         </div>
-        <p class="fs-5 mb-4">Введите серию и номер паспорта без пробелов</p>
-        <form action="{{ route('personal-file.edit-find') }}" method="POST">
+        <p class="fs-5 mb-4">Введите серию и номер паспорта <strong>без пробелов</strong></p>
+        <form action="{{ route('personal-file.management.find') }}" method="POST">
             @csrf
             <div class="d-flex">
                 <div class="col-3 me-4">
@@ -23,7 +23,7 @@
                         value=""
                         type="search"
                         required
-                        placeholder="РKAZ145359130">
+                        placeholder="Т-АТZ0825000">
                 </div>
                 <div class="col-2 ms-2">
                     <button
