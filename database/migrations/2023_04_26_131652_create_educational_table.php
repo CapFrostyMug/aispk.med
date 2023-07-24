@@ -29,7 +29,7 @@ return new class extends Migration {
                 ->constrained('educational_doc_types')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('ed_doc_number', 20)->nullable(false);
+            $table->string('ed_doc_number', 30)->nullable(false);
             $table->string('ed_institution_name', 255)->nullable(false);
             $table->boolean('is_first_spo')->nullable(false);
             $table->boolean('is_excellent_student')->nullable(false);

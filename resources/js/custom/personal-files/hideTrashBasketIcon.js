@@ -1,4 +1,3 @@
-
 // Скрывает иконку корзины у первого потомка блока 'custom-faculty-block-parent'
 
 export default function hideTrashBasketIcon() {

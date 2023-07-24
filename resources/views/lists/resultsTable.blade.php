@@ -18,7 +18,7 @@
                     <td class="col-3 text-center">{{ $student->name }}</td>
                     <td class="col-3 text-center">{{ $student->patronymic }}</td>
                     <td class="col-3 text-center">
-                        <a href="{{ route('personal-file.edit-file', $student->id) }}">
+                        <a href="{{ route('personal-file.management.edit', $student->id) }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                  class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path

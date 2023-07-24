@@ -18,10 +18,11 @@
         <label for="email-1" class="form-label">Электронная почта</label>
         <input
             id="email-1"
-            class="form-control @error('email') is-invalid @enderror"
+            class="form-control custom-capslock-none @error('email') is-invalid @enderror"
             name="email"
             value="{{ old('email') ?? $student->email ?? '' }}"
             type="email"
+            placeholder="example@mail.com"
             aria-describedby="email-1-validation">
         @error('email')
         <div id="email-1-validation" class="invalid-feedback">

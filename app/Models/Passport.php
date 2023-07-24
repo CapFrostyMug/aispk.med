@@ -49,14 +49,7 @@ class Passport extends Model
             return null;
         }
 
-        $search = $validatedData['search'];
-
-        $search = iconv_substr($search, 0, 20);
-        $search = preg_replace('#[^0-9a-zA-ZА]#u', '', $search);
-        $search = preg_replace('#\s+#u', '', $search);
-        $search = strtoupper($search);
-
-        $passport = $this::firstWhere('number', $search);
+        $passport = $this::firstWhere('number', $validatedData['search']);
 
         if (is_null($passport)) {
             return null;

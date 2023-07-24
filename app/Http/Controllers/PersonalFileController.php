@@ -41,29 +41,37 @@ class PersonalFileController extends Controller
      */
     public function store(CreateFormRequest $createFormRequest, PersonalFileFacade $personalFileFacade)
     {
-        $personalFileFacade->store($createFormRequest->validated());
+        $requestToDataBase = $personalFileFacade->store($createFormRequest->validated());
 
-        /*if () {
+        if (is_null($requestToDataBase)) {
             return redirect()
                 ->route('students-lists.search')
-                ->with('success', '');
+                ->with('success', 'Анкета успешно создана');
         } else {
             return back()
-                ->with('error', '');
-        }*/
-
-        return redirect()->route('students-lists.search');
+                ->withInput()
+                ->with('error', 'Системная ошибка: не удалось создать анкету. Попробуйте еще раз.
+                Перед отправкой обязательно перепроверьте поля!');
+        }
     }
 
     /**
      * Display the specified resource.
      *
+     * @param PersonalFileFacade $personalFileFacade
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function show($id)
+    public function show(PersonalFileFacade $personalFileFacade, $id)
     {
-        //
+        $primaryModels = $personalFileFacade->edit($id);
+        $secondaryModels = $personalFileFacade->getSecondaryModels();
+
+        if (is_null($primaryModels)) {
+            abort(404);
+        }
+
+        return view('personal-files.form.create', $secondaryModels, $primaryModels);
     }
 
     /**
@@ -95,29 +103,40 @@ class PersonalFileController extends Controller
      */
     public function update(CreateFormRequest $createFormRequest, PersonalFileFacade $personalFileFacade, $id)
     {
-        $personalFileFacade->update($createFormRequest->validated(), $id);
+        $requestToDataBase = $personalFileFacade->update($createFormRequest->validated(), $id);
 
-        /*if () {
+        if (is_null($requestToDataBase)) {
             return redirect()
                 ->route('students-lists.search')
-                ->with('success', '');
+                ->with('success', 'Анкета успешно обновлена');
         } else {
             return back()
-                ->with('error', '');
-        }*/
-
-        return redirect()->route('students-lists.search');
+                ->withInput()
+                ->with('error', 'Системная ошибка: не удалось обновить анкету. Попробуйте еще раз.
+                Перед отправкой обязательно перепроверьте поля!');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param PersonalFileFacade $personalFileFacade
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(PersonalFileFacade $personalFileFacade, $id)
     {
-        //
+        $requestToDataBase = $personalFileFacade->destroy($id);
+
+        if (is_null($requestToDataBase)) {
+            return redirect()
+                ->route('students-lists.search')
+                ->with('success', 'Анкета успешно удалена');
+        } else {
+            return back()
+                ->withInput()
+                ->with('error', 'Системная ошибка: не удалось удалить анкету. Попробуйте еще раз.');
+        }
     }
 
     /**
@@ -140,7 +159,7 @@ class PersonalFileController extends Controller
     public function find(Request $request, PersonalFileFacade $personalFileFacade)
     {
         $validatedData = $request->validate([
-            'search' => 'alpha_num',
+            'search' => 'alpha_dash', 'between:5,20',
         ]);
 
         $student = $personalFileFacade->find($validatedData);

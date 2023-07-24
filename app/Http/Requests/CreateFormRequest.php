@@ -33,16 +33,16 @@ class CreateFormRequest extends FormRequest
         }
 
         return [
-            'surname' => 'alpha|between:2,30|required',
-            'name' => 'alpha|between:2,30|required',
-            'patronymic' => 'alpha|between:5,30|nullable',
+            'surname' => 'alpha_dash|between:2,30|required',
+            'name' => 'alpha_dash|between:2,30|required',
+            'patronymic' => 'alpha_dash|between:5,30|nullable',
             'gender' => 'alpha|between:4,6|required',
             'birthday' => 'date|required',
             'nationality' => 'integer|exists:App\Models\Nationality,id|required',
             'birthplace' => 'string|between:3,150|required',
 
             'passportNumber' => [
-                'alpha_num', 'between:7,20', 'required',
+                'alpha_dash', 'between:5,20', 'required',
                 Rule::unique('passports', 'number')->ignore($passportId),
             ],
             'issueDatePassport' => 'date|required',
@@ -68,7 +68,7 @@ class CreateFormRequest extends FormRequest
             'educationalDocType' => 'integer|exists:App\Models\EducationalDocType,id|required',
             'excellentStudent' => 'boolean|required',
             'educationalDocNumber' => [
-                'alpha_num', 'between:6,20', 'required',
+                'alpha_dash', 'between:6,30', 'required',
                 Rule::unique('educational', 'ed_doc_number')->ignore($this->id, 'student_id'),
             ],
             'issueDateEducationalDoc' => 'date|required',
@@ -83,17 +83,17 @@ class CreateFormRequest extends FormRequest
             'circumstance' => 'array|required',
             'aboutMe' => 'string|min:10|max:300|nullable',
 
-            'fatherSurname' => 'alpha|between:2,30|nullable',
-            'fatherName' => 'alpha|between:2,30|nullable',
-            'fatherPatronymic' => 'alpha|between:5,30|nullable',
+            'fatherSurname' => 'alpha_dash|between:2,30|nullable',
+            'fatherName' => 'alpha_dash|between:2,30|nullable',
+            'fatherPatronymic' => 'alpha_dash|between:5,30|nullable',
             'fatherPhone' => [
                 'digits:11', 'integer', 'nullable',
                 Rule::unique('student_parent_fathers', 'phone')->ignore($this->id, 'student_id'),
             ],
 
-            'motherSurname' => 'alpha|between:2,30|nullable',
-            'motherName' => 'alpha|between:2,30|nullable',
-            'motherPatronymic' => 'alpha|between:5,30|nullable',
+            'motherSurname' => 'alpha_dash|between:2,30|nullable',
+            'motherName' => 'alpha_dash|between:2,30|nullable',
+            'motherPatronymic' => 'alpha_dash|between:5,30|nullable',
             'motherPhone' => [
                 'digits:11', 'integer', 'nullable',
                 Rule::unique('student_parent_mothers', 'phone')->ignore($this->id, 'student_id'),

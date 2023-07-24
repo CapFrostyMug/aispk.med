@@ -1,25 +1,44 @@
-import avgCalculator from './custom/avgCalculator';
-import addFacultyBlock from './custom/addFacultyBlock';
-import {clickHandler as removeFacultyBlock} from './custom/removeFacultyBlock';
+import addFacultyBlock from './custom/personal-files/addFacultyBlock';
+import avgCalculator from './custom/personal-files/avgCalculator';
+import capsLockDetector from './custom/personal-files/capsLockDetector';
+import checkboxHandler from './custom/personal-files/checkboxHandler';
+import disabledAll from './custom/personal-files/disabledAll';
+import hideTrashBasketIcon from './custom/personal-files/hideTrashBasketIcon';
+import {clickHandler as removeFacultyBlock} from './custom/personal-files/removeFacultyBlock';
+import removeSessionAlert from './custom/personal-files/removeSessionAlert';
 import WindowOnloadFunctions from './custom/windowOnloadFunctions';
-import checkboxHandler from './custom/checkboxHandler';
 
 export const config = {
 
     '/personal-file/create': [
-        WindowOnloadFunctions,
-        avgCalculator,
         addFacultyBlock,
-        removeFacultyBlock,
+        avgCalculator,
+        capsLockDetector,
         checkboxHandler,
+        hideTrashBasketIcon,
+        removeFacultyBlock,
+        removeSessionAlert,
+        WindowOnloadFunctions,
     ],
 
-    'personal-file/edit/file': [
-        WindowOnloadFunctions,
-        avgCalculator,
+    'personal-file/manage/edit/file': [
         addFacultyBlock,
-        removeFacultyBlock,
+        avgCalculator,
+        capsLockDetector,
         checkboxHandler,
+        hideTrashBasketIcon,
+        removeFacultyBlock,
+        removeSessionAlert,
+        WindowOnloadFunctions,
+    ],
+
+    'personal-file/manage/view/file': [
+        hideTrashBasketIcon,
+        disabledAll,
+    ],
+
+    'students-lists/search': [
+        removeSessionAlert,
     ],
 
     '/test': [
