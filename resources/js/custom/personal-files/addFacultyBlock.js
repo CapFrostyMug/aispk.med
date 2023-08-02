@@ -2,10 +2,10 @@ import addFacultyBlockCounter from './addFacultyBlockCounter';
 
 export default function addFacultyBlock() {
 
-    let button = document.querySelector('.custom-add-faculty');
+    let button = document.querySelector('.custom-fn-add-faculty');
 
-    let facultyBlockParent = document.querySelector('.custom-faculty-block-parent');
-    let facultyBlockChild = document.querySelector('.custom-faculty-block-child');
+    let facultyBlockParent = document.querySelector('.custom-fn-faculty-block-parent');
+    let facultyBlockChild = document.querySelector('.custom-fn-faculty-block-child');
 
     let counter = 0;
 

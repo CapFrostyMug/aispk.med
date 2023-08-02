@@ -10,11 +10,14 @@ class ListController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param ListFacade $listFacade
+     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(ListFacade $listFacade)
     {
-        //
+        $data = $listFacade->index();
+
+        return view('lists.index', ['faculties' => $data['faculties']]);
     }
 
     /**
@@ -41,12 +44,18 @@ class ListController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param ListFacade $listFacade
+     * @return \Illuminate\View\View
      */
-    public function show($id)
+    public function show(Request $request, ListFacade $listFacade)
     {
-        //
+        $data = $listFacade->show($request);
+
+        return view('lists.index', [
+            'faculties' => $data['faculties'],
+            'students' => $data['students'],
+        ]);
     }
 
     /**
@@ -81,38 +90,5 @@ class ListController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    /**
-     * [Method description].
-     *
-     * @param ListFacade $listFacade
-     * @return \Illuminate\View\View
-     */
-    public function search(ListFacade $listFacade)
-    {
-        $faculties = $listFacade->search();
-
-        return view('lists.index', [
-            'faculties' => $faculties,
-        ]);
-    }
-
-    /**
-     * [Method description].
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param ListFacade $listFacade
-     * @return \Illuminate\View\View
-     */
-    public function find(Request $request, ListFacade $listFacade)
-    {
-        $faculties = $listFacade->search();
-        $students = $listFacade->find($request);
-
-        return view('lists.index', [
-            'faculties' => $faculties,
-            'students' => $students,
-        ]);
     }
 }

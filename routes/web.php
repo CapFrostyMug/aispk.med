@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\PersonalFileController;
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ListController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PersonalFileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +20,12 @@ use App\Http\Controllers\ListController;
 */
 
 /*Route::get('/', function () {
-    return view('index');
+    return view('welcome');
 });*/
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 /**
  * Работа с личными делами
@@ -34,15 +35,15 @@ Route::prefix('personal-file')->name('personal-file.')->group(function () {
     Route::get('/create', [PersonalFileController::class, 'create'])->name('create');
     Route::post('/create', [PersonalFileController::class, 'store'])->name('store');
 
-    Route::prefix('manage')->name('management.')->group(function () {
+    Route::prefix('manage')->name('manage.')->group(function () {
 
         Route::get('/search', [PersonalFileController::class, 'search'])->name('search');
-        Route::match(['get', 'post'],'/search/result', [PersonalFileController::class, 'find'])->name('find');
+        Route::get('/search/result', [PersonalFileController::class, 'find'])->name('find');
 
         Route::get('/view/file/{id}', [PersonalFileController::class, 'show'])->name('show');
 
         Route::get('/edit/file/{id}', [PersonalFileController::class, 'edit'])->name('edit');
-        Route::put('/edit/file/{id}', [PersonalFileController::class, 'update'])->name('update');
+        Route::post('/edit/file/{id}', [PersonalFileController::class, 'update'])->name('update');
 
         Route::get('/print/file/{id}', [PersonalFileController::class, 'print'])->name('print');
 
@@ -56,8 +57,8 @@ Route::prefix('personal-file')->name('personal-file.')->group(function () {
  */
 Route::prefix('students-lists')->name('students-lists.')->group(function () {
 
-    Route::get('/search', [ListController::class, 'search'])->name('search');
-    Route::post('/search/result', [ListController::class, 'find'])->name('find');
+    Route::get('/search', [ListController::class, 'index'])->name('index');
+    Route::get('/search/result', [ListController::class, 'show'])->name('show');
 
 });
 
@@ -66,24 +67,12 @@ Route::prefix('students-lists')->name('students-lists.')->group(function () {
  */
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::prefix('users-management')->name('users-management.')->group(function () {
+    Route::prefix('users-manage')->name('users-manage.')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
-        Route::get('/user/{id}', [UserController::class, 'edit'])->name('user');
     });
 
-    Route::prefix('categories-editor')->name('categories-editor.')->group(function () {
-
+    Route::prefix('categories-manage')->name('categories-manage.')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('index');
-        Route::get('/category/faculties', [CategoryController::class, 'edit'])->name('faculties');
-        Route::get('/category/languages', [CategoryController::class, 'edit'])->name('languages');
-        Route::get('/category/nationality', [CategoryController::class, 'edit'])->name('nationality');
-        Route::get('/category/decrees', [CategoryController::class, 'edit'])->name('decrees');
-
     });
 
 });
-
-/**
- * Тестовый роут
- */
-Route::match(['get', 'post'], '/test', [TestController::class, 'index'])->name('test-index');

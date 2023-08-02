@@ -7,10 +7,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@section('title') AISPK | @show</title>
+    <title>{{ config('app.name', 'AISPK') }} | @yield('title')</title>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
@@ -18,10 +18,10 @@
 </head>
 <body class="bg-secondary bg-opacity-10">
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light shadow-sm p-0 custom-navbar-bg-color">
+    <nav class="navbar navbar-expand-md navbar-light shadow-sm custom-st-master-navbar p-1">
         <div class="container">
-            <a class="navbar-brand p-2" href="{{ url('/') }}">
-                <img src="/img/aispk-logo.svg" width="50" height="54" alt="aispk-logo">
+            <a class="navbar-brand" href="{{ url('/') }}">
+                <img src="/img/aispk-logo.svg" alt="aispk-logo" width="50" height="54">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -31,101 +31,26 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                <div>
-                    <ul class="nav nav-pills">
-                        <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
-                            <a class="nav-link dropdown-toggle text-white"
-                               data-bs-toggle="dropdown"
-                               href="#"
-                               role="button"
-                               aria-expanded="false">Личные дела
-                            </a>
-                            <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
-                                @yield('personal-files.menu')
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="nav nav-pills">
-                        <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
-                            <a class="nav-link dropdown-toggle text-white"
-                               data-bs-toggle="dropdown"
-                               href="#"
-                               role="button"
-                               aria-expanded="false">Списки
-                            </a>
-                            <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
-                                @yield('lists.menu')
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="nav nav-pills">
-                        <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
-                            <a class="nav-link dropdown-toggle text-white"
-                               data-bs-toggle="dropdown"
-                               href="#"
-                               role="button"
-                               aria-expanded="false">Журналы регистрации
-                            </a>
-                            <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
-                                @yield('registration-logs.menu')
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="nav nav-pills">
-                        <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
-                            <a class="nav-link dropdown-toggle text-white"
-                               data-bs-toggle="dropdown"
-                               href="#"
-                               role="button"
-                               aria-expanded="false">Отчётность
-                            </a>
-                            <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
-                                @yield('reports.menu')
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="nav nav-pills">
-                        <li class="nav-item dropdown custom-navbar-border-right custom-navbar-font">
-                            <a class="nav-link dropdown-toggle text-white"
-                               data-bs-toggle="dropdown"
-                               href="#"
-                               role="button"
-                               aria-expanded="false">Админка
-                            </a>
-                            <ul class="dropdown-menu"> {{-- navbar-nav me-auto --}}
-                                @yield('admin.menu')
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+            @include('menu.index')
 
-                <!-- Right Side Of Navbar -->
+            <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
                     @guest
                         @if (Route::has('login'))
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                         @endif
 
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @endif
                     @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle custom-username-color" href="#"
-                               role="button"
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
                             </a>
@@ -147,16 +72,16 @@
             </div>
         </div>
     </nav>
-    <div class="wrapper container shadow-sm bg-body rounded-0 px-5 pb-5">
-        <div class="fullscreen">
-            <main class="fullscreen-body py-4">
+    <div class="container custom-st-wrapper shadow-sm bg-body p-3">
+        <main class="custom-st-fullscreen p-4">
+            <div class="custom-st-fullscreen-body">
                 @yield('content')
-            </main>
-        </div>
+            </div>
+        </main>
     </div>
-    <footer class="footer">
-        <div class="footer-body">
-            {{----}}
+    <footer class="bg-body-secondary">
+        <div class="container">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, pariatur!</p>
         </div>
     </footer>
 </div>

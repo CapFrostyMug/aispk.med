@@ -1,40 +1,48 @@
 @extends('layouts.app')
 
-@section('title')
-    @parent Поиск анкеты
-@endsection
-
-@include('menu')
+@section('title', 'Поиск анкеты')
 
 @section('content')
-    <div class="row">
-        <div class="col-12 py-5">
-            <h2><strong>Поиск анкеты</strong></h2>
-        </div>
-        <p class="fs-5 mb-4">Введите серию и номер паспорта <strong>без пробелов</strong></p>
-        <form action="{{ route('personal-file.management.find') }}" method="POST">
-            @csrf
-            <div class="d-flex">
-                <div class="col-3 me-4">
-                    <input
-                        class="form-control"
-                        aria-label="Поиск"
-                        name="search"
-                        value=""
-                        type="search"
-                        required
-                        placeholder="Т-АТZ0825000">
-                </div>
-                <div class="col-2 ms-2">
-                    <button
-                        class="btn btn-success px-5"
-                        type="submit">Поиск
-                    </button>
-                </div>
+    <h2 class="fw-bold py-5">Поиск анкеты</h2>
+    <p class="fs-5 mb-4">Введите серию и номер паспорта <strong>без пробелов</strong></p>
+    <form action="{{ route('personal-file.manage.find') }}" method="get">
+        @csrf
+        <div class="d-flex">
+            <div class="col-3 me-4">
+                <input
+                    class="form-control"
+                    aria-label="Поиск"
+                    name="search"
+                    value=""
+                    type="search"
+                    required
+                    placeholder="Т-АТZ0825000">
             </div>
-        </form>
-        <div class="#">
-            @include('personal-files.search.resultsTable')
+            <button type="submit" class="btn btn-success col-2 ms-2 px-5">Поиск</button>
         </div>
-    </div>
+        @if(!empty($student))
+            <table class="table table-bordered mt-5">
+                <thead>
+                <tr class="custom-results-table-bg-color">
+                    <th scope="col" class="col-1 text-center">№</th>
+                    <th scope="col" class="col-3 text-center">Фамилия</th>
+                    <th scope="col" class="col-3 text-center">Имя</th>
+                    <th scope="col" class="col-3 text-center">Отчество</th>
+                    <th scope="col" class="col-2 text-center">Управление</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row" class="text-center">{{ $student->id }}</th>
+                    <td class="text-center">{{ $student->surname }}</td>
+                    <td class="text-center">{{ $student->name }}</td>
+                    <td class="text-center">{{ $student->patronymic }}</td>
+                    <td class="text-center d-flex justify-content-around">@include('manage-buttons')</td>
+                </tr>
+                </tbody>
+            </table>
+        @elseif(isset($student) || !empty($errors->all()))
+            <p class="fs-5 text-danger pt-5">Ничего не найдено</p>
+        @endif
+    </form>
 @endsection

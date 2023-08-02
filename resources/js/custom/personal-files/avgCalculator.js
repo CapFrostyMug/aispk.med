@@ -1,6 +1,6 @@
 export default function avgCalculator() {
 
-    let button = document.querySelector('.custom-avg-calc');
+    let button = document.querySelector('.custom-fn-avg-calc');
 
     function handler() {
 

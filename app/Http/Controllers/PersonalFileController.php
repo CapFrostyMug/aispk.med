@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Facades\PersonalFileFacade;
-use App\Http\Requests\CreateFormRequest;
+use App\Http\Requests\PersonalFileFormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -28,24 +28,24 @@ class PersonalFileController extends Controller
      */
     public function create(PersonalFileFacade $personalFileFacade)
     {
-        $secondaryModels = $personalFileFacade->create();
-        return view('personal-files.form.create', $secondaryModels);
+        $data = $personalFileFacade->create();
+        return view('personal-files.form.index', $data['lists']);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param CreateFormRequest $createFormRequest
+     * @param PersonalFileFormRequest $personalFileFormRequest
      * @param PersonalFileFacade $personalFileFacade
      * @return RedirectResponse
      */
-    public function store(CreateFormRequest $createFormRequest, PersonalFileFacade $personalFileFacade)
+    public function store(PersonalFileFormRequest $personalFileFormRequest, PersonalFileFacade $personalFileFacade)
     {
-        $requestToDataBase = $personalFileFacade->store($createFormRequest->validated());
+        $response = $personalFileFacade->store($personalFileFormRequest->validated());
 
-        if (is_null($requestToDataBase)) {
+        if (is_null($response)) {
             return redirect()
-                ->route('students-lists.search')
+                ->route('students-lists.index')
                 ->with('success', 'Анкета успешно создана');
         } else {
             return back()
@@ -64,14 +64,13 @@ class PersonalFileController extends Controller
      */
     public function show(PersonalFileFacade $personalFileFacade, $id)
     {
-        $primaryModels = $personalFileFacade->edit($id);
-        $secondaryModels = $personalFileFacade->getSecondaryModels();
+        $data = $personalFileFacade->show($id);
 
-        if (is_null($primaryModels)) {
+        if (is_null($data['student'])) {
             abort(404);
         }
 
-        return view('personal-files.form.create', $secondaryModels, $primaryModels);
+        return view('personal-files.form.index', $data['lists'], $data['student']);
     }
 
     /**
@@ -83,31 +82,30 @@ class PersonalFileController extends Controller
      */
     public function edit(PersonalFileFacade $personalFileFacade, $id)
     {
-        $primaryModels = $personalFileFacade->edit($id);
-        $secondaryModels = $personalFileFacade->getSecondaryModels();
+        $data = $personalFileFacade->edit($id);
 
-        if (is_null($primaryModels)) {
+        if (is_null($data['student'])) {
             abort(404);
         }
 
-        return view('personal-files.form.create', $secondaryModels, $primaryModels);
+        return view('personal-files.form.index', $data['lists'], $data['student']);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param CreateFormRequest $createFormRequest
+     * @param PersonalFileFormRequest $personalFileFormRequest
      * @param PersonalFileFacade $personalFileFacade
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(CreateFormRequest $createFormRequest, PersonalFileFacade $personalFileFacade, $id)
+    public function update(PersonalFileFormRequest $personalFileFormRequest, PersonalFileFacade $personalFileFacade, $id)
     {
-        $requestToDataBase = $personalFileFacade->update($createFormRequest->validated(), $id);
+        $response = $personalFileFacade->update($personalFileFormRequest->validated(), $id);
 
-        if (is_null($requestToDataBase)) {
+        if (is_null($response)) {
             return redirect()
-                ->route('students-lists.search')
+                ->route('students-lists.index')
                 ->with('success', 'Анкета успешно обновлена');
         } else {
             return back()
@@ -126,11 +124,11 @@ class PersonalFileController extends Controller
      */
     public function destroy(PersonalFileFacade $personalFileFacade, $id)
     {
-        $requestToDataBase = $personalFileFacade->destroy($id);
+        $response = $personalFileFacade->destroy($id);
 
-        if (is_null($requestToDataBase)) {
+        if (is_null($response)) {
             return redirect()
-                ->route('students-lists.search')
+                ->route('students-lists.index')
                 ->with('success', 'Анкета успешно удалена');
         } else {
             return back()

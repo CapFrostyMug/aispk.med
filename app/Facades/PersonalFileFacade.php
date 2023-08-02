@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Facades;
-
 
 use App\Models\Decree;
 use App\Models\Educational;
@@ -93,7 +91,7 @@ final class PersonalFileFacade
      */
     public function create()
     {
-        return $this->getSecondaryModels();
+        return ['lists' => $this->getLists()];
     }
 
     /**
@@ -105,7 +103,7 @@ final class PersonalFileFacade
     public function store($validatedData)
     {
         try {
-            DB::transaction(function() use ($validatedData) {
+            DB::transaction(function () use ($validatedData) {
 
                 $this->passport = $this->passport->create([
                     'birthday' => $validatedData['birthday'],
@@ -204,11 +202,14 @@ final class PersonalFileFacade
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function show($id)
     {
-        //
+        return [
+            'lists' => $this->getLists(),
+            'student' => $this->getStudentWithRelatedModels($id),
+        ];
     }
 
     /**
@@ -219,38 +220,9 @@ final class PersonalFileFacade
      */
     public function edit($id)
     {
-        $student = $this->student
-            ->with('passport')
-            ->with('educational')
-            ->with('seniority')
-            ->with('studentsParentFather')
-            ->with('studentsParentMother')
-            ->with('specialCircumstances')
-            ->with('enrollment')
-            ->find($id);
-
-        if (is_null($student)) {
-            return null;
-        }
-
-        $facultiesBlocks = [];
-        $counterFacultiesBlocks = 1;
-
-        foreach ($student->faculties as $faculty) {
-            $facultiesBlocks['block_' . $counterFacultiesBlocks] = $faculty->pivot->getAttributes();
-            $counterFacultiesBlocks++;
-        }
-
         return [
-            'student' => $student,
-            'passport' => $student->passport,
-            'educational' => $student->educational,
-            'seniority' => $student->seniority,
-            'studentsParentFather' => $student->studentsParentFather,
-            'studentsParentMother' => $student->studentsParentMother,
-            'specialCircumstancesForEdit' => $student->specialCircumstances,
-            'enrollment' => $student->enrollment,
-            'facultiesBlocks' => $facultiesBlocks,
+            'lists' => $this->getLists(),
+            'student' => $this->getStudentWithRelatedModels($id),
         ];
     }
 
@@ -267,7 +239,7 @@ final class PersonalFileFacade
         $passportId = $student->passport->id;
 
         try {
-            DB::transaction(function() use ($student, $passportId, $validatedData) {
+            DB::transaction(function () use ($student, $passportId, $validatedData) {
 
                 $this->passport->where('id', $passportId)->update([
                     'birthday' => $validatedData['birthday'],
@@ -342,7 +314,7 @@ final class PersonalFileFacade
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return string
+     * @return string|void
      */
     public function destroy($id)
     {
@@ -362,7 +334,7 @@ final class PersonalFileFacade
      *
      * @return array
      */
-    public function getSecondaryModels()
+    public function getLists()
     {
         return [
             'nationality' => $this->nationality->all(),
@@ -373,6 +345,49 @@ final class PersonalFileFacade
             'educationalDocTypes' => $this->edDocType->all(),
             'specialCircumstances' => $this->specialCircumstance->all(),
             'decrees' => $this->decree->all(),
+        ];
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getStudentWithRelatedModels($id)
+    {
+        $student = $this->student
+            ->with('passport')
+            ->with('educational')
+            ->with('seniority')
+            ->with('studentsParentFather')
+            ->with('studentsParentMother')
+            ->with('specialCircumstances')
+            ->with('enrollment')
+            ->find($id);
+
+        if (is_null($student)) {
+            return null;
+        }
+
+        $facultiesBlocks = [];
+        $counterFacultiesBlocks = 1;
+
+        foreach ($student->faculties as $faculty) {
+            $facultiesBlocks['block_' . $counterFacultiesBlocks] = $faculty->pivot->getAttributes();
+            $counterFacultiesBlocks++;
+        }
+
+        return [
+            'student' => $student,
+            'passport' => $student->passport,
+            'educational' => $student->educational,
+            'seniority' => $student->seniority,
+            'studentsParentFather' => $student->studentsParentFather,
+            'studentsParentMother' => $student->studentsParentMother,
+            'specialCircumstancesForEdit' => $student->specialCircumstances,
+            'enrollment' => $student->enrollment,
+            'facultiesBlocks' => $facultiesBlocks,
         ];
     }
 
