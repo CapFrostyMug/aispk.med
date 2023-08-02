@@ -1,6 +1,6 @@
 export default function capsLockDetector() {
 
-    const inputs = document.querySelectorAll('.custom-capslock-none');
+    const inputs = document.querySelectorAll('.custom-fn-capslock');
     const message = 'Пожалуйста, отключите CapsLock';
 
     inputs.forEach((item) => {

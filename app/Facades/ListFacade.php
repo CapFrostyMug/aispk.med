@@ -1,11 +1,8 @@
 <?php
 
-
 namespace App\Facades;
 
-
 use App\Models\Faculty;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 final class ListFacade
@@ -23,11 +20,11 @@ final class ListFacade
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function index()
     {
-        //
+        return ['faculties' => $this->faculty->all()];
     }
 
     /**
@@ -54,12 +51,18 @@ final class ListFacade
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return array
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $selectedFaculty = $this->faculty->where('id', $request->faculty)->first();
+        $studentsList = $selectedFaculty->students;
+
+        return [
+            'faculties' => $this->index()['faculties'],
+            'students' => $studentsList,
+        ];
     }
 
     /**
@@ -104,20 +107,5 @@ final class ListFacade
     public function search()
     {
         return $this->faculty->all();
-    }
-
-    /**
-     * [Method description].
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function find(Request $request)
-    {
-        $faculty = $this->faculty->where('id', $request->faculty)->first();
-        // TODO Attempt to read property "students" on null
-        $students = $faculty->students;
-
-        return $students;
     }
 }

@@ -2,9 +2,9 @@ import attributeHandlerDisabled from './attributeHandlerDisabled';
 
 export default function checkboxHandler() {
 
-    let checkboxClassName = 'form-check-input custom-input-original-docs';
+    let checkboxClassName = 'form-check-input custom-fn-input-original-docs';
 
-    document.querySelector('.custom-faculty-block-parent').onclick = function (e) {
+    document.querySelector('.custom-fn-faculty-block-parent').onclick = function (e) {
 
         if (e.target.className === checkboxClassName && !e.target.hasAttribute('checked')) {
 

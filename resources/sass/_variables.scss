@@ -1,6 +1,6 @@
 // Body
 $body-bg: #f8fafc;
-$app-main-color: #41A49E;
+$custom-app-main-color: #41A49E;
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
@@ -26,18 +26,18 @@ body {
     height: 100%;
 }
 
-.wrapper {
-    min-height: 100vh;
+.custom-st-wrapper {
+    min-height: calc(100vh - 70px);
     display: flex;
     flex-direction: column;
 }
 
-.fullscreen {
-    min-height: 100vh;
+.custom-st-fullscreen {
+    min-height: calc(100vh - 70px);
     display: flex;
 }
 
-.fullscreen-body {
+.custom-st-fullscreen-body {
     flex: 1 1 auto;
     width: 100%;
     max-width: 1140px;
@@ -46,52 +46,37 @@ body {
     flex-direction: column;
 }
 
-.footer {
-    background-color: #BBBCBD;
-    text-align: center;
-}
-
-.footer-body {
-    width: 100%;
-    max-width: 1140px;
-    padding: 30px;
-    color: aliceblue;
-}
-
-// Стили, используемые кастомными функциями
+// Стили, используемые кастомными функциями (custom-function)
 
 /* facultyBlock.blade.php */
-.custom-delete-cart {
+.custom-fn-remove-cart {
     cursor: pointer;
 }
 
-// Прочие кастомные стили
-.custom-navbar-bg-color {
-    background-color: $app-main-color;
+// Прочие кастомные стили (custom-style)
+.custom-st-master-navbar {
+    background-color: $custom-app-main-color;
 }
 
-.custom-navbar-font {
+.custom-st-dropdown-navbar {
     font-size: 16px;
-}
-
-.custom-navbar-border-right {
     border-right: 1px solid #CCCCCC;
 }
 
-.dropdown-item:active {
-    background-color: $app-main-color !important;
-}
+/*.dropdown-item:active {
+    background-color: $custom-app-main-color !important;
+}*/
 
-.custom-results-table-bg-color {
+.custom-st-results-table-bg-color {
     background-color: #99CCCC;
 }
 
-.custom-form-button-size {
+.custom-st-form-button-size {
     width: 241px;
     height: 38px;
     padding: 6px 12px;
 }
 
-.custom-username-color {
+.custom-st-username-color {
     color: #FFFFFF !important;
 }
