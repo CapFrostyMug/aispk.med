@@ -128,7 +128,8 @@
         @enderror
     </div>
 
-    <div class="col-2">
+    @include('personal-files.form.blocks.avg-calculator')
+    <div class="col-2 d-flex flex-column justify-content-end pb-3">
         <label for="avg-rating-1" class="form-label">Средний балл*</label>
         <input id="avg-rating-1"
                class="form-control @error('avgRating') is-invalid @enderror"
@@ -143,8 +144,20 @@
         </div>
         @enderror
     </div>
-
-    @include('personal-files.form.blocks.avg-calculator')
+    <div class="col-2 d-flex flex-column justify-content-end pb-3">
+        <label for="admission-testing-1" class="form-label">Тестирование</label>
+        <input id="admission-testing-1"
+               class="form-control @error('admissionTesting') is-invalid @enderror"
+               name="admissionTesting"
+               value="{{ old('admissionTesting') ?? $educational->admission_testing ?? '' }}"
+               type="text"
+               aria-describedby="admission-testing-1-validation">
+        @error('admissionTesting')
+        <div id="admission-testing-1-validation" class="invalid-feedback">
+            {{ $message }}
+        </div>
+        @enderror
+    </div>
 
     <div class="col-12">
         <p class="fw-bold mb-2">Абитуриент получает СПО впервые?</p>

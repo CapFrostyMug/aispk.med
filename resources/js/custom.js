@@ -1,4 +1,4 @@
-import { config } from './config';
+import {CONFIG as config} from './config';
 
 let pathname = window.location.pathname;
 

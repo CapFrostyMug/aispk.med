@@ -34,6 +34,7 @@ return new class extends Migration {
             $table->boolean('is_first_spo')->nullable(false);
             $table->boolean('is_excellent_student')->nullable(false);
             $table->decimal('avg_rating')->nullable(false);
+            $table->decimal('admission_testing')->nullable();
             $table->date('issue_date')->nullable(false);
             $table->timestamps();
         });

@@ -33,6 +33,7 @@ class EducationalSeeder extends Seeder
                 'is_first_spo' => fake()->boolean(),
                 'is_excellent_student' => fake()->boolean(),
                 'avg_rating' => fake()->randomFloat(2, 1, 5),
+                'admission_testing' => fake()->randomFloat(2, 0, 9.99),
                 'issue_date' => fake()->date(),
             ];
         }

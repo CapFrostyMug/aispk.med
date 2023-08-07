@@ -1,4 +1,4 @@
-import attributeHandlerDisabled from './attributeHandlerDisabled';
+import checkboxHandlerDisabled from './checkboxHandlerDisabled';
 
 export default function checkboxHandlerFlag() {
 
@@ -12,5 +12,5 @@ export default function checkboxHandlerFlag() {
         }
     }
 
-    attributeHandlerDisabled(flag);
+    checkboxHandlerDisabled(flag);
 };
