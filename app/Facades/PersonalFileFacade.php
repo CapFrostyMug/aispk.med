@@ -102,13 +102,14 @@ final class PersonalFileFacade
      */
     public function store($validatedData)
     {
+        //dd($validatedData);
         try {
             DB::transaction(function () use ($validatedData) {
 
                 $this->passport = $this->passport->create([
                     'birthday' => $validatedData['birthday'],
                     'birthplace' => $validatedData['birthplace'],
-                    'number' => strtoupper($validatedData['passportNumber']),
+                    'number' => str_replace(' ', '', strtoupper($validatedData['passportNumber'])),
                     'gender' => $validatedData['gender'],
                     'nationality_id' => $validatedData['nationality'],
                     'issue_by' => $validatedData['issueBy'],
@@ -132,11 +133,12 @@ final class PersonalFileFacade
                     'student_id' => $this->student->id,
                     'ed_institution_type_id' => $validatedData['educationalInstitutionType'],
                     'ed_doc_type_id' => $validatedData['educationalDocType'],
-                    'ed_doc_number' => strtoupper($validatedData['educationalDocNumber']),
+                    'ed_doc_number' => str_replace(' ', '', strtoupper($validatedData['educationalDocNumber'])),
                     'ed_institution_name' => $validatedData['educationalInstitutionName'],
                     'is_first_spo' => $validatedData['firstProfession'],
                     'is_excellent_student' => $validatedData['excellentStudent'],
                     'avg_rating' => $validatedData['avgRating'],
+                    'admission_testing' => $validatedData['admissionTesting'],
                     'issue_date' => $validatedData['issueDateEducationalDoc'],
                 ]);
 
@@ -193,8 +195,11 @@ final class PersonalFileFacade
                 }
 
             }, 3);
+
+            return $this->student->id;
+
         } catch (\Exception $exception) {
-            return $exception->getMessage();
+            return $exception;
         }
     }
 
@@ -244,7 +249,7 @@ final class PersonalFileFacade
                 $this->passport->where('id', $passportId)->update([
                     'birthday' => $validatedData['birthday'],
                     'birthplace' => $validatedData['birthplace'],
-                    'number' => strtoupper($validatedData['passportNumber']),
+                    'number' => str_replace(' ', '', strtoupper($validatedData['passportNumber'])),
                     'gender' => $validatedData['gender'],
                     'nationality_id' => $validatedData['nationality'],
                     'issue_by' => $validatedData['issueBy'],
@@ -266,11 +271,12 @@ final class PersonalFileFacade
                 $this->educational->where('student_id', $student->id)->update([
                     'ed_institution_type_id' => $validatedData['educationalInstitutionType'],
                     'ed_doc_type_id' => $validatedData['educationalDocType'],
-                    'ed_doc_number' => strtoupper($validatedData['educationalDocNumber']),
+                    'ed_doc_number' => str_replace(' ', '', strtoupper($validatedData['educationalDocNumber'])),
                     'ed_institution_name' => $validatedData['educationalInstitutionName'],
                     'is_first_spo' => $validatedData['firstProfession'],
                     'is_excellent_student' => $validatedData['excellentStudent'],
                     'avg_rating' => $validatedData['avgRating'],
+                    'admission_testing' => $validatedData['admissionTesting'],
                     'issue_date' => $validatedData['issueDateEducationalDoc'],
                 ]);
 
@@ -306,7 +312,7 @@ final class PersonalFileFacade
 
             }, 3);
         } catch (\Exception $exception) {
-            return $exception->getMessage();
+            return $exception;
         }
     }
 
@@ -325,7 +331,7 @@ final class PersonalFileFacade
             $student->delete();
             $passport->delete();
         } catch (\Exception $exception) {
-            return $exception->getMessage();
+            return $exception;
         }
     }
 

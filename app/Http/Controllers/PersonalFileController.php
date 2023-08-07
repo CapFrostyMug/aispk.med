@@ -43,15 +43,15 @@ class PersonalFileController extends Controller
     {
         $response = $personalFileFacade->store($personalFileFormRequest->validated());
 
-        if (is_null($response)) {
-            return redirect()
-                ->route('students-lists.index')
-                ->with('success', 'Анкета успешно создана');
-        } else {
+        if (gettype($response) === 'object') {
             return back()
                 ->withInput()
                 ->with('error', 'Системная ошибка: не удалось создать анкету. Попробуйте еще раз.
-                Перед отправкой обязательно перепроверьте поля!');
+                Перед отправкой формы обязательно перепроверьте поля!');
+        } else {
+            return redirect()
+                ->route('personal-file.manage.show', $response)
+                ->with('success', 'Анкета успешно создана');
         }
     }
 
@@ -103,15 +103,15 @@ class PersonalFileController extends Controller
     {
         $response = $personalFileFacade->update($personalFileFormRequest->validated(), $id);
 
-        if (is_null($response)) {
-            return redirect()
-                ->route('students-lists.index')
-                ->with('success', 'Анкета успешно обновлена');
-        } else {
+        if (gettype($response) === 'object') {
             return back()
                 ->withInput()
                 ->with('error', 'Системная ошибка: не удалось обновить анкету. Попробуйте еще раз.
-                Перед отправкой обязательно перепроверьте поля!');
+                Перед отправкой формы обязательно перепроверьте поля!');
+        } else {
+            return redirect()
+                ->route('personal-file.manage.show', $id)
+                ->with('success', 'Анкета успешно обновлена');
         }
     }
 
@@ -126,14 +126,14 @@ class PersonalFileController extends Controller
     {
         $response = $personalFileFacade->destroy($id);
 
-        if (is_null($response)) {
-            return redirect()
-                ->route('students-lists.index')
-                ->with('success', 'Анкета успешно удалена');
-        } else {
+        if (gettype($response) === 'object') {
             return back()
                 ->withInput()
                 ->with('error', 'Системная ошибка: не удалось удалить анкету. Попробуйте еще раз.');
+        } else {
+            return redirect()
+                ->route('personal-file.manage.search')
+                ->with('success', 'Анкета успешно удалена');
         }
     }
 

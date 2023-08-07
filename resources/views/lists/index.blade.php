@@ -29,8 +29,8 @@
         </div>
     </form>
 
-    @if(isset($students) && !empty($students))
-        <table class="table table-bordered mt-5">
+    @if(isset($students[0]))
+        <table class="table table-bordered table-striped mt-5">
             <thead>
             <tr class="custom-results-table-bg-color">
                 <th scope="col" class="col-1 text-center">№</th>
@@ -47,12 +47,12 @@
                     <td class="text-center">{{ $student->surname }}</td>
                     <td class="text-center">{{ $student->name }}</td>
                     <td class="text-center">{{ $student->patronymic }}</td>
-                    <td class="text-center d-flex justify-content-around">@include('manage-buttons')</td>
+                    <td class="text-center d-flex justify-content-around align-items-center">@include('manage-buttons')</td>
                 </tr>
             @endforeach
             </tbody>
         </table>
-    @elseif (isset($students) && empty($students))
+    @elseif (isset($students) && !isset($students[0]))
         <p class="fs-5 mt-5">По выбранной специальности личные дела не найдены.</p>
     @endif
 @endsection

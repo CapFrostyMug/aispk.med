@@ -4,6 +4,7 @@
 
 @section('content')
     <h2 class="fw-bold py-5">Поиск анкеты</h2>
+    @include('session-message')
     <p class="fs-5 mb-4">Введите серию и номер паспорта <strong>без пробелов</strong></p>
     <form action="{{ route('personal-file.manage.find') }}" method="get">
         @csrf
@@ -21,7 +22,7 @@
             <button type="submit" class="btn btn-success col-2 ms-2 px-5">Поиск</button>
         </div>
         @if(!empty($student))
-            <table class="table table-bordered mt-5">
+            <table class="table table-bordered table-striped mt-5">
                 <thead>
                 <tr class="custom-results-table-bg-color">
                     <th scope="col" class="col-1 text-center">№</th>

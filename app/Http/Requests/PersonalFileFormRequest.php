@@ -73,6 +73,7 @@ class PersonalFileFormRequest extends FormRequest
             ],
             'issueDateEducationalDoc' => 'date|required',
             'avgRating' => 'numeric|min:1|max:5|required',
+            'admissionTesting' => 'numeric|min:0|max:10|nullable',
             'firstProfession' => 'boolean|required',
 
             'placeWork' => 'string|between:3,100|nullable',
@@ -127,6 +128,7 @@ class PersonalFileFormRequest extends FormRequest
             'educationalDocNumber' => '«серия и номер документа»',
             'issueDateEducationalDoc' => '«дата выдачи»',
             'avgRating' => '«средний балл»',
+            'admissionTesting' => '«тестирование»',
             'firstProfession' => '«абитуриент получает СПО впервые»',
             'placeWork' => '«место работы»',
             'profession' => '«должность, специализация»',

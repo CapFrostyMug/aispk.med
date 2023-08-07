@@ -23,15 +23,7 @@
         </h2>
         @if(!request()->routeIs('personal-file.create'))
             <div class="btn-group" role="group" aria-label="#">
-                <a class="btn btn-outline-secondary"
-                   href="{{ url()->previous() }}"
-                   role="button">
-                    @if (request()->routeIs('personal-file.manage.show'))
-                        {{__('Вернуться')}} @include('icons.personal-files.manage-buttons.return')
-                    @else
-                        {{__('Отмена')}} @include('icons.personal-files.manage-buttons.cancel')
-                    @endif
-                </a>
+                {{--<a href="{{ url()->previous() }}" class="#"></a>--}}
                 @if(request()->routeIs('personal-file.manage.show'))
                     <a class="btn btn-outline-secondary"
                        href="{{ route('personal-file.manage.edit', $student->id) }}"
@@ -42,10 +34,11 @@
                    href="{{ route('personal-file.manage.print', $student->id) }}"
                    role="button">Печать @include('icons.personal-files.manage-buttons.print')
                 </a>
-                <a class="btn btn-danger"
-                   href="{{ route('personal-file.manage.destroy', $student->id) }}"
-                   role="button">Удалить @include('icons.personal-files.manage-buttons.remove')
-                </a>
+                <button type="button"
+                        class="btn btn-danger custom-fn-personal-file-remove"
+                        data-student-id="{{ $student->id }}">
+                    Удалить @include('icons.personal-files.manage-buttons.remove')
+                </button>
             </div>
         @endif
     </div>
@@ -67,7 +60,8 @@
 
     <form
         action="{{ isset($student->id) ? route('personal-file.manage.update', $student->id) : route('personal-file.store') }}"
-        method="post">
+        method="post"
+        class="custom-fn-form">
         @csrf
         @if(request()->routeIs('personal-file.manage.update'))
             @method('put')
@@ -83,13 +77,10 @@
                     {{ isset($student->id) ? __('Обновить') : __('Сохранить') }}
                 </button>
 
-                @if(isset($student->id))
-                    <a class="btn btn-secondary custom-st-form-button-size"
-                       href="{{ url()->previous() }}"
-                       role="button">Отмена
-                    </a>
-                @else
-                    <button class="btn btn-secondary custom-st-form-button-size" type="reset">Очистить форму</button>
+                @if(request()->routeIs('personal-file.create'))
+                    <button class="btn btn-secondary custom-st-form-button-size custom-fn-reset-form" type="button">
+                        Очистить форму
+                    </button>
                 @endif
             </div>
         @endif

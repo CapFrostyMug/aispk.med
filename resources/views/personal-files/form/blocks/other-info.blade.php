@@ -34,9 +34,15 @@
     <div class="col-6">
         <label for="about-me-1" class="form-label">О себе</label>
         <textarea id="about-me-1"
-                  class="form-control custom-fn-capslock"
+                  class="form-control custom-fn-capslock @error('aboutMe') is-invalid @enderror"
                   name="aboutMe"
-                  rows="4">{{ old('aboutMe') ?? $student->about_me ?? '(достижения, хобби и т.д.)' }}
+                  rows="4"
+                  aria-describedby="about-me-1-validation">{{ old('aboutMe') ?? $student->about_me ?? '' }}
         </textarea>
+        @error('aboutMe')
+        <div id="about-me-1-validation" class="invalid-feedback">
+            {{ $message }}
+        </div>
+        @enderror
     </div>
 </div>

@@ -47,7 +47,7 @@ Route::prefix('personal-file')->name('personal-file.')->group(function () {
 
         Route::get('/print/file/{id}', [PersonalFileController::class, 'print'])->name('print');
 
-        Route::get('/delete/file/{id}', [PersonalFileController::class, 'destroy'])->name('destroy');
+        Route::delete('/delete/file/{id}', [PersonalFileController::class, 'destroy'])->name('destroy');
     });
 
 });
