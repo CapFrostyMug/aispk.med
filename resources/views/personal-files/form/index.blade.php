@@ -30,14 +30,28 @@
                        role="button">Редактировать @include('icons.personal-files.manage-buttons.edit')
                     </a>
                 @endif
-                <a class="btn btn-outline-secondary"
-                   href="{{ route('personal-file.manage.print', $student->id) }}"
-                   role="button">Печать @include('icons.personal-files.manage-buttons.print')
-                </a>
+                <button class="btn btn-outline-secondary dropdown-toggle rounded-end-0 text-decoration-none"
+                        type="button"
+                        id="dropdownMenuPrintWord"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        title="Печать">Печать @include('icons.personal-files.manage-buttons.print')
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuPrintWord">
+                    <li>
+                        <a href="{{ route('personal-file.manage.export-application', $student->id) }}"
+                           class="text-decoration-none dropdown-item">Печать заявления
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('personal-file.manage.export', $student->id) }}"
+                           class="text-decoration-none dropdown-item">Печать личного дела
+                        </a>
+                    </li>
+                </ul>
                 <button type="button"
                         class="btn btn-danger custom-fn-personal-file-remove"
-                        data-student-id="{{ $student->id }}">
-                    Удалить @include('icons.personal-files.manage-buttons.remove')
+                        data-student-id="{{ $student->id }}">Удалить @include('icons.personal-files.manage-buttons.remove')
                 </button>
             </div>
         @endif

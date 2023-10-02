@@ -19,6 +19,9 @@ use App\Models\StudentsParentFather;
 use App\Models\StudentsParentMother;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpWord\TemplateProcessor;
+use PhpOffice\PhpWord\Style\Font;
+use PhpOffice\PhpWord\PhpWord;
 
 final class PersonalFileFacade
 {
@@ -91,7 +94,7 @@ final class PersonalFileFacade
      */
     public function create()
     {
-        return ['lists' => $this->getLists()];
+        return $this->getLists();
     }
 
     /**
@@ -102,7 +105,6 @@ final class PersonalFileFacade
      */
     public function store($validatedData)
     {
-        //dd($validatedData);
         try {
             DB::transaction(function () use ($validatedData) {
 
@@ -211,10 +213,7 @@ final class PersonalFileFacade
      */
     public function show($id)
     {
-        return [
-            'lists' => $this->getLists(),
-            'student' => $this->getStudentWithRelatedModels($id),
-        ];
+        return array_merge($this->getLists(), $this->getStudentWithRelatedModels($id) ?: []);
     }
 
     /**
@@ -225,10 +224,7 @@ final class PersonalFileFacade
      */
     public function edit($id)
     {
-        return [
-            'lists' => $this->getLists(),
-            'student' => $this->getStudentWithRelatedModels($id),
-        ];
+        return array_merge($this->getLists(), $this->getStudentWithRelatedModels($id) ?: []);
     }
 
     /**
@@ -413,4 +409,110 @@ final class PersonalFileFacade
 
         return '';
     }
+
+    /**
+     * [Method description].
+     *
+     * @param int $id
+     * @return string
+     */
+    public function exportApplicationToWord($id)
+    {
+        $data = array_merge($this->getLists(), $this->getStudentWithRelatedModels($id));
+
+        $templateProcessor = new TemplateProcessor('ms_office_templates/college_application_template.docx');
+
+        $faculties = [];
+        $facultyWithOriginalDocs = '';
+        $specialCircumstances = [];
+
+        foreach ($data['facultiesBlocks'] as $block) {
+            $faculties[] = $this->faculty->where('id', $block['faculty_id'])->first()->name;
+        }
+
+        foreach ($data['facultiesBlocks'] as $block) {
+            if ($block['is_original_docs']) {
+                $facultyWithOriginalDocs = $this->faculty->where('id', $block['faculty_id'])->first()->name;
+                break;
+            }
+        }
+
+        foreach ($data['specialCircumstancesForEdit'] as $specialCircumstance) {
+            $specialCircumstances[$specialCircumstance->name] = $specialCircumstance->pivot->status;
+        }
+
+        $templateProcessor->setValues([
+
+            'student_surname' => $data['student']->surname,
+            'student_name' => $data['student']->name,
+            'student_patronymic' => $data['student']->patronymic ?: '',
+            'student_language' => $data['student']->language->name,
+            'student_id' => $data['student']->id,
+
+            'passport_birthday' => date('d.m.Y', strtotime($data['passport']->birthday)),
+            'passport_address_registered' => $data['passport']->address_registered,
+            'passport_nationality' => $data['passport']->nationality->name,
+            'passport_number' => $data['passport']->number,
+            'passport_issue_date' => date('d.m.Y', strtotime($data['passport']->issue_date)),
+            'passport_issue_by' => $data['passport']->issue_by,
+
+            'faculties' => join(', ', $faculties),
+            'faculty_with_original_docs' => $facultyWithOriginalDocs ?: 'Отсутствуют',
+            'is_original_docs' => $facultyWithOriginalDocs ? 'оригинал' : 'копия',
+
+            'educational_issue_date' => date('Y', strtotime($data['educational']->issue_date)),
+            'educational_ed_institution_type' => $data['educational']->educationalInstitutionType->name,
+            'educational_ed_institution_name' => $data['educational']->ed_institution_name,
+            'educational_avg_rating' => $data['educational']->avg_rating,
+            'educational_ed_doc_type' => $data['educational']->educationalDocType->name,
+            'educational_ed_doc_number' => $data['educational']->ed_doc_number,
+            'educational_is_excellent_student' => $data['educational']->is_excellent_student ? 'Да' : 'Нет',
+            'educational_is_first_spo' => $data['educational']->is_first_spo ? 'Да' : 'Нет',
+
+            'seniority_years' => $data['seniority']->years ? "{$data['seniority']->years} лет" : '',
+            'seniority_months' => $data['seniority']->months ? "{$data['seniority']->months} месяцев" : '',
+
+            'current_date' => date('d.m.Y'),
+
+            'special_circumstances_dormitory' => $specialCircumstances['Общежитие'] ? 'Да' : 'Нет',
+            'special_circumstances_spec_conditions' => $specialCircumstances['Специальные условия'] ? 'Да' : 'Нет',
+        ]);
+
+        $fileName = $data['student']->surname . ' ' . $data['student']->name;
+        $templateProcessor->saveAs($fileName . '.docx');
+
+        return $fileName;
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param
+     * @return
+     */
+    public function exportPersonalFileToWord()
+    {
+        //
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param string $text
+     * @return object
+     */
+    /*public function phpWordMakeTextBold($text)
+    {
+        $phpWord = new PhpWord();
+        $section = $phpWord->addSection();
+
+        $fontStyle = new Font();
+        $fontStyle->setBold(true);
+
+        $myTextElement = $section->addText($text);
+
+        $myTextElement->setFontStyle($fontStyle);
+
+        return $myTextElement;
+    }*/
 }

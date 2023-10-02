@@ -29,7 +29,7 @@ class PersonalFileController extends Controller
     public function create(PersonalFileFacade $personalFileFacade)
     {
         $data = $personalFileFacade->create();
-        return view('personal-files.form.index', $data['lists']);
+        return view('personal-files.form.index', $data);
     }
 
     /**
@@ -66,11 +66,11 @@ class PersonalFileController extends Controller
     {
         $data = $personalFileFacade->show($id);
 
-        if (is_null($data['student'])) {
+        if (empty($data['student'])) {
             abort(404);
         }
 
-        return view('personal-files.form.index', $data['lists'], $data['student']);
+        return view('personal-files.form.index', $data);
     }
 
     /**
@@ -84,11 +84,11 @@ class PersonalFileController extends Controller
     {
         $data = $personalFileFacade->edit($id);
 
-        if (is_null($data['student'])) {
+        if (empty($data['student'])) {
             abort(404);
         }
 
-        return view('personal-files.form.index', $data['lists'], $data['student']);
+        return view('personal-files.form.index', $data);
     }
 
     /**
@@ -165,5 +165,30 @@ class PersonalFileController extends Controller
         return view('personal-files.search.index', [
             'student' => $student,
         ]);
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param PersonalFileFacade $personalFileFacade
+     * @param int $id
+     * @return
+     */
+    public function exportApplicationToWord(PersonalFileFacade $personalFileFacade, $id)
+    {
+        $fileName = $personalFileFacade->exportApplicationToWord($id);
+
+        return response()->download($fileName . '.docx')->deleteFileAfterSend(true);
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param
+     * @return
+     */
+    public function exportPersonalFileToWord()
+    {
+        //
     }
 }
