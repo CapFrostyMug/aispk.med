@@ -45,7 +45,8 @@ Route::prefix('personal-file')->name('personal-file.')->group(function () {
         Route::get('/edit/file/{id}', [PersonalFileController::class, 'edit'])->name('edit');
         Route::post('/edit/file/{id}', [PersonalFileController::class, 'update'])->name('update');
 
-        Route::get('/print/file/{id}', [PersonalFileController::class, 'print'])->name('print');
+        Route::get('/export/file/{id}', [PersonalFileController::class, 'exportPersonalFileToWord'])->name('export');
+        Route::get('/export/application/file/{id}', [PersonalFileController::class, 'exportApplicationToWord'])->name('export-application');
 
         Route::delete('/delete/file/{id}', [PersonalFileController::class, 'destroy'])->name('destroy');
     });

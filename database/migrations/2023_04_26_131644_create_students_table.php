@@ -30,6 +30,11 @@ return new class extends Migration
                 ->constrained('languages')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            /*$table->foreignId('language_id')
+                ->nullable()
+                ->constrained('languages')
+                ->onUpdate('cascade')
+                ->nullOnDelete();*/
             $table->text('about_me')->nullable();
             $table->timestamps();
         });

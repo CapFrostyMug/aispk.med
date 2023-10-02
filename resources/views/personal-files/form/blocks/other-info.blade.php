@@ -6,7 +6,7 @@
     @if(isset($specialCircumstances))
         @foreach($specialCircumstances as $circumstance)
             <div class="col-4">
-                <p class="col-12 mb-2">{{ $circumstance->name }}</p>
+                <p class="col-12 mb-2">{{ $circumstance->text }}</p>
                 <div class="form-check form-check-inline">
                     <input id="circumstance-{{ $circumstance->id }}-false"
                            class="form-check-input"
