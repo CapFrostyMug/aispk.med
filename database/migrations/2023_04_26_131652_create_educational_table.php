@@ -23,12 +23,12 @@ return new class extends Migration {
                 ->nullable(false)
                 ->constrained('educational_institution_types')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
             $table->foreignId('ed_doc_type_id')
                 ->nullable(false)
                 ->constrained('educational_doc_types')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
             $table->string('ed_doc_number', 30)->nullable(false);
             $table->string('ed_institution_name', 255)->nullable(false);
             $table->boolean('is_first_spo')->nullable(false);

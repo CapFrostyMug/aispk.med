@@ -43,7 +43,7 @@
         <p class="mt-2 mb-2">Абитуриент забрал документы</p>
         <div class="form-check form-check-inline">
             <input id="pickup-docs-false-1"
-                   class="form-check-input"
+                   class="form-check-input custom-st-fix-circle"
                    name="pickupDocs"
                    value="0"
                    type="radio"
@@ -52,7 +52,7 @@
         </div>
         <div class="form-check form-check-inline">
             <input id="pickup-docs-true-1"
-                   class="form-check-input"
+                   class="form-check-input custom-st-fix-circle"
                    name="pickupDocs"
                    value="1"
                    type="radio"

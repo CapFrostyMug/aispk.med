@@ -24,12 +24,12 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('faculties')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
             $table->foreignId('decree_id')
                 ->nullable()
                 ->constrained('decrees')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
             $table->boolean('is_pickup_docs')->nullable();
             $table->timestamps();
         });

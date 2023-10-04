@@ -46,13 +46,13 @@
     <div class="col-4">
         <p>Пол</p>
         <div class="form-check form-check-inline">
-            <input id="genderMale-1" class="form-check-input" name="gender" value="male" type="radio"
+            <input id="genderMale-1" class="form-check-input custom-st-fix-circle" name="gender" value="male" type="radio"
                    checked>
             <label for="genderMale-1" class="form-check-label">Мужской</label>
         </div>
         <div class="form-check form-check-inline">
             <input id="genderFemale-1"
-                   class="form-check-input"
+                   class="form-check-input custom-st-fix-circle"
                    name="gender"
                    value="female"
                    type="radio"

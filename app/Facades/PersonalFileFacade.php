@@ -426,10 +426,12 @@ final class PersonalFileFacade
         $facultyWithOriginalDocs = '';
         $specialCircumstances = [];
 
+        /** Формируем массив из названий специальностей */
         foreach ($data['facultiesBlocks'] as $block) {
             $faculties[] = $this->faculty->where('id', $block['faculty_id'])->first()->name;
         }
 
+        /** Ищем специальность, на которую поданы оригиналы документов */
         foreach ($data['facultiesBlocks'] as $block) {
             if ($block['is_original_docs']) {
                 $facultyWithOriginalDocs = $this->faculty->where('id', $block['faculty_id'])->first()->name;
@@ -437,45 +439,63 @@ final class PersonalFileFacade
             }
         }
 
+        /** Формируем массив из "особых обстоятельств", задействуя сводную таблицу */
         foreach ($data['specialCircumstancesForEdit'] as $specialCircumstance) {
             $specialCircumstances[$specialCircumstance->name] = $specialCircumstance->pivot->status;
         }
 
         $templateProcessor->setValues([
 
-            'student_surname' => $data['student']->surname,
-            'student_name' => $data['student']->name,
-            'student_patronymic' => $data['student']->patronymic ?: '',
-            'student_language' => $data['student']->language->name,
             'student_id' => $data['student']->id,
+            'student_name' => $data['student']->name,
+            'student_surname' => $data['student']->surname,
+            'student_patronymic' => $data['student']->patronymic ?: '',
+            'student_phone' => $data['student']->phone ?: '',
+            'student_language' => $data['student']->language->name,
+            'student_about_me' => $data['student']->about_me ?: '',
 
             'passport_birthday' => date('d.m.Y', strtotime($data['passport']->birthday)),
-            'passport_address_registered' => $data['passport']->address_registered,
-            'passport_nationality' => $data['passport']->nationality->name,
+            'passport_birthplace' => $data['passport']->birthplace,
             'passport_number' => $data['passport']->number,
-            'passport_issue_date' => date('d.m.Y', strtotime($data['passport']->issue_date)),
+            'passport_nationality' => $data['passport']->nationality->name,
             'passport_issue_by' => $data['passport']->issue_by,
+            'passport_issue_date' => date('d.m.Y', strtotime($data['passport']->issue_date)),
+            'passport_address_registered' => $data['passport']->address_registered,
+            'passport_address_residential' => $data['passport']->address_residential,
+
+            'educational_ed_institution_type' => $data['educational']->educationalInstitutionType->name,
+            'educational_ed_doc_type' => $data['educational']->educationalDocType->name,
+            'educational_ed_doc_number' => $data['educational']->ed_doc_number,
+            'educational_ed_institution_name' => $data['educational']->ed_institution_name,
+            'educational_is_first_spo' => $data['educational']->is_first_spo ? 'Да' : 'Нет',
+            'educational_is_excellent_student' => $data['educational']->is_excellent_student ? 'Да' : 'Нет',
+            'educational_avg_rating' => $data['educational']->avg_rating,
+            'educational_issue_date' => date('Y', strtotime($data['educational']->issue_date)),
+
+            'seniority_place_work' => $data['seniority']->place_work ?: '',
+            'seniority_profession' => $data['seniority']->profession ?: '',
+            'seniority_years' => $data['seniority']->years ? "{$data['seniority']->years} лет" : '',
+            'seniority_months' => $data['seniority']->months ? "{$data['seniority']->months} месяцев" : '',
+
+            'students_father_name' => $data['studentsParentFather']->name ?: '',
+            'students_father_surname' => $data['studentsParentFather']->surname ?: '',
+            'students_father_patronymic' => $data['studentsParentFather']->patronymic ?: '',
+            'students_father_phone' => $data['studentsParentFather']->phone ?: '',
+
+            'students_mother_name' => $data['studentsParentMother']->name ?: '',
+            'students_mother_surname' => $data['studentsParentMother']->surname ?: '',
+            'students_mother_patronymic' => $data['studentsParentMother']->patronymic ?: '',
+            'students_mother_phone' => $data['studentsParentMother']->phone ?: '',
 
             'faculties' => join(', ', $faculties),
             'faculty_with_original_docs' => $facultyWithOriginalDocs ?: 'Отсутствуют',
             'is_original_docs' => $facultyWithOriginalDocs ? 'оригинал' : 'копия',
 
-            'educational_issue_date' => date('Y', strtotime($data['educational']->issue_date)),
-            'educational_ed_institution_type' => $data['educational']->educationalInstitutionType->name,
-            'educational_ed_institution_name' => $data['educational']->ed_institution_name,
-            'educational_avg_rating' => $data['educational']->avg_rating,
-            'educational_ed_doc_type' => $data['educational']->educationalDocType->name,
-            'educational_ed_doc_number' => $data['educational']->ed_doc_number,
-            'educational_is_excellent_student' => $data['educational']->is_excellent_student ? 'Да' : 'Нет',
-            'educational_is_first_spo' => $data['educational']->is_first_spo ? 'Да' : 'Нет',
-
-            'seniority_years' => $data['seniority']->years ? "{$data['seniority']->years} лет" : '',
-            'seniority_months' => $data['seniority']->months ? "{$data['seniority']->months} месяцев" : '',
+            'special_circumstances_dormitory' => $specialCircumstances['Общежитие'] ? 'Да' : 'Нет',
+            'special_circumstances_disability' => $specialCircumstances['Инвалидность'] ? 'Да' : 'Нет',
+            'special_circumstances_spec_conditions' => $specialCircumstances['Специальные условия'] ? 'Да' : 'Нет',
 
             'current_date' => date('d.m.Y'),
-
-            'special_circumstances_dormitory' => $specialCircumstances['Общежитие'] ? 'Да' : 'Нет',
-            'special_circumstances_spec_conditions' => $specialCircumstances['Специальные условия'] ? 'Да' : 'Нет',
         ]);
 
         $fileName = $data['student']->surname . ' ' . $data['student']->name;
