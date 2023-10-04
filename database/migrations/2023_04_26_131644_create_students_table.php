@@ -22,14 +22,14 @@ return new class extends Migration
                 ->nullable(false)
                 ->constrained('passports')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
             $table->string('phone', 30)->nullable();
             $table->string('email', 50)->nullable();
             $table->foreignId('language_id')
                 ->nullable(false)
                 ->constrained('languages')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
             /*$table->foreignId('language_id')
                 ->nullable()
                 ->constrained('languages')

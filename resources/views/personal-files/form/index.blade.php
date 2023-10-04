@@ -45,7 +45,7 @@
                     </li>
                     <li>
                         <a href="{{ route('personal-file.manage.export', $student->id) }}"
-                           class="text-decoration-none dropdown-item">Печать личного дела
+                           class="text-decoration-none dropdown-item disabled">Печать личного дела
                         </a>
                     </li>
                 </ul>

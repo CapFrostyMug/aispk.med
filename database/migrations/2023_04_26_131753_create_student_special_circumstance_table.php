@@ -24,7 +24,7 @@ return new class extends Migration
                 ->nullable(false)
                 ->constrained('special_circumstances')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
             $table->boolean('status')->nullable(false);
             $table->timestamps();
         });

@@ -164,7 +164,7 @@
         <div>
             <div class="form-check form-check-inline">
                 <input id="first-profession-true-1"
-                       class="form-check-input"
+                       class="form-check-input custom-st-fix-circle"
                        name="firstProfession"
                        value="1"
                        type="radio"
@@ -174,7 +174,7 @@
             </div>
             <div class="form-check form-check-inline">
                 <input id="first-profession-false-1"
-                       class="form-check-input"
+                       class="form-check-input custom-st-fix-circle"
                        name="firstProfession"
                        value="0"
                        type="radio"

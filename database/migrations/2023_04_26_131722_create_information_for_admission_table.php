@@ -24,12 +24,12 @@ return new class extends Migration
                 ->nullable(false)
                 ->constrained('faculties')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
             $table->foreignId('financing_type_id')
                 ->nullable(false)
                 ->constrained('financing_types')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
             $table->boolean('is_original_docs')
                 ->nullable(false);
             $table->timestamps();

@@ -9,7 +9,7 @@
                 <p class="col-12 mb-2">{{ $circumstance->text }}</p>
                 <div class="form-check form-check-inline">
                     <input id="circumstance-{{ $circumstance->id }}-false"
-                           class="form-check-input"
+                           class="form-check-input custom-st-fix-circle"
                            name="circumstance[{{ $circumstance->id }}]"
                            value="0"
                            type="radio"
@@ -18,7 +18,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                     <input id="circumstance-{{ $circumstance->id }}-true"
-                           class="form-check-input"
+                           class="form-check-input custom-st-fix-circle"
                            name="circumstance[{{ $circumstance->id }}]"
                            value="1"
                            type="radio"

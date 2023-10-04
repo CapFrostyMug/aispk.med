@@ -23,7 +23,7 @@ return new class extends Migration
                 ->nullable(false)
                 ->constrained('nationality')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
             $table->string('issue_by', 150)->nullable(false);
             $table->date('issue_date')->nullable(false);
             $table->string('address_registered', 180)->nullable(false);
