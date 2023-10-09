@@ -3,6 +3,7 @@
 namespace App\Facades;
 
 use App\Models\Faculty;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 final class ListFacade
@@ -24,7 +25,7 @@ final class ListFacade
      */
     public function index()
     {
-        return ['faculties' => $this->faculty->all()];
+        return ['faculties' => $this->getFaculties()];
     }
 
     /**
@@ -57,11 +58,17 @@ final class ListFacade
     public function show(Request $request)
     {
         $selectedFaculty = $this->faculty->where('id', $request->faculty)->first();
-        $studentsList = $selectedFaculty->students;
+
+        $students = $selectedFaculty
+            ->students()
+            ->where('faculty_id', $selectedFaculty->id)
+            ->paginate(config('paginate.studentsList'))
+            ->withQueryString();
 
         return [
-            'faculties' => $this->index()['faculties'],
-            'students' => $studentsList,
+            'faculties' => $this->getFaculties(),
+            'selectedFaculty' => $selectedFaculty->name,
+            'students' => $students,
         ];
     }
 
@@ -104,7 +111,7 @@ final class ListFacade
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function search()
+    public function getFaculties()
     {
         return $this->faculty->all();
     }

@@ -17,7 +17,7 @@ class ListController extends Controller
     {
         $data = $listFacade->index();
 
-        return view('lists.index', ['faculties' => $data['faculties']]);
+        return view('lists.index', $data);
     }
 
     /**
@@ -52,10 +52,7 @@ class ListController extends Controller
     {
         $data = $listFacade->show($request);
 
-        return view('lists.index', [
-            'faculties' => $data['faculties'],
-            'students' => $data['students'],
-        ]);
+        return view('lists.index', $data);
     }
 
     /**

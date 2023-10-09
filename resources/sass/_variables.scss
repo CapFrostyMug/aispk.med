@@ -1,17 +1,29 @@
 // Body
-$custom-app-main-color: #41A49E;
-
-// Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
-$font-size-base: 0.9rem;
-$line-height-base: 1.6;
-
 $container-max-widths: (
     sm: 540px,
     md: 720px,
     lg: 960px,
     xl: 1140px,
 );
+
+%fullscreen-block {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// Style
+$custom-app-main-color: #41A49E;
 
 // Убирает смещение страницы влево при появлении scrollbar-а
 html {
@@ -37,12 +49,7 @@ body {
 }
 
 .custom-st-fullscreen-body {
-    flex: 1 1 auto;
-    width: 100%;
-    max-width: 1140px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
+    @extend %fullscreen-block;
 }
 
 // Стили, используемые кастомными функциями (custom-function)
@@ -87,4 +94,13 @@ body {
 .custom-st-fix-circle {
     width: 15px !important;
     height: 15px !important;
+}
+
+.custom-st-font-color-white {
+    color: #FFFFFF !important;
+}
+
+.custom-st-fullscreen-block {
+    @extend %fullscreen-block;
+    justify-content: space-between;
 }
