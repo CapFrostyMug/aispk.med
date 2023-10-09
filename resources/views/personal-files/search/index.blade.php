@@ -21,7 +21,7 @@
             </div>
             <button type="submit" class="btn btn-success col-2 ms-2 px-5">Поиск</button>
         </div>
-        @if(!empty($student))
+        @if(isset($student) && !empty($student))
             <table class="table table-bordered table-striped mt-5">
                 <thead>
                 <tr class="custom-results-table-bg-color">
@@ -42,7 +42,7 @@
                 </tr>
                 </tbody>
             </table>
-        @elseif(isset($student) || !empty($errors->all()))
+        @elseif(isset($student) && empty($student))
             <p class="fs-5 text-danger pt-5">Ничего не найдено</p>
         @endif
     </form>

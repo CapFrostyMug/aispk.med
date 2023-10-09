@@ -160,10 +160,10 @@ class PersonalFileController extends Controller
             'search' => 'alpha_dash', 'between:5,20',
         ]);
 
-        $student = $personalFileFacade->find($validatedData);
+        $data = $personalFileFacade->find($validatedData);
 
         return view('personal-files.search.index', [
-            'student' => $student,
+            'student' => $data
         ]);
     }
 

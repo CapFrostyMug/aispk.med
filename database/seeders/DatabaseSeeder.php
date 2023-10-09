@@ -4,6 +4,13 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Student;
+use App\Models\Passport;
+use App\Models\Educational;
+use App\Models\Seniority;
+use App\Models\StudentsParentFather;
+use App\Models\StudentsParentMother;
+use App\Models\Enrollment;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +27,9 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        $studentMax = config('factories.studentsCount');
+
         /**
          * Таблицы категорий
          */
@@ -35,14 +45,13 @@ class DatabaseSeeder extends Seeder
         /**
          * Главная и второстепенные таблицы
          */
-        $this->call(PassportsSeeder::class);
-        $this->call(StudentsSeeder::class);
-
-        $this->call(EducationalSeeder::class);
-        $this->call(SenioritySeeder::class);
-        $this->call(StudentParentFathersSeeder::class);
-        $this->call(StudentParentMothersSeeder::class);
-        $this->call(EnrollmentSeeder::class);
+        Passport::factory($studentMax)->create();
+        Student::factory($studentMax)->create();
+        Educational::factory($studentMax)->create();
+        Seniority::factory($studentMax)->create();
+        StudentsParentFather::factory($studentMax)->create();
+        StudentsParentMother::factory($studentMax)->create();
+        Enrollment::factory($studentMax)->create();
 
         /**
          * Сводные таблицы

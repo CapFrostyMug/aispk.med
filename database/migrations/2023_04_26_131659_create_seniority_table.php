@@ -21,7 +21,8 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('place_work', 100)->nullable();
-            $table->string('profession', 75)->nullable();
+            /** TODO Для 'profession' вернуть значение в 75 */
+            $table->string('profession', 100)->nullable();
             $table->integer('years')->nullable();
             $table->integer('months')->nullable();
             $table->timestamps();

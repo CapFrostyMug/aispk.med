@@ -21,11 +21,12 @@ class StudentSpecialCircumstanceSeeder extends Seeder
     private function getData(): array
     {
         $data = [];
-        $count = 100;
+        $studentMax = config('factories.studentsCount');
+        $count = 500;
 
         for ($i = 1; $i <= $count; $i++) {
             $data[] = [
-                'student_id' => fake()->numberBetween(1, 20),
+                'student_id' => fake()->numberBetween(1, $studentMax),
                 'special_circumstance_id' => fake()->numberBetween(1, 5),
                 'status' => fake()->numberBetween(0, 1),
             ];

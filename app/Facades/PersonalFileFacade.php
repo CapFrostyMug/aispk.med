@@ -397,7 +397,7 @@ final class PersonalFileFacade
      * [Method description].
      *
      * @param array $validatedData
-     * @return string|Model
+     * @return string|array
      */
     public function find($validatedData)
     {
