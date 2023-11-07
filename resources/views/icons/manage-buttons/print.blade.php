@@ -2,7 +2,7 @@
      width="20"
      height="20"
      fill="#666666"
-     class="bi bi-printer-fill"
+     class="bi bi-printer-fill custom-st-icon-hover"
      viewBox="0 0 16 16">
     <path
         d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>

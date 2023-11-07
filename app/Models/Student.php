@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Filter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
     use HasFactory;
+    use Filter;
 
     protected $table = 'students';
 
@@ -103,7 +105,7 @@ class Student extends Model
             'information_for_admission',
             'student_id',
             'financing_type_id'
-        )->withPivot('is_original_docs');
+        )->withPivot('is_original_docs', 'faculty_id');
     }
 
     public function enrollment()

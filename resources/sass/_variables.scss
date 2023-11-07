@@ -15,8 +15,6 @@ $container-max-widths: (
     flex-direction: column;
 }
 
-;
-
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
@@ -103,4 +101,16 @@ body {
 .custom-st-fullscreen-block {
     @extend %fullscreen-block;
     justify-content: space-between;
+}
+
+.custom-st-search-filter {
+    background-color: #F5F5F5;
+}
+
+.custom-st-icon-hover:hover {
+    fill: #999999;
+}
+
+.custom-st-icon-remove-hover:hover {
+    fill: #FF7373;
 }

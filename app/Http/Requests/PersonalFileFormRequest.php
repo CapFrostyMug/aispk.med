@@ -82,7 +82,7 @@ class PersonalFileFormRequest extends FormRequest
             'seniorityMonths' => 'integer|between:1,12|nullable',
 
             'circumstance' => 'array|required',
-            'aboutMe' => 'string|min:10|max:300|nullable',
+            'aboutMe' => 'string|min:5|max:300|nullable',
 
             'fatherSurname' => 'alpha_dash|between:2,30|nullable',
             'fatherName' => 'alpha_dash|between:2,30|nullable',
