@@ -1,4 +1,4 @@
-<div class="col-7 bg-primary bg-opacity-25 custom-fn-avg-calc pb-3">
+<div class="col-7 bg-primary bg-opacity-25 rounded custom-fn-avg-calc pb-3">
     <p class="fw-bold col-9 mt-2">Калькулятор среднего балла</p>
     <div class="row">
         <div class="col-3">

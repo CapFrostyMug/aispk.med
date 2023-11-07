@@ -11,28 +11,9 @@
 
             @include('session-message')
 
-            <form action="{{ route('students-lists.show') }}" method="get">
+            <form action="{{ route('students-lists.view-and-print.filtered-list') }}" method="get" class="custom-fn-form">
                 @csrf
-                <div class="d-flex justify-content-start align-items-end">
-                    <div class="col-6">
-                        <label for="faculty-1" class="form-label">Выберите специальность</label>
-                        <select id="faculty-1" class="form-select" name="faculty" required>
-                            <option value="">Выберите...</option>
-                            @if(isset($faculties))
-                                @foreach($faculties as $item)
-                                    <option
-                                        value="{{ $item->id }}"
-                                        @if(isset($selectedFaculty) && $selectedFaculty == $item->name)
-                                        selected
-                                        @endif>
-                                        {{ $item->name }}
-                                    </option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
-                    <button class="col-2 btn btn-success px-5 ms-4" type="submit">Поиск</button>
-                </div>
+                @include('lists.search-filter')
             </form>
 
             @if(isset($students) && $students->isNotEmpty())

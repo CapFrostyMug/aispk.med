@@ -14,7 +14,7 @@ export const PERSONAL_FILE_REMOVE_PATH = '/personal-file/manage/delete/file/';
 
 export const CONFIG = {
 
-    '/personal-file/create': [
+    '/personal-files/create': [
         addFacultyBlock,
         avgCalculator,
         capsLockDetector,
@@ -26,7 +26,7 @@ export const CONFIG = {
         confirmAction,
     ],
 
-    'personal-file/manage/edit/file': [
+    'personal-files/manage/edit/file': [
         addFacultyBlock,
         avgCalculator,
         capsLockDetector,
@@ -38,14 +38,14 @@ export const CONFIG = {
         confirmAction,
     ],
 
-    'personal-file/manage/view/file': [
+    'personal-files/manage/view/file': [
         hideTrashBasketIcon,
         viewFileFieldsHandler,
         removeSessionMessage,
         confirmAction,
     ],
 
-    'personal-file/manage/search': [
+    'personal-files/manage/search': [
         removeSessionMessage,
         confirmAction,
     ],

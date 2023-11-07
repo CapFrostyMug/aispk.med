@@ -2,7 +2,7 @@
      width="20"
      height="20"
      fill="#666666"
-     class="bi bi-eye-fill"
+     class="bi bi-eye-fill custom-st-icon-hover"
      viewBox="0 0 16 16">
     <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
     <path

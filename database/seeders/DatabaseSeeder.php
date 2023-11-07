@@ -45,18 +45,18 @@ class DatabaseSeeder extends Seeder
         /**
          * Главная и второстепенные таблицы
          */
-        Passport::factory($studentMax)->create();
+        /*Passport::factory($studentMax)->create();
         Student::factory($studentMax)->create();
         Educational::factory($studentMax)->create();
         Seniority::factory($studentMax)->create();
         StudentsParentFather::factory($studentMax)->create();
         StudentsParentMother::factory($studentMax)->create();
-        Enrollment::factory($studentMax)->create();
+        Enrollment::factory($studentMax)->create();*/
 
         /**
          * Сводные таблицы
          */
-        $this->call(InformationForAdmissionSeeder::class);
-        $this->call(StudentSpecialCircumstanceSeeder::class);
+        /*$this->call(InformationForAdmissionSeeder::class);
+        $this->call(StudentSpecialCircumstanceSeeder::class);*/
     }
 }

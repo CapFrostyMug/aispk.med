@@ -30,7 +30,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 /**
  * Работа с личными делами
  */
-Route::prefix('personal-file')->name('personal-file.')->group(function () {
+Route::prefix('personal-files')->name('personal-file.')->group(function () {
 
     Route::get('/create', [PersonalFileController::class, 'create'])->name('create');
     Route::post('/create', [PersonalFileController::class, 'store'])->name('store');
@@ -45,7 +45,7 @@ Route::prefix('personal-file')->name('personal-file.')->group(function () {
         Route::get('/edit/file/{id}', [PersonalFileController::class, 'edit'])->name('edit');
         Route::post('/edit/file/{id}', [PersonalFileController::class, 'update'])->name('update');
 
-        Route::get('/export/file/{id}', [PersonalFileController::class, 'exportPersonalFileToWord'])->name('export');
+        Route::get('/export/file/{id}', [PersonalFileController::class, 'exportPersonalFileToWord'])->name('export-file');
         Route::get('/export/application/file/{id}', [PersonalFileController::class, 'exportApplicationToWord'])->name('export-application');
 
         Route::delete('/delete/file/{id}', [PersonalFileController::class, 'destroy'])->name('destroy');
@@ -58,8 +58,16 @@ Route::prefix('personal-file')->name('personal-file.')->group(function () {
  */
 Route::prefix('students-lists')->name('students-lists.')->group(function () {
 
-    Route::get('/search', [ListController::class, 'index'])->name('index');
-    Route::get('/search/result', [ListController::class, 'show'])->name('show');
+    Route::prefix('view-and-print')->name('view-and-print.')->group(function () {
+        Route::get('/', [ListController::class, 'viewAndPrintIndex'])->name('index');
+        Route::get('/filtered-list', [ListController::class, 'filter'])->name('filtered-list');
+    });
+
+    Route::prefix('enrollment-manage')->name('enrollment-manage.')->group(function () {
+        Route::get('/', [ListController::class, 'enrollmentManageIndex'])->name('index');
+        Route::get('/filtered-list', [ListController::class, 'filter'])->name('filtered-list');
+        Route::get('/change-status', [ListController::class, 'changeStatus'])->name('change-status');
+    });
 
 });
 
