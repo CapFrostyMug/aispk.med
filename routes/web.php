@@ -59,8 +59,8 @@ Route::prefix('personal-files')->name('personal-file.')->group(function () {
 Route::prefix('students-lists')->name('students-lists.')->group(function () {
 
     Route::prefix('view-and-print')->name('view-and-print.')->group(function () {
-        Route::get('/', [ListController::class, 'viewAndPrintIndex'])->name('index');
-        Route::get('/filtered-list', [ListController::class, 'filter'])->name('filtered-list');
+        Route::get('/', [ListController::class, 'filter'])->name('filter');
+        Route::get('/filtered-list', [ListController::class, 'filter'])->name('filter');
     });
 
     Route::prefix('enrollment-manage')->name('enrollment-manage.')->group(function () {

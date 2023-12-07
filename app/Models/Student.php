@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use App\Traits\Filter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Student extends Model
 {
     use HasFactory;
-    use Filter;
 
     protected $table = 'students';
 
@@ -149,6 +148,69 @@ class Student extends Model
                     'status' => $circumstanceValue,
                 ]
             );
+        }
+    }
+
+    public function scopeFilterByFaculties(Builder $query, $type)
+    {
+        return $query->where('faculties.id', '=', $type['faculty']);
+    }
+
+    public function scopeFilterByFinancingTypes(Builder $query, $type)
+    {
+        $arr = [];
+
+        foreach ($type['financingType'] as $key => $value) {
+            $arr[] = $value;
+        }
+        return $query->whereIn('financing_types.id', $arr)->groupBy('students.id');
+    }
+
+    public function scopeFilterByEnrollmentStatus(Builder $query, $type)
+    {
+        if (count($type['studentStatus']) > 1) {
+            return $query
+                ->groupBy('students.id');
+        }
+
+        foreach ($type['studentStatus'] as $key => $value) {
+
+            if ($type['faculty']) {
+                if ($value) {
+                    return $query
+                        ->whereNotNull('enrollment.decree_id')
+                        ->where('enrollment.faculty_id', '=', $type['faculty'])
+                        ->groupBy('students.id');
+                }
+
+                return $query
+                    ->whereNull('enrollment.decree_id')
+                    ->orWhere('enrollment.faculty_id', '!=', $type['faculty'])
+                    ->groupBy('students.id');
+            }
+
+            if ($value) {
+                return $query
+                    ->whereNotNull('enrollment.decree_id')
+                    ->groupBy('students.id');
+            }
+
+            return $query
+                ->whereNull('enrollment.decree_id')
+                ->groupBy('students.id');
+        }
+    }
+
+    public function scopeFilterByOriginalDocs(Builder $query, $type)
+    {
+        if (count($type['docsType']) > 1) {
+            return $query
+                ->groupBy('students.id');
+        }
+
+        foreach ($type['docsType'] as $key => $value) {
+            return $query
+                ->where('information_for_admission.is_original_docs', '=', $value);
         }
     }
 }
