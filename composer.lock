@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4fe3ad3de0a857e17fdeb010f732eb65",
+    "content-hash": "f55fedb2c73d3f69c486318ebe1d123c",
     "packages": [
         {
             "name": "brick/math",
@@ -1928,44 +1928,6 @@
                 }
             ],
             "time": "2023-08-05T12:09:49+00:00"
-        },
-        {
-            "name": "llagerlof/moodlerest",
-            "version": "2.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/llagerlof/MoodleRest.git",
-                "reference": "3fb24a0dd494d8dbbac70999b26627ce4ee63ac4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/llagerlof/MoodleRest/zipball/3fb24a0dd494d8dbbac70999b26627ce4ee63ac4",
-                "reference": "3fb24a0dd494d8dbbac70999b26627ce4ee63ac4",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "MoodleRest.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Lawrence Lagerlof",
-                    "email": "llagerlof@gmail.com"
-                }
-            ],
-            "description": "MoodleRest is a PHP class to query Moodle REST webservices",
-            "homepage": "https://github.com/llagerlof",
-            "support": {
-                "issues": "https://github.com/llagerlof/MoodleRest/issues",
-                "source": "https://github.com/llagerlof/MoodleRest/tree/v2.4.0"
-            },
-            "time": "2021-04-14T14:47:33+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -6958,27 +6920,27 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.25.0",
+            "version": "v1.26.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "e81a7bd7ac1a745ccb25572830fecf74a89bb48a"
+                "reference": "fa1ad5fbb03686dfc752bfd1861d86091cc1c32d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/e81a7bd7ac1a745ccb25572830fecf74a89bb48a",
-                "reference": "e81a7bd7ac1a745ccb25572830fecf74a89bb48a",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/fa1ad5fbb03686dfc752bfd1861d86091cc1c32d",
+                "reference": "fa1ad5fbb03686dfc752bfd1861d86091cc1c32d",
                 "shasum": ""
             },
             "require": {
-                "illuminate/console": "^8.0|^9.0|^10.0",
-                "illuminate/contracts": "^8.0|^9.0|^10.0",
-                "illuminate/support": "^8.0|^9.0|^10.0",
+                "illuminate/console": "^9.0|^10.0|^11.0",
+                "illuminate/contracts": "^9.0|^10.0|^11.0",
+                "illuminate/support": "^9.0|^10.0|^11.0",
                 "php": "^8.0",
-                "symfony/yaml": "^6.0"
+                "symfony/yaml": "^6.0|^7.0"
             },
             "require-dev": {
-                "orchestra/testbench": "^6.0|^7.0|^8.0",
+                "orchestra/testbench": "^7.0|^8.0|^9.0",
                 "phpstan/phpstan": "^1.10"
             },
             "bin": [
@@ -7019,7 +6981,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2023-09-11T17:37:09+00:00"
+            "time": "2023-12-02T18:26:39+00:00"
         },
         {
             "name": "maximebf/debugbar",
@@ -9252,9 +9214,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0.2",
-        "ext-curl": "*"
+        "php": "^8.0.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
