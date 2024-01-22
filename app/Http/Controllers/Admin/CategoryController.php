@@ -15,6 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        echo 'Список всех категорий';
     }
 
     /**
@@ -47,6 +48,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         //
+        echo 'Отдельная категория';
     }
 
     /**
