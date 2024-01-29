@@ -21,29 +21,31 @@
             </div>
             <button type="submit" class="btn btn-success col-2 ms-2 px-5">Поиск</button>
         </div>
-        @if(isset($student) && !empty($student))
-            <table class="table table-bordered table-striped mt-5">
-                <thead>
-                <tr class="custom-results-table-bg-color">
-                    <th scope="col" class="col-1 text-center">№</th>
-                    <th scope="col" class="col-3 text-center">Фамилия</th>
-                    <th scope="col" class="col-3 text-center">Имя</th>
-                    <th scope="col" class="col-3 text-center">Отчество</th>
-                    <th scope="col" class="col-2 text-center">Управление</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row" class="text-center">{{ $student->id }}</th>
-                    <td class="text-center">{{ $student->surname }}</td>
-                    <td class="text-center">{{ $student->name }}</td>
-                    <td class="text-center">{{ $student->patronymic }}</td>
-                    <td class="text-center d-flex justify-content-around">@include('manage-buttons')</td>
-                </tr>
-                </tbody>
-            </table>
-        @elseif(isset($student) && empty($student))
-            <p class="fs-5 text-danger pt-5">Ничего не найдено</p>
+        @if(isset($student))
+            @if(empty($student))
+                <p class="fs-5 text-danger pt-5">Ничего не найдено</p>
+            @else
+                <table class="table table-bordered table-striped mt-5">
+                    <thead>
+                    <tr class="custom-results-table-bg-color">
+                        <th scope="col" class="col-1 text-center">№</th>
+                        <th scope="col" class="col-3 text-center">Фамилия</th>
+                        <th scope="col" class="col-3 text-center">Имя</th>
+                        <th scope="col" class="col-3 text-center">Отчество</th>
+                        <th scope="col" class="col-2 text-center">Управление</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row" class="text-center">{{ $student->id }}</th>
+                        <td class="text-center">{{ $student->surname }}</td>
+                        <td class="text-center">{{ $student->name }}</td>
+                        <td class="text-center">{{ $student->patronymic }}</td>
+                        <td class="text-center d-flex justify-content-around">@include('manage-buttons')</td>
+                    </tr>
+                    </tbody>
+                </table>
+            @endif
         @endif
     </form>
 @endsection

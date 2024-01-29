@@ -43,18 +43,10 @@ class Passport extends Model
         );
     }
 
-    public function find($validatedData)
+    public function findPassportByNumber($validatedData)
     {
-        if (!isset($validatedData['search'])) {
-            return null;
+        if (isset($validatedData['search'])) {
+            return $this::firstWhere('number', $validatedData['search']);
         }
-
-        $passport = $this::firstWhere('number', $validatedData['search']);
-
-        if (is_null($passport)) {
-            return null;
-        }
-
-        return $passport;
     }
 }

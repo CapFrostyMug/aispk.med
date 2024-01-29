@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         /**
          * Таблицы категорий
          */
+        $this->call(CategoriesSeeder::class);
         $this->call(LanguagesSeeder::class);
         $this->call(NationalitySeeder::class);
         $this->call(EducationalInstitutionTypesSeeder::class);
