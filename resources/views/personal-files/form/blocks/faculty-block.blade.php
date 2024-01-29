@@ -2,7 +2,7 @@
     <div class="col-6">
         <label for="{{ isset($facultiesBlocks) && isset($blockName) ? "faculty_$blockName" : 'faculty_block_1' }}"
                class="form-label">
-            Наименование специальности*
+            Специальность*
         </label>
 
         <select id="{{ isset($facultiesBlocks) && isset($blockName) ? "faculty_$blockName" : 'faculty_block_1' }}"

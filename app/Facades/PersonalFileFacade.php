@@ -2,81 +2,15 @@
 
 namespace App\Facades;
 
-use App\Models\Decree;
-use App\Models\Educational;
-use App\Models\EducationalDocType;
-use App\Models\EducationalInstitutionType;
-use App\Models\Enrollment;
-use App\Models\Faculty;
-use App\Models\FinancingType;
-use App\Models\Language;
-use App\Models\Nationality;
-use App\Models\Passport;
-use App\Models\Seniority;
-use App\Models\SpecialCircumstance;
-use App\Models\Student;
-use App\Models\StudentsParentFather;
-use App\Models\StudentsParentMother;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpWord\TemplateProcessor;
 use PhpOffice\PhpWord\Style\Font;
 use PhpOffice\PhpWord\PhpWord;
+use Illuminate\Http\Request;
+use function PHPUnit\Framework\isEmpty;
 
-final class PersonalFileFacade
+final class PersonalFileFacade extends Facade
 {
-    protected $nationality;
-    protected $faculty;
-    protected $financing;
-    protected $edInstitutionType;
-    protected $language;
-    protected $edDocType;
-    protected $specialCircumstance;
-    protected $decree;
-    protected $passport;
-    protected $student;
-    protected $educational;
-    protected $seniority;
-    protected $studentsParentFather;
-    protected $studentsParentMother;
-    protected $enrollment;
-
-    public function __construct
-    (
-        Nationality $nationality = null,
-        Faculty $faculty = null,
-        FinancingType $financing = null,
-        EducationalInstitutionType $edInstitutionType = null,
-        Language $language = null,
-        EducationalDocType $edDocType = null,
-        SpecialCircumstance $specialCircumstance = null,
-        Decree $decree = null,
-        Passport $passport = null,
-        Student $student = null,
-        Educational $educational = null,
-        Seniority $seniority = null,
-        StudentsParentFather $studentsParentFather = null,
-        StudentsParentMother $studentsParentMother = null,
-        Enrollment $enrollment = null,
-    )
-    {
-        $this->nationality = $nationality ?: new Nationality();
-        $this->faculty = $faculty ?: new Faculty();
-        $this->financing = $financing ?: new FinancingType();
-        $this->edInstitutionType = $edInstitutionType ?: new EducationalInstitutionType();
-        $this->language = $language ?: new Language();
-        $this->edDocType = $edDocType ?: new EducationalDocType();
-        $this->specialCircumstance = $specialCircumstance ?: new SpecialCircumstance();
-        $this->decree = $decree ?: new Decree();
-        $this->passport = $passport ?: new Passport();
-        $this->student = $student ?: new Student();
-        $this->educational = $educational ?: new Educational();
-        $this->seniority = $seniority ?: new Seniority();
-        $this->studentsParentFather = $studentsParentFather ?: new StudentsParentFather();
-        $this->studentsParentMother = $studentsParentMother ?: new StudentsParentMother();
-        $this->enrollment = $enrollment ?: new Enrollment();
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -92,7 +26,7 @@ final class PersonalFileFacade
      *
      * @return array
      */
-    public function create()
+    public function create(): array
     {
         return $this->getLists();
     }
@@ -101,9 +35,9 @@ final class PersonalFileFacade
      * Store a newly created resource in storage.
      *
      * @param array $validatedData
-     * @return string
+     * @return string|object
      */
-    public function store($validatedData)
+    public function store(array $validatedData): string|object
     {
         try {
             DB::transaction(function () use ($validatedData) {
@@ -208,10 +142,11 @@ final class PersonalFileFacade
     /**
      * Display the specified resource.
      *
+     * @param Request $request
      * @param int $id
      * @return array
      */
-    public function show($id)
+    public function show(Request $request, int $id): array
     {
         return array_merge($this->getLists(), $this->getStudentWithRelatedModels($id) ?: []);
     }
@@ -222,7 +157,7 @@ final class PersonalFileFacade
      * @param int $id
      * @return array
      */
-    public function edit($id)
+    public function edit(int $id): array
     {
         return array_merge($this->getLists(), $this->getStudentWithRelatedModels($id) ?: []);
     }
@@ -232,9 +167,9 @@ final class PersonalFileFacade
      *
      * @param array $validatedData
      * @param int $id
-     * @return string
+     * @return null|object
      */
-    public function update($validatedData, $id)
+    public function update(array $validatedData, int $id)//: null|object
     {
         $student = $this->student->find($id);
         $passportId = $student->passport->id;
@@ -316,9 +251,9 @@ final class PersonalFileFacade
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return string|void
+     * @return null|string
      */
-    public function destroy($id)
+    public function destroy(int $id)//: null|string
     {
         try {
             $student = $this->student->find($id);
@@ -336,7 +271,7 @@ final class PersonalFileFacade
      *
      * @return array
      */
-    public function getLists()
+    public function getLists(): array
     {
         return [
             'nationality' => $this->nationality->all(),
@@ -354,9 +289,9 @@ final class PersonalFileFacade
      * [Method description].
      *
      * @param int $id
-     * @return array
+     * @return null|array
      */
-    public function getStudentWithRelatedModels($id)
+    public function getStudentWithRelatedModels(int $id): null|array
     {
         $student = $this->student
             ->with('passport')
@@ -396,18 +331,15 @@ final class PersonalFileFacade
     /**
      * [Method description].
      *
-     * @param array $validatedData
-     * @return string|array
+     * @param Request $request
+     * @return object|array
      */
-    public function find($validatedData)
+    public function find(Request $request): object|array
     {
-        $passport = $this->passport->find($validatedData);
+        $validatedData = $request->validate(['search' => 'alpha_dash', 'between:5,20']);
+        $passport = $this->passport->findPassportByNumber($validatedData);
 
-        if (!is_null($passport)) {
-            return $passport->student;
-        }
-
-        return '';
+        return $passport ? $passport->student : [];
     }
 
     /**
@@ -416,7 +348,7 @@ final class PersonalFileFacade
      * @param int $id
      * @return string
      */
-    public function exportApplicationToWord($id)
+    public function exportApplicationToWord(int $id): string
     {
         $data = array_merge($this->getLists(), $this->getStudentWithRelatedModels($id));
 

@@ -17,9 +17,9 @@
             </form>
 
             <div class="col-12 d-flex justify-content-center my-4">
-                @if(!empty($request))
-                    <span>Найдено записей: {{ $students->count() }}</span>
-                @endif
+                {{--@if(!empty($request))--}}
+                <span>Найдено записей: {{ $students->total() }}</span>
+                {{--@endif--}}
             </div>
 
             {{--@if(isset($students) && $students->isNotEmpty())
@@ -63,19 +63,19 @@
                 <p class="fs-5 text-danger mt-5">По выбранным параметрам личные дела не найдены.</p>
             @endif--}}
 
-            @if(isset($students) && $students->isNotEmpty())
-                <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr class="custom-results-table-bg-color">
-                        <th scope="col" class="col-1 text-center">№</th>
-                        <th scope="col" class="col-3 text-center">Фамилия</th>
-                        <th scope="col" class="col-3 text-center">Имя</th>
-                        <th scope="col" class="col-3 text-center">Отчество</th>
-                        <th scope="col" class="col-2 text-center">Управление</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($students as $student)
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr class="custom-results-table-bg-color">
+                    <th scope="col" class="col-1 text-center">№</th>
+                    <th scope="col" class="col-3 text-center">Фамилия</th>
+                    <th scope="col" class="col-3 text-center">Имя</th>
+                    <th scope="col" class="col-3 text-center">Отчество</th>
+                    <th scope="col" class="col-2 text-center">Управление</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if(isset($students))
+                    @forelse ($students as $student)
                         <tr>
                             <th scope="row" class="text-center">{{ $student->id }}</th>
                             <td class="text-center">{{ $student->surname }}</td>
@@ -83,15 +83,18 @@
                             <td class="text-center">{{ $student->patronymic }}</td>
                             <td class="text-center d-flex justify-content-around align-items-center">@include('manage-buttons')</td>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            @elseif (isset($students) && $students->isEmpty())
-                <p class="fs-5 text-danger mt-5">По выбранной специальности личные дела не найдены.</p>
-            @endif
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center">Ничего не найдено</td>
+                        </tr>
+                    @endforelse
+                @endif
+                </tbody>
+            </table>
         </div>
-        @if(isset($students) && $students->isNotEmpty())
-            <div class="block2">
+
+        @if(isset($students)/* && $students->isNotEmpty()*/)
+            <div class="mt-3">
                 {{ $students->links() }}
             </div>
         @endif

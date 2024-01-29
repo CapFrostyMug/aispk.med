@@ -76,18 +76,18 @@ Route::prefix('students-lists')->name('students-lists.')->group(function () {
  */
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    /*Route::prefix('users-manage')->name('users-manage.')->group(function () {
-        Route::get('/', [UserController::class, 'index'])->name('index');
-    });*/
-
     Route::prefix('manage')->name('manage.')->group(function () {
 
         Route::get('categories', [CategoryController::class, 'index'])->name('categories');
 
         Route::prefix('category')->name('category.')->group(function () {
-
-            Route::get('faculties', [CategoryController::class, 'show'])->name('faculties');
+            Route::get('/{slug}', [CategoryController::class, 'show'])->name('show');
+            Route::post('/create', [CategoryController::class, 'store'])->name('store');
+            Route::delete('/delete/item/{id}', [CategoryController::class, 'destroy'])->name('destroy');
         });
-    });
 
+        /*Route::prefix('users-manage')->name('users-manage.')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('index');
+        });*/
+    });
 });

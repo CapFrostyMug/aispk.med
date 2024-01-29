@@ -13,7 +13,7 @@ class PersonalFileFormRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -23,19 +23,15 @@ class PersonalFileFormRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         $student = Student::find($this->id);
-        $passportId = null;
-
-        if (isset($student)) {
-            $passportId = $student->passport->id;
-        }
+        $passportId = $student->passport->id ?? null;
 
         return [
             'surname' => 'alpha_dash|between:2,30|required',
             'name' => 'alpha_dash|between:2,30|required',
-            'patronymic' => 'alpha_dash|between:5,30|nullable',
+            'patronymic' => 'string|between:5,30|nullable',
             'gender' => 'alpha|between:4,6|required',
             'birthday' => 'date|required',
             'nationality' => 'integer|exists:App\Models\Nationality,id|required',
@@ -111,7 +107,7 @@ class PersonalFileFormRequest extends FormRequest
      *
      * @return array
      */
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'passportNumber' => '«серия и номер паспорта»',

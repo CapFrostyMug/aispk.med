@@ -66,7 +66,7 @@
 
 <div class="row mb-5 gy-3"> {{--СВЕДЕНИЯ ОБ ОБРАЗОВАНИИ: БЛОК 2--}}
     <div class="col-4">
-        <label for="educational-doc-type-1" class="form-label">Тип документа об образовании*</label>
+        <label for="educational-doc-type-1" class="form-label">Документ об образовании*</label>
         <select id="educational-doc-type-1"
                 class="form-select"
                 name="educationalDocType"

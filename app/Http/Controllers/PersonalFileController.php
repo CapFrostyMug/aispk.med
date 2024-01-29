@@ -7,6 +7,7 @@ use App\Http\Requests\PersonalFileFormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PersonalFileController extends Controller
 {
@@ -26,7 +27,7 @@ class PersonalFileController extends Controller
      * @param PersonalFileFacade $personalFileFacade
      * @return View
      */
-    public function create(PersonalFileFacade $personalFileFacade)
+    public function create(PersonalFileFacade $personalFileFacade): view
     {
         $data = $personalFileFacade->create();
         return view('personal-files.form.index', $data);
@@ -39,11 +40,15 @@ class PersonalFileController extends Controller
      * @param PersonalFileFacade $personalFileFacade
      * @return RedirectResponse
      */
-    public function store(PersonalFileFormRequest $personalFileFormRequest, PersonalFileFacade $personalFileFacade)
+    public function store
+    (
+        PersonalFileFormRequest $personalFileFormRequest,
+        PersonalFileFacade      $personalFileFacade
+    ): RedirectResponse
     {
         $response = $personalFileFacade->store($personalFileFormRequest->validated());
 
-        if (gettype($response) === 'object') {
+        if (is_object($response)) {
             return back()
                 ->withInput()
                 ->with('error', 'Системная ошибка: не удалось создать анкету. Попробуйте еще раз.
@@ -59,12 +64,13 @@ class PersonalFileController extends Controller
      * Display the specified resource.
      *
      * @param PersonalFileFacade $personalFileFacade
+     * @param Request $request
      * @param int $id
      * @return View
      */
-    public function show(PersonalFileFacade $personalFileFacade, $id)
+    public function show(PersonalFileFacade $personalFileFacade, Request $request, int $id): view
     {
-        $data = $personalFileFacade->show($id);
+        $data = $personalFileFacade->show($request, $id);
 
         if (empty($data['student'])) {
             abort(404);
@@ -80,7 +86,7 @@ class PersonalFileController extends Controller
      * @param int $id
      * @return View
      */
-    public function edit(PersonalFileFacade $personalFileFacade, $id)
+    public function edit(PersonalFileFacade $personalFileFacade, int $id): view
     {
         $data = $personalFileFacade->edit($id);
 
@@ -99,11 +105,16 @@ class PersonalFileController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(PersonalFileFormRequest $personalFileFormRequest, PersonalFileFacade $personalFileFacade, $id)
+    public function update
+    (
+        PersonalFileFormRequest $personalFileFormRequest,
+        PersonalFileFacade      $personalFileFacade,
+        int                     $id
+    ): RedirectResponse
     {
         $response = $personalFileFacade->update($personalFileFormRequest->validated(), $id);
 
-        if (gettype($response) === 'object') {
+        if (is_object($response)) {
             return back()
                 ->withInput()
                 ->with('error', 'Системная ошибка: не удалось обновить анкету. Попробуйте еще раз.
@@ -122,11 +133,11 @@ class PersonalFileController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
-    public function destroy(PersonalFileFacade $personalFileFacade, $id)
+    public function destroy(PersonalFileFacade $personalFileFacade, int $id): RedirectResponse
     {
         $response = $personalFileFacade->destroy($id);
 
-        if (gettype($response) === 'object') {
+        if (is_object($response)) {
             return back()
                 ->withInput()
                 ->with('error', 'Системная ошибка: не удалось удалить анкету. Попробуйте еще раз.');
@@ -142,7 +153,7 @@ class PersonalFileController extends Controller
      *
      * @return View
      */
-    public function search()
+    public function search(): view
     {
         return view('personal-files.search.index');
     }
@@ -154,17 +165,10 @@ class PersonalFileController extends Controller
      * @param PersonalFileFacade $personalFileFacade
      * @return View
      */
-    public function find(Request $request, PersonalFileFacade $personalFileFacade)
+    public function find(Request $request, PersonalFileFacade $personalFileFacade): view
     {
-        $validatedData = $request->validate([
-            'search' => 'alpha_dash', 'between:5,20',
-        ]);
-
-        $data = $personalFileFacade->find($validatedData);
-
-        return view('personal-files.search.index', [
-            'student' => $data
-        ]);
+        $data = $personalFileFacade->find($request);
+        return view('personal-files.search.index', ['student' => $data]);
     }
 
     /**
@@ -172,9 +176,9 @@ class PersonalFileController extends Controller
      *
      * @param PersonalFileFacade $personalFileFacade
      * @param int $id
-     * @return
+     * @return BinaryFileResponse
      */
-    public function exportApplicationToWord(PersonalFileFacade $personalFileFacade, $id)
+    public function exportApplicationToWord(PersonalFileFacade $personalFileFacade, int $id): BinaryFileResponse
     {
         $fileName = $personalFileFacade->exportApplicationToWord($id);
 
