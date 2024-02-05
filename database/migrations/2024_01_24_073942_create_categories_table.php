@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('name', 50)
                 ->unique()
                 ->nullable(false);
-            $table->string('table', 50)
+            $table->string('slug', 50)
                 ->unique()
                 ->nullable(false);
-            $table->string('slug', 50)
+            $table->string('table', 50)
                 ->unique()
                 ->nullable(false);
             $table->timestamps();

@@ -3,11 +3,22 @@
 namespace App\Facades\Admin;
 
 use App\Facades\Facade;
+use App\Models\Admin\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 final class CategoryFacade extends Facade
 {
+    protected object $category;
+
+    public function __construct
+    (
+        Category $category = null,
+    )
+    {
+        $this->category = $category ?: new Category();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,76 +26,84 @@ final class CategoryFacade extends Facade
      */
     public function index(): array
     {
-        return [
-            'data' => $this->category->all()
-        ];
+        return ['data' => $this->category->all()];
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        // TODO: Implement create() method.
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param array $validatedData
-     * @return string
+     * @return void|object
      */
-    public function store(array $validatedData)
+    public function store(array $validatedData)//: void|object
     {
-        DB::table($validatedData['table'])->insert(['name' => $validatedData['newItem']]);
+        try {
+            DB::transaction(function () use ($validatedData) {
+                DB::table($validatedData['table'])->insert(['name' => $validatedData['newItem']]);
+            }, 3);
+
+        } catch (\Exception $exception) {
+            return $exception;
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return array
+     * @param Request $request
+     * @return array|null
      */
-    public function show(Request $request, int $id = 0): array
+    public function show(Request $request): array|null
     {
         $table = $request->input('table');
-        return ['data' => DB::table($table)->get()];
+
+        $response = DB::table('categories')->where('table', $table)->get();
+
+        return $response->isNotEmpty() ? ['data' => DB::table($table)->get()] : null;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return array
      */
-    public function edit(int $id)
+    public function edit()
     {
-        //
+        // TODO: Implement edit() method.
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param array $validatedData
-     * @param int $id
-     * @return string
      */
-    public function update(array $validatedData, int $id)
+    public function update()
     {
-        //
+        // TODO: Implement update() method.
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return null|string
+     * @param Request|null $request
+     * @return void|object
      */
-    public function destroy(int $id)
+    public function destroy(int $id, Request $request = null)//: void|object
     {
-        //
+        try {
+            DB::transaction(function () use ($id, $request) {
+                DB::table($request->query('table'))->where('id', '=', $id)->delete();
+            }, 3);
+        } catch (\Exception $exception) {
+            return $exception;
+        }
     }
 }

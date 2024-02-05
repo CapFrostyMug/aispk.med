@@ -48,7 +48,7 @@ Route::prefix('personal-files')->name('personal-file.')->group(function () {
         Route::get('/export/file/{id}', [PersonalFileController::class, 'exportPersonalFileToWord'])->name('export-file');
         Route::get('/export/application/file/{id}', [PersonalFileController::class, 'exportApplicationToWord'])->name('export-application');
 
-        Route::delete('/delete/file/{id}', [PersonalFileController::class, 'destroy'])->name('destroy');
+        Route::delete('/delete/item/{id}', [PersonalFileController::class, 'destroy'])->name('destroy');
     });
 
 });
@@ -75,6 +75,8 @@ Route::prefix('students-lists')->name('students-lists.')->group(function () {
  * Административные функции
  */
 Route::prefix('admin')->name('admin.')->group(function () {
+
+    /**/
 
     Route::prefix('manage')->name('manage.')->group(function () {
 

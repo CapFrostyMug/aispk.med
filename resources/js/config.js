@@ -4,15 +4,12 @@ import capsLockDetector from './custom/personal-files/capsLockDetector';
 import checkboxHandler from './custom/personal-files/checkboxHandler';
 import hideTrashBasketIcon from './custom/personal-files/hideTrashBasketIcon';
 import {clickHandler as removeFacultyBlock} from './custom/personal-files/removeFacultyBlock';
-import removePersonalFile from './custom/personal-files/removePersonalFile';
-import removeSessionMessage from './custom/personal-files/removeSessionMessage';
+import removeItem from './custom/removeItem';
+import removeSessionMessage from './custom/removeSessionMessage';
 import resetFilter from './custom/lists/resetFilter';
 import resetForm from './custom/personal-files/resetForm';
 import viewFileFieldsHandler from './custom/personal-files/viewFileFieldsHandler';
 import WindowOnloadFunctions from './custom/windowOnloadFunctions';
-
-export const PERSONAL_FILE_REDIRECT_PATH = '/personal-files/manage/search';
-export const PERSONAL_FILE_REMOVE_PATH = '/personal-files/manage/delete/file/';
 
 export const CONFIG = {
 
@@ -35,7 +32,7 @@ export const CONFIG = {
         checkboxHandler,
         hideTrashBasketIcon,
         removeFacultyBlock,
-        removePersonalFile,
+        removeItem,
         removeSessionMessage,
         WindowOnloadFunctions,
     ],
@@ -43,17 +40,23 @@ export const CONFIG = {
     'personal-files/manage/view/file': [
         hideTrashBasketIcon,
         viewFileFieldsHandler,
-        removePersonalFile,
+        removeItem,
         removeSessionMessage,
     ],
 
     'personal-files/manage/search': [
         removeSessionMessage,
-        removePersonalFile,
+        removeItem,
     ],
 
     'students-lists/view-and-print': [
-        removePersonalFile,
+        removeItem,
+        removeSessionMessage,
         //resetFilter,
+    ],
+
+    'admin/manage/category': [
+        removeSessionMessage,
+        removeItem,
     ],
 };

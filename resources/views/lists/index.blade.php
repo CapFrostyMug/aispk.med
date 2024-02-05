@@ -81,7 +81,7 @@
                             <td class="text-center">{{ $student->surname }}</td>
                             <td class="text-center">{{ $student->name }}</td>
                             <td class="text-center">{{ $student->patronymic }}</td>
-                            <td class="text-center d-flex justify-content-around align-items-center">@include('manage-buttons')</td>
+                            <td class="d-flex justify-content-around align-items-center">@include('buttons.button-group-1')</td>
                         </tr>
                     @empty
                         <tr>

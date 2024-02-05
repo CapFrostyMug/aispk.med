@@ -77,7 +77,7 @@
 
     <div class="col-1 d-flex justify-content-center align-items-center custom-fn-remove-cart">
         <span class="custom-st-trashbasket-icon" title="Удалить строку">
-            @include('icons.personal-files.trashbasket')
+            @include('icons.other.trashbasket')
         </span>
     </div>
 </div>

@@ -23,36 +23,7 @@
         </h2>
         @if(!request()->routeIs('personal-file.create'))
             <div class="btn-group" role="group" aria-label="#">
-                {{--<a href="{{ url()->previous() }}" class="#"></a>--}}
-                @if(request()->routeIs('personal-file.manage.show'))
-                    <a class="btn btn-outline-secondary"
-                       href="{{ route('personal-file.manage.edit', $student->id) }}"
-                       role="button">Редактировать @include('icons.personal-files.manage-buttons.edit')
-                    </a>
-                @endif
-                <button class="btn btn-outline-secondary dropdown-toggle rounded-end-0 text-decoration-none"
-                        type="button"
-                        id="dropdownMenuPrintWord"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        title="Печать">Печать @include('icons.personal-files.manage-buttons.print')
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuPrintWord">
-                    <li>
-                        <a href="{{ route('personal-file.manage.export-application', $student->id) }}"
-                           class="text-decoration-none dropdown-item">Печать заявления
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('personal-file.manage.export-file', $student->id) }}"
-                           class="text-decoration-none dropdown-item disabled">Печать личного дела
-                        </a>
-                    </li>
-                </ul>
-                <button type="button"
-                        class="btn btn-danger custom-fn-personal-file-remove"
-                        data-student-id="{{ $student->id }}">Удалить @include('icons.personal-files.manage-buttons.remove')
-                </button>
+                @include('buttons.button-group-2')
             </div>
         @endif
     </div>

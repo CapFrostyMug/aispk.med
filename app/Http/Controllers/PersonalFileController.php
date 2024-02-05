@@ -48,27 +48,20 @@ class PersonalFileController extends Controller
     {
         $response = $personalFileFacade->store($personalFileFormRequest->validated());
 
-        if (is_object($response)) {
-            return back()
-                ->withInput()
-                ->with('error', 'Системная ошибка: не удалось создать анкету. Попробуйте еще раз.
-                Перед отправкой формы обязательно перепроверьте поля!');
-        } else {
-            return redirect()
-                ->route('personal-file.manage.show', $response)
-                ->with('success', 'Анкета успешно создана');
-        }
+        return is_object($response) ?
+            back()->withInput()->with('error', config('messages.personalFiles.error.store')) :
+            redirect()->route('personal-file.manage.show', $response)->with('success', config('messages.personalFiles.success.store'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param PersonalFileFacade $personalFileFacade
      * @param Request $request
+     * @param PersonalFileFacade $personalFileFacade
      * @param int $id
      * @return View
      */
-    public function show(PersonalFileFacade $personalFileFacade, Request $request, int $id): view
+    public function show(Request $request, PersonalFileFacade $personalFileFacade, int $id): view
     {
         $data = $personalFileFacade->show($request, $id);
 
@@ -114,16 +107,9 @@ class PersonalFileController extends Controller
     {
         $response = $personalFileFacade->update($personalFileFormRequest->validated(), $id);
 
-        if (is_object($response)) {
-            return back()
-                ->withInput()
-                ->with('error', 'Системная ошибка: не удалось обновить анкету. Попробуйте еще раз.
-                Перед отправкой формы обязательно перепроверьте поля!');
-        } else {
-            return redirect()
-                ->route('personal-file.manage.show', $id)
-                ->with('success', 'Анкета успешно обновлена');
-        }
+        return is_object($response) ?
+            back()->withInput()->with('error', config('messages.personalFiles.error.update')) :
+            redirect()->route('personal-file.manage.show', $id)->with('success', config('messages.personalFiles.success.update'));
     }
 
     /**
@@ -137,15 +123,9 @@ class PersonalFileController extends Controller
     {
         $response = $personalFileFacade->destroy($id);
 
-        if (is_object($response)) {
-            return back()
-                ->withInput()
-                ->with('error', 'Системная ошибка: не удалось удалить анкету. Попробуйте еще раз.');
-        } else {
-            return redirect()
-                ->route('personal-file.manage.search')
-                ->with('success', 'Анкета успешно удалена');
-        }
+        return is_object($response) ?
+            back()->withInput()->with('error', config('messages.personalFiles.error.destroy')) :
+            redirect()->route('personal-file.manage.search')->with('success', config('messages.personalFiles.success.destroy'));
     }
 
     /**
@@ -183,16 +163,5 @@ class PersonalFileController extends Controller
         $fileName = $personalFileFacade->exportApplicationToWord($id);
 
         return response()->download($fileName . '.docx')->deleteFileAfterSend(true);
-    }
-
-    /**
-     * [Method description].
-     *
-     * @param
-     * @return
-     */
-    public function exportPersonalFileToWord()
-    {
-        //
     }
 }

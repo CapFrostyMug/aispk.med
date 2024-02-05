@@ -32,7 +32,19 @@ class CategoryFormRequest extends FormRequest
                 'string', 'between:2,100', 'required',
                 Rule::unique($table, 'name')->ignore($this->id),
             ],
-            'table' => [],
+            'table' => 'alpha_dash|max:30|required',
+        ];
+    }
+
+    /**
+     * [Method description].
+     *
+     * @return array
+     */
+    public function attributes(): array
+    {
+        return [
+            'newItem' => '«Новый элемент»',
         ];
     }
 }

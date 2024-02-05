@@ -7,7 +7,6 @@
     @include('session-message')
     <p class="fs-5 mb-4">Введите серию и номер паспорта <strong>без пробелов</strong></p>
     <form action="{{ route('personal-file.manage.find') }}" method="get">
-        @csrf
         <div class="d-flex">
             <div class="col-3 me-4">
                 <input
@@ -41,7 +40,7 @@
                         <td class="text-center">{{ $student->surname }}</td>
                         <td class="text-center">{{ $student->name }}</td>
                         <td class="text-center">{{ $student->patronymic }}</td>
-                        <td class="text-center d-flex justify-content-around">@include('manage-buttons')</td>
+                        <td class="text-center d-flex justify-content-around">@include('buttons.button-group-1')</td>
                     </tr>
                     </tbody>
                 </table>
