@@ -2,23 +2,86 @@
 
 namespace App\Facades;
 
+use App\Models\Decree;
+use App\Models\Educational;
+use App\Models\EducationalDocType;
+use App\Models\EducationalInstitutionType;
+use App\Models\Enrollment;
+use App\Models\Faculty;
+use App\Models\FinancingType;
+use App\Models\Language;
+use App\Models\Nationality;
+use App\Models\Passport;
+use App\Models\Seniority;
+use App\Models\SpecialCircumstance;
+use App\Models\Student;
+use App\Models\StudentsParentFather;
+use App\Models\StudentsParentMother;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpWord\TemplateProcessor;
-use PhpOffice\PhpWord\Style\Font;
-use PhpOffice\PhpWord\PhpWord;
-use Illuminate\Http\Request;
-use function PHPUnit\Framework\isEmpty;
 
 final class PersonalFileFacade extends Facade
 {
+    protected object $nationality;
+    protected object $faculty;
+    protected object $financing;
+    protected object $edInstitutionType;
+    protected object $language;
+    protected object $edDocType;
+    protected object $specialCircumstance;
+    protected object $decree;
+    protected object $passport;
+    protected object $student;
+    protected object $educational;
+    protected object $seniority;
+    protected object $studentsParentFather;
+    protected object $studentsParentMother;
+    protected object $enrollment;
+
+    public function __construct
+    (
+        Nationality                $nationality = null,
+        Faculty                    $faculty = null,
+        FinancingType              $financing = null,
+        EducationalInstitutionType $edInstitutionType = null,
+        Language                   $language = null,
+        EducationalDocType         $edDocType = null,
+        SpecialCircumstance        $specialCircumstance = null,
+        Decree                     $decree = null,
+        Passport                   $passport = null,
+        Student                    $student = null,
+        Educational                $educational = null,
+        Seniority                  $seniority = null,
+        StudentsParentFather       $studentsParentFather = null,
+        StudentsParentMother       $studentsParentMother = null,
+        Enrollment                 $enrollment = null,
+    )
+    {
+        $this->nationality = $nationality ?: new Nationality();
+        $this->faculty = $faculty ?: new Faculty();
+        $this->financing = $financing ?: new FinancingType();
+        $this->edInstitutionType = $edInstitutionType ?: new EducationalInstitutionType();
+        $this->language = $language ?: new Language();
+        $this->edDocType = $edDocType ?: new EducationalDocType();
+        $this->specialCircumstance = $specialCircumstance ?: new SpecialCircumstance();
+        $this->decree = $decree ?: new Decree();
+        $this->passport = $passport ?: new Passport();
+        $this->student = $student ?: new Student();
+        $this->educational = $educational ?: new Educational();
+        $this->seniority = $seniority ?: new Seniority();
+        $this->studentsParentFather = $studentsParentFather ?: new StudentsParentFather();
+        $this->studentsParentMother = $studentsParentMother ?: new StudentsParentMother();
+        $this->enrollment = $enrollment ?: new Enrollment();
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        // TODO: Implement index() method.
     }
 
     /**
@@ -144,9 +207,9 @@ final class PersonalFileFacade extends Facade
      *
      * @param Request $request
      * @param int $id
-     * @return array
+     * @return array|null
      */
-    public function show(Request $request, int $id): array
+    public function show(Request $request, int $id = 0): array|null
     {
         return array_merge($this->getLists(), $this->getStudentWithRelatedModels($id) ?: []);
     }
@@ -157,7 +220,7 @@ final class PersonalFileFacade extends Facade
      * @param int $id
      * @return array
      */
-    public function edit(int $id): array
+    public function edit(int $id = 0): array
     {
         return array_merge($this->getLists(), $this->getStudentWithRelatedModels($id) ?: []);
     }
@@ -167,9 +230,9 @@ final class PersonalFileFacade extends Facade
      *
      * @param array $validatedData
      * @param int $id
-     * @return null|object
+     * @return void|object
      */
-    public function update(array $validatedData, int $id)//: null|object
+    public function update(array $validatedData = [], int $id = 0)//: void|object
     {
         $student = $this->student->find($id);
         $passportId = $student->passport->id;
@@ -251,16 +314,18 @@ final class PersonalFileFacade extends Facade
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return null|string
+     * @return void|object
      */
-    public function destroy(int $id)//: null|string
+    public function destroy(int $id)//: void|string
     {
         try {
-            $student = $this->student->find($id);
-            $passport = $student->passport;
+            DB::transaction(function () use ($id) {
+                $student = $this->student->find($id);
+                $passport = $student->passport;
 
-            $student->delete();
-            $passport->delete();
+                $student->delete();
+                $passport->delete();
+            }, 3);
         } catch (\Exception $exception) {
             return $exception;
         }
@@ -271,7 +336,7 @@ final class PersonalFileFacade extends Facade
      *
      * @return array
      */
-    public function getLists(): array
+    private function getLists(): array
     {
         return [
             'nationality' => $this->nationality->all(),
@@ -291,7 +356,7 @@ final class PersonalFileFacade extends Facade
      * @param int $id
      * @return null|array
      */
-    public function getStudentWithRelatedModels(int $id): null|array
+    private function getStudentWithRelatedModels(int $id): null|array
     {
         $student = $this->student
             ->with('passport')
@@ -435,36 +500,4 @@ final class PersonalFileFacade extends Facade
 
         return $fileName;
     }
-
-    /**
-     * [Method description].
-     *
-     * @param
-     * @return
-     */
-    public function exportPersonalFileToWord()
-    {
-        //
-    }
-
-    /**
-     * [Method description].
-     *
-     * @param string $text
-     * @return object
-     */
-    /*public function phpWordMakeTextBold($text)
-    {
-        $phpWord = new PhpWord();
-        $section = $phpWord->addSection();
-
-        $fontStyle = new Font();
-        $fontStyle->setBold(true);
-
-        $myTextElement = $section->addText($text);
-
-        $myTextElement->setFontStyle($fontStyle);
-
-        return $myTextElement;
-    }*/
 }
