@@ -1,7 +1,7 @@
 export default function removeItem() {
 
     let buttons = document.querySelectorAll('.custom-fn-remove');
-    let redirectUrl = `${location.origin}/personal-files/manage/search`;
+    let redirectUrl = `${location.origin}/personal-files/manage/personal-file/search`;
 
     async function send(url) {
         let response = await fetch(url, {

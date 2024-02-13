@@ -6,13 +6,12 @@ use App\Models\Faculty;
 use App\Models\FinancingType;
 use App\Models\Student;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
 
-final class ListFacade
+class ListFacade
 {
-    protected $faculty;
-    protected $financing;
-    protected $student;
+    protected object $faculty;
+    protected object $financing;
+    protected object $student;
 
     public function __construct
     (
@@ -27,12 +26,12 @@ final class ListFacade
     }
 
     /**
-     * [Method description].
+     * Display a listing of the resource.
      *
      * @param Request $request
-     * @return
+     * @return array
      */
-    public function filter(Request $request)
+    public function index(Request $request): array
     {
         $faculties = $this->faculty->all();
         $students = $this->student
@@ -41,14 +40,77 @@ final class ListFacade
             ->with('enrollment')
             ->with('educational')
             ->paginate(config('paginate.studentsList'))->withQueryString();
-            //->get();
-
-        //dd($students);
 
         return [
             'faculties' => $faculties,
             'students' => $students,
             'request' => $request ?? null, // Отображение кол-ва наденных записей
         ];
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }

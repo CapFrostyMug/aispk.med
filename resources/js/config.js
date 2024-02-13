@@ -13,7 +13,7 @@ import WindowOnloadFunctions from './custom/windowOnloadFunctions';
 
 export const CONFIG = {
 
-    '/personal-files/create': [
+    '/personal-files/create-personal-file': [
         addFacultyBlock,
         avgCalculator,
         capsLockDetector,
@@ -25,7 +25,7 @@ export const CONFIG = {
         WindowOnloadFunctions,
     ],
 
-    'personal-files/manage/edit/file': [
+    'personal-files/manage/personal-file/edit': [
         addFacultyBlock,
         avgCalculator,
         capsLockDetector,
@@ -37,25 +37,25 @@ export const CONFIG = {
         WindowOnloadFunctions,
     ],
 
-    'personal-files/manage/view/file': [
+    'personal-files/manage/personal-file/view': [
         hideTrashBasketIcon,
         viewFileFieldsHandler,
         removeItem,
         removeSessionMessage,
     ],
 
-    'personal-files/manage/search': [
+    'personal-files/manage/personal-file/search': [
         removeSessionMessage,
         removeItem,
     ],
 
-    'students-lists/view-and-print': [
+    'students-lists': [
         removeItem,
         removeSessionMessage,
         //resetFilter,
     ],
 
-    'admin/manage/category': [
+    'admin/manage/categories/category': [
         removeSessionMessage,
         removeItem,
     ],

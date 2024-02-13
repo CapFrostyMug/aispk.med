@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name', 100)
                 ->unique()
                 ->nullable(false);
+            $table->boolean('permission_remove')->default(1)->nullable(false);
             $table->timestamps();
         });
     }

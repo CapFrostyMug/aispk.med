@@ -1,7 +1,7 @@
 {{--<a href="{{ url()->previous() }}" class="#"></a>--}}
-@if(request()->routeIs('personal-file.manage.show'))
+@if(request()->routeIs('personal-files.manage.personal-file.show'))
     <a class="btn btn-outline-secondary"
-       href="{{ route('personal-file.manage.edit', $student->id) }}"
+       href="{{ route('personal-files.manage.personal-file.edit', $student->id) }}"
        role="button">Редактировать @include('icons.buttons.button-group-2.edit')
     </a>
 @endif
@@ -14,12 +14,12 @@
 </button>
 <ul class="dropdown-menu" aria-labelledby="dropdownMenuPrintWord">
     <li>
-        <a href="{{ route('personal-file.manage.export-application', $student->id) }}"
+        <a href="{{ route('personal-files.manage.personal-file.export-app', $student->id) }}"
            class="text-decoration-none dropdown-item">Печать заявления
         </a>
     </li>
     <li>
-        <a href="{{ route('personal-file.manage.export-file', $student->id) }}"
+        <a href="#"
            class="text-decoration-none dropdown-item disabled">Печать личного дела
         </a>
     </li>
@@ -27,6 +27,6 @@
 <button type="button"
         class="btn btn-danger custom-fn-remove"
         data-item-id="{{ $student->id }}"
-        data-delete-url="{{ route('personal-file.manage.destroy', $student->id) }}">
+        data-delete-url="{{ route('personal-files.manage.personal-file.destroy', $student->id) }}">
     Удалить @include('icons.buttons.button-group-2.remove')
 </button>

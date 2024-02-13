@@ -399,10 +399,10 @@ final class PersonalFileFacade extends Facade
      * @param Request $request
      * @return object|array
      */
-    public function find(Request $request): object|array
+    public function search(Request $request): object|array
     {
-        $validatedData = $request->validate(['search' => 'alpha_dash', 'between:5,20']);
-        $passport = $this->passport->findPassportByNumber($validatedData);
+        $validatedData = $request->validate(['passport-number' => 'alpha_dash', 'between:5,20']);
+        $passport = $this->passport->findPassportByNumber($validatedData['passport-number']);
 
         return $passport ? $passport->student : [];
     }
@@ -438,7 +438,7 @@ final class PersonalFileFacade extends Facade
 
         /** Формируем массив из "особых обстоятельств", задействуя сводную таблицу */
         foreach ($data['specialCircumstancesForEdit'] as $specialCircumstance) {
-            $specialCircumstances[$specialCircumstance->name] = $specialCircumstance->pivot->status;
+            $specialCircumstances[$specialCircumstance->id] = $specialCircumstance->pivot->status;
         }
 
         $templateProcessor->setValues([
@@ -488,9 +488,9 @@ final class PersonalFileFacade extends Facade
             'faculty_with_original_docs' => $facultyWithOriginalDocs ?: 'Отсутствуют',
             'is_original_docs' => $facultyWithOriginalDocs ? 'оригинал' : 'копия',
 
-            'special_circumstances_dormitory' => $specialCircumstances['Общежитие'] ? 'Да' : 'Нет',
-            'special_circumstances_disability' => $specialCircumstances['Инвалидность'] ? 'Да' : 'Нет',
-            'special_circumstances_spec_conditions' => $specialCircumstances['Специальные условия'] ? 'Да' : 'Нет',
+            'special_circumstances_dormitory' => $specialCircumstances[1] ? 'Да' : 'Нет', // Общежитие
+            'special_circumstances_disability' => $specialCircumstances[2] ? 'Да' : 'Нет', // Инвалидность
+            'special_circumstances_spec_conditions' => $specialCircumstances[5] ? 'Да' : 'Нет', // Специальные условия
 
             'current_date' => date('d.m.Y'),
         ]);

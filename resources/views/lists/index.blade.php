@@ -11,7 +11,7 @@
 
             @include('session-message')
 
-            <form action="{{ route('students-lists.view-and-print.filter') }}" method="get" class="custom-fn-form">
+            <form action="{{ route('students-lists.index') }}" method="get" class="custom-fn-form">
                 @csrf
                 @include('lists.search-filter')
             </form>

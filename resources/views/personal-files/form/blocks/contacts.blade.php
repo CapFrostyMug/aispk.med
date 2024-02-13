@@ -22,7 +22,7 @@
             name="email"
             value="{{ old('email') ?? $student->email ?? '' }}"
             type="email"
-            placeholder="example@mail.com"
+            placeholder=""
             aria-describedby="email-1-validation">
         @error('email')
         <div id="email-1-validation" class="invalid-feedback">

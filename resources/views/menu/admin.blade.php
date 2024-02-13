@@ -6,10 +6,10 @@
         <a class="dropdown-item" href="#">Календарь</a>
     </li>
     <li>
-        <a class="dropdown-item" href="{{ route('admin.manage.categories') }}">Категории</a>
+        <a class="dropdown-item" href="{{ route('admin.manage.categories.index') }}">Категории</a>
     </li>
     <li>
-        <a class="dropdown-item" href="#">Пользователи</a>
+        <a class="dropdown-item" href="{{ route('admin.manage.users.index') }}">Пользователи</a>
     </li>
     <li>
         <a class="dropdown-item" href="#">Сайт</a>
