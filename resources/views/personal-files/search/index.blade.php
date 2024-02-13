@@ -6,13 +6,13 @@
     <h2 class="fw-bold py-5">Поиск анкеты</h2>
     @include('session-message')
     <p class="fs-5 mb-4">Введите серию и номер паспорта <strong>без пробелов</strong></p>
-    <form action="{{ route('personal-file.manage.find') }}" method="get">
+    <form action="{{ route('personal-files.manage.personal-file.search') }}" method="get">
         <div class="d-flex">
             <div class="col-3 me-4">
                 <input
                     class="form-control"
                     aria-label="Поиск"
-                    name="search"
+                    name="passport-number"
                     value=""
                     type="search"
                     required

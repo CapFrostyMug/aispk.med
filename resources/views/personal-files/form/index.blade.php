@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('title')
-    @if(request()->routeIs('personal-file.create'))
+    @if(request()->routeIs('personal-files.create'))
         Создание личного дела
-    @elseif(request()->routeIs('personal-file.manage.show'))
+    @elseif(request()->routeIs('personal-files.manage.personal-file.show'))
         Просмотр личного дела
     @else
         Редактирование личного дела
@@ -13,15 +13,15 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center">
         <h2 class="fw-bold py-5">
-            @if(request()->routeIs('personal-file.create'))
+            @if(request()->routeIs('personal-files.create'))
                 Создание личного дела
-            @elseif(request()->routeIs('personal-file.manage.show'))
+            @elseif(request()->routeIs('personal-files.manage.personal-file.show'))
                 Просмотр личного дела
             @else
                 Редактирование личного дела
             @endif
         </h2>
-        @if(!request()->routeIs('personal-file.create'))
+        @if(!request()->routeIs('personal-files.create'))
             <div class="btn-group" role="group" aria-label="#">
                 @include('buttons.button-group-2')
             </div>
@@ -44,25 +44,25 @@
     @include('session-message')
 
     <form
-        action="{{ isset($student->id) ? route('personal-file.manage.update', $student->id) : route('personal-file.store') }}"
+        action="{{ isset($student->id) ? route('personal-files.manage.personal-file.update', $student->id) : route('personal-files.store') }}"
         method="post"
         class="custom-fn-form">
         @csrf
-        @if(request()->routeIs('personal-file.manage.update'))
+        @if(request()->routeIs('personal-files.manage.personal-file.update'))
             @method('put')
-        @elseif(request()->routeIs('personal-file.manage.destroy'))
+        @elseif(request()->routeIs('personal-files.manage.personal-file.destroy'))
             @method('delete')
         @endif
 
         @include('personal-files.form.blocks.index')
 
-        @if(!request()->routeIs('personal-file.manage.show'))
+        @if(!request()->routeIs('personal-files.manage.personal-file.show'))
             <div class="d-flex justify-content-center">
                 <button class="btn btn-success custom-st-form-button-size me-5" type="submit">
                     {{ isset($student->id) ? __('Обновить') : __('Сохранить') }}
                 </button>
 
-                @if(request()->routeIs('personal-file.create'))
+                @if(request()->routeIs('personal-files.create'))
                     <button class="btn btn-secondary custom-st-form-button-size custom-fn-reset-form" type="button">
                         Очистить форму
                     </button>

@@ -15,12 +15,10 @@ return new class extends Migration
     {
         Schema::create('special_circumstances', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 25)
+            $table->string('name', 100)
                 ->unique()
                 ->nullable(false);
-            $table->string('text', 100)
-                ->unique()
-                ->nullable(false);
+            $table->boolean('permission_remove')->default(1)->nullable(false);
             $table->timestamps();
         });
     }

@@ -64,7 +64,7 @@ class CategoryController extends Controller
             abort(404);
         }
 
-        return view('admin.manage.categories.index', $data);
+        return view('admin.manage.categories.category-page', $data);
     }
 
     /**

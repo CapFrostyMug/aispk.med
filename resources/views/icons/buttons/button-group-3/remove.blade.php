@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      width="20"
      height="20"
-     fill="#FF0000"
+     fill="{{ $item->permission_remove ? '#FF0000' : '#6C757D' }}"
      class="bi bi-trash3-fill custom-st-icon-remove-hover"
      viewBox="0 0 16 16">
     <path

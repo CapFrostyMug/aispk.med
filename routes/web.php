@@ -23,73 +23,74 @@ use App\Http\Controllers\PersonalFileController;
     return view('welcome');
 });*/
 
-Auth::routes();
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 /**
- * Работа с личными делами
+ * Личные дела
  */
-Route::prefix('personal-files')->name('personal-file.')->group(function () {
+Route::prefix('personal-files')->name('personal-files.')->group(function () {
 
-    Route::get('/create', [PersonalFileController::class, 'create'])->name('create');
-    Route::post('/create', [PersonalFileController::class, 'store'])->name('store');
+    Route::get('/create-personal-file', [PersonalFileController::class, 'create'])->name('create');
+    Route::post('/create-personal-file', [PersonalFileController::class, 'store'])->name('store');
 
-    Route::prefix('manage')->name('manage.')->group(function () {
-
+    Route::prefix('manage/personal-file')->name('manage.personal-file.')->group(function () {
         Route::get('/search', [PersonalFileController::class, 'search'])->name('search');
-        Route::get('/search/result', [PersonalFileController::class, 'find'])->name('find');
-
-        Route::get('/view/file/{id}', [PersonalFileController::class, 'show'])->name('show');
-
-        Route::get('/edit/file/{id}', [PersonalFileController::class, 'edit'])->name('edit');
-        Route::post('/edit/file/{id}', [PersonalFileController::class, 'update'])->name('update');
-
-        Route::get('/export/file/{id}', [PersonalFileController::class, 'exportPersonalFileToWord'])->name('export-file');
-        Route::get('/export/application/file/{id}', [PersonalFileController::class, 'exportApplicationToWord'])->name('export-application');
-
-        Route::delete('/delete/item/{id}', [PersonalFileController::class, 'destroy'])->name('destroy');
+        Route::get('/{id}/view', [PersonalFileController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [PersonalFileController::class, 'edit'])->name('edit');
+        Route::post('/{id}/edit', [PersonalFileController::class, 'update'])->name('update');
+        Route::delete('/{id}/delete', [PersonalFileController::class, 'destroy'])->name('destroy');
+        Route::get('/{id}/export/application', [PersonalFileController::class, 'exportApplicationToWord'])->name('export-app');
     });
-
 });
 
 /**
- * Работа со списками
+ * Списки
  */
 Route::prefix('students-lists')->name('students-lists.')->group(function () {
-
-    Route::prefix('view-and-print')->name('view-and-print.')->group(function () {
-        Route::get('/', [ListController::class, 'filter'])->name('filter');
-        Route::get('/filtered-list', [ListController::class, 'filter'])->name('filter');
-    });
-
-    Route::prefix('enrollment-manage')->name('enrollment-manage.')->group(function () {
-        Route::get('/', [ListController::class, 'enrollmentManageIndex'])->name('index');
-        Route::get('/filtered-list', [ListController::class, 'filter'])->name('filtered-list');
-        Route::get('/change-status', [ListController::class, 'changeStatus'])->name('change-status');
-    });
-
+    Route::get('/', [ListController::class, 'index'])->name('index');
+    Route::get('/manage/enrollment', [ListController::class, ''])->name('');
 });
 
 /**
- * Административные функции
+ * Журналы регистрации
  */
-Route::prefix('admin')->name('admin.')->group(function () {
 
-    /**/
+/**
+ * Отчётность
+ */
 
-    Route::prefix('manage')->name('manage.')->group(function () {
+/**
+ * Админка
+ */
+Route::prefix('admin/manage')->name('admin.manage.')->group(function () {
 
-        Route::get('categories', [CategoryController::class, 'index'])->name('categories');
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/create-user', [UserController::class, 'create'])->name('create');
+        Route::post('/create-user', [UserController::class, 'store'])->name('store');
+
+        Route::prefix('user')->name('user.')->group(function () {
+            Route::get('/{id}/profile/view', [UserController::class, 'show'])->name('show');
+            Route::get('/{id}/profile/edit', [UserController::class, 'edit'])->name('edit');
+            Route::post('/{id}/profile/edit', [UserController::class, 'update'])->name('update');
+            Route::delete('/{id}/delete', [UserController::class, 'destroy'])->name('destroy');
+        });
+    });
+
+    Route::prefix('categories')->name('categories.')->group(function () {
+
+        Route::get('/', [CategoryController::class, 'index'])->name('index');
 
         Route::prefix('category')->name('category.')->group(function () {
             Route::get('/{slug}', [CategoryController::class, 'show'])->name('show');
-            Route::post('/create', [CategoryController::class, 'store'])->name('store');
-            Route::delete('/delete/item/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+            Route::post('/create-item', [CategoryController::class, 'store'])->name('store');
+            Route::delete('/item/{id}/delete', [CategoryController::class, 'destroy'])->name('destroy');
         });
-
-        /*Route::prefix('users-manage')->name('users-manage.')->group(function () {
-            Route::get('/', [UserController::class, 'index'])->name('index');
-        });*/
     });
+
+    Route::prefix('database')->name('database.')->group(function () {});
+    Route::prefix('calendar')->name('calendar.')->group(function () {});
+    Route::prefix('website')->name('website.')->group(function () {});
 });
+
+Auth::routes();

@@ -50,7 +50,7 @@ class PersonalFileController extends Controller
 
         return is_object($response) ?
             back()->withInput()->with('error', config('messages.personalFiles.error.store')) :
-            redirect()->route('personal-file.manage.show', $response)->with('success', config('messages.personalFiles.success.store'));
+            redirect()->route('personal-files.manage.personal-file.show', $response)->with('success', config('messages.personalFiles.success.store'));
     }
 
     /**
@@ -109,7 +109,7 @@ class PersonalFileController extends Controller
 
         return is_object($response) ?
             back()->withInput()->with('error', config('messages.personalFiles.error.update')) :
-            redirect()->route('personal-file.manage.show', $id)->with('success', config('messages.personalFiles.success.update'));
+            redirect()->route('personal-files.manage.personal-file.show', $id)->with('success', config('messages.personalFiles.success.update'));
     }
 
     /**
@@ -125,17 +125,7 @@ class PersonalFileController extends Controller
 
         return is_object($response) ?
             back()->withInput()->with('error', config('messages.personalFiles.error.destroy')) :
-            redirect()->route('personal-file.manage.search')->with('success', config('messages.personalFiles.success.destroy'));
-    }
-
-    /**
-     * [Method description].
-     *
-     * @return View
-     */
-    public function search(): view
-    {
-        return view('personal-files.search.index');
+            redirect()->route('personal-files.manage.personal-file.search')->with('success', config('messages.personalFiles.success.destroy'));
     }
 
     /**
@@ -145,10 +135,14 @@ class PersonalFileController extends Controller
      * @param PersonalFileFacade $personalFileFacade
      * @return View
      */
-    public function find(Request $request, PersonalFileFacade $personalFileFacade): view
+    public function search(Request $request, PersonalFileFacade $personalFileFacade): view
     {
-        $data = $personalFileFacade->find($request);
-        return view('personal-files.search.index', ['student' => $data]);
+        if ($request->input('passport-number')) {
+            $data = $personalFileFacade->search($request);
+            return view('personal-files.search.index', ['student' => $data]);
+        }
+
+        return view('personal-files.search.index');
     }
 
     /**

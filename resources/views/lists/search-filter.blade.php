@@ -99,7 +99,7 @@
     <div class="col-12 mt-3">
         <button class="col-2 btn btn-success me-3" type="submit">Поиск</button>
         <a class="col-2 btn btn-secondary"
-           href="{{ route('students-lists.view-and-print.filter') }}"
+           href="{{ route('students-lists.index') }}"
            role="button">Очистить
         </a>
     </div>

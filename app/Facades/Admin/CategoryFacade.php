@@ -94,16 +94,27 @@ final class CategoryFacade extends Facade
      *
      * @param int $id
      * @param Request|null $request
-     * @return void|object
+     * @return array|object
      */
     public function destroy(int $id, Request $request = null)//: void|object
     {
-        try {
-            DB::transaction(function () use ($id, $request) {
-                DB::table($request->query('table'))->where('id', '=', $id)->delete();
-            }, 3);
-        } catch (\Exception $exception) {
-            return $exception;
+        $permissionRemove = DB::table($request->query('table'))
+            ->where('id', '=', $id)
+            ->first()->permission_remove;
+
+        if ($permissionRemove) {
+            try {
+                DB::transaction(function () use ($id, $request) {
+                    DB::table($request->query('table'))->where('id', '=', $id)->delete();
+                }, 3);
+
+                return [];
+
+            } catch (\Exception $exception) {
+                return $exception;
+            }
         }
+
+        return new \Exception();
     }
 }

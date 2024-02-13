@@ -1,70 +1,17 @@
 @extends('layouts.app')
 
-@section('title')
-    @if(request()->routeIs('admin.manage.categories'))
-        Управление категориями
-    @elseif(request()->routeIs('admin.manage.category.show'))
-        Управление категорией: {{ request()->query('category') }}
-    @endif
-@endsection
+@section('title', 'Управление категориями')
 
 @section('content')
-
-    @if(request()->routeIs('admin.manage.category.show'))
-        <a href="{{ route('admin.manage.categories') }}"
-           class="text-decoration-none">@include('icons.other.arrow-left-circle')К списку категорий</a>
-    @endif
-
-    <h2 class="fw-bold py-5">
-        @if(request()->routeIs('admin.manage.categories'))
-            Управление категориями
-        @elseif(request()->routeIs('admin.manage.category.show'))
-            Управление категорией: «{{ request()->query('category') }}»
-        @endif
-    </h2>
-
+    <h2 class="fw-bold py-5">Управление категориями</h2>
     <div class="row">
-
         @include('session-message')
-
         <div class="col-6">
-            @if(request()->routeIs('admin.manage.category.show'))
-                <form
-                    action="{{ route('admin.manage.category.store', ['table' => request()->query('table')]) }}"
-                    method="post"
-                    class="mb-5">
-                    @csrf
-                    <div class="input-group mb-3">
-                        <label for="newItem-1" class="form-label"></label>
-                        <input id="newItem-1"
-                               class="form-control @error('newItem') is-invalid @enderror"
-                               name="newItem"
-                               value="{{ old('newItem') ?? $newItem->name ?? '' }}"
-                               type="text"
-                               placeholder="Новый элемент"
-                               required
-                               aria-describedby="newItem-1-validation">
-                        <button class="btn btn-outline-secondary rounded-0" title="Добавить" type="submit"
-                                id="button-addon2">
-                            <span class="fw-bold fs-5">+</span>
-                        </button>
-                        @error('newItem')
-                        <div id="newItem-1-validation" class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-                </form>
-            @endif
-
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th scope="col" class="col-1 text-center">№</th>
                     <th scope="col" class="col-10 text-center">Наименование</th>
-                    @if(request()->routeIs('admin.manage.category.show'))
-                        <th scope="col" class="col-1 text-center">Управление</th>
-                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -72,20 +19,13 @@
                     @php $counter = 1; @endphp
                     @forelse ($data as $item)
                         <tr>
-                            <th scope="row" class="text-center">{{ $counter }}</th>
-                            @if(request()->routeIs('admin.manage.categories'))
-                                <td class="text-start align-middle p-0">
-                                    <a href="{{ route('admin.manage.category.show', ['slug' => $item->slug,
-                                                                                     'table' => $item->table,
-                                                                                     'category' => $item->name]) }}"
-                                       class="text-decoration-none d-block h-100 p-2">{{ $item->name }}</a>
-                                </td>
-                            @else
-                                <td class="text-start align-middle p-0">
-                                    <span class="d-inline-block align-middle ms-3">{{ $item->name }}</span>
-                                </td>
-                                <td class="d-flex justify-content-around align-items-center">@include('buttons.button-group-3')</td>
-                            @endif
+                            <th scope="row" class="text-center align-middle">{{ $counter }}</th>
+                            <td class="text-start align-middle">
+                                <a href="{{ route('admin.manage.categories.category.show', ['slug' => $item->slug,
+                                                                                            'table' => $item->table,
+                                                                                            'category' => $item->name]) }}"
+                                   class="text-decoration-none d-block h-100 p-0">{{ $item->name }}</a>
+                            </td>
                         </tr>
                         @php $counter++; @endphp
                     @empty

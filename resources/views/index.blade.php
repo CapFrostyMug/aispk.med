@@ -5,7 +5,7 @@
 @section('content')
     <div class="#">
         <h2 class="fw-bold">
-            Главная страница
+            Добро пожаловать!
         </h2>
     </div>
 @endsection
