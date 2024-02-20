@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'AISPK') }} | @yield('title')</title>
+    <title>{{ config('app.name', 'АИС «Приёмная комиссия»') }} | @yield('title')</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -21,7 +21,7 @@
     <nav class="navbar navbar-expand-md navbar-light shadow-sm custom-st-master-navbar p-1">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
-                <img src="/img/aispk-logo.svg" alt="aispk-logo" width="50" height="54">
+                <img src="/img/aispk-logo.svg" alt="logo" width="50" height="54">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -31,13 +31,15 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-            @include('menu.index')
+                @if(Auth::check())
+                    @include('menu.index')
+                @endif
 
-            <!-- Right Side Of Navbar -->
+                <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
                     @guest
-                        @if (Route::has('login'))
+                        {{--@if (Route::has('login'))
                             <li class="nav-item">
                                 <a class="nav-link custom-st-font-color-white" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
@@ -47,12 +49,14 @@
                             <li class="nav-item">
                                 <a class="nav-link custom-st-font-color-white" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
-                        @endif
+                        @endif--}}
                     @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle text-decoration-underline" href="#" role="button"
-                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="color: #FFCFAA">
-                                {{ Auth::user()->name }}
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle text-decoration-underline" href="#"
+                               role="button"
+                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre
+                               style="color: #FFCFAA">
+                                {{ Auth::user()->name }}&nbsp;{{ Auth::user()->surname }}
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

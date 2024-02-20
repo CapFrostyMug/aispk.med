@@ -58,7 +58,7 @@
 
         @if(!request()->routeIs('personal-files.manage.personal-file.show'))
             <div class="d-flex justify-content-center">
-                <button class="btn btn-success custom-st-form-button-size me-5" type="submit">
+                <button class="btn btn-success custom-st-form-button-size me-4" type="submit">
                     {{ isset($student->id) ? __('Обновить') : __('Сохранить') }}
                 </button>
 

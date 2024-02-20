@@ -1,6 +1,7 @@
 <div class="row mb-5 gy-3"> {{--СВЕДЕНИЯ ОБ ОБРАЗОВАНИИ: БЛОК 1--}}
     <div class="col-12">
-        <label for="educationalInstitutionName-1" class="form-label">Наименование учебного заведения*</label>
+        <label for="educationalInstitutionName-1" class="form-label">Наименование учебного заведения<span
+                class="custom-st-required-field">*</span></label>
         <input
             id="educationalInstitutionName-1"
             class="form-control custom-fn-capslock @error('educationalInstitutionName') is-invalid @enderror"
@@ -16,7 +17,8 @@
         @enderror
     </div>
     <div class="col-4">
-        <label for="educationalInstitutionType-1" class="form-label">Тип учебного заведения*</label>
+        <label for="educationalInstitutionType-1" class="form-label">Тип учебного заведения<span
+                class="custom-st-required-field">*</span></label>
         <select id="educationalInstitutionType-1"
                 class="form-select"
                 name="educationalInstitutionType"
@@ -31,7 +33,7 @@
                         value="{{ $item->id }}"
                         @if($item->id == old('educationalInstitutionType') ||
                         (isset($educational) && ($educational->ed_institution_type_id == $item->id)))
-                        selected
+                            selected
                         @endif>
                         {{ $item->name }}
                     </option>
@@ -40,7 +42,8 @@
         </select>
     </div>
     <div class="col-3">
-        <label for="language-1" class="form-label">Иностранный язык*</label>
+        <label for="language-1" class="form-label">Иностранный язык<span
+                class="custom-st-required-field">*</span></label>
         <select id="language-1"
                 class="form-select"
                 name="language"
@@ -54,7 +57,7 @@
                         value="{{ $item->id }}"
                         @if($item->id == old('language') ||
                         (isset($student) && $student->language_id == $item->id))
-                        selected
+                            selected
                         @endif>
                         {{ $item->name }}
                     </option>
@@ -66,7 +69,8 @@
 
 <div class="row mb-5 gy-3"> {{--СВЕДЕНИЯ ОБ ОБРАЗОВАНИИ: БЛОК 2--}}
     <div class="col-4">
-        <label for="educational-doc-type-1" class="form-label">Документ об образовании*</label>
+        <label for="educational-doc-type-1" class="form-label">Документ об образовании<span
+                class="custom-st-required-field">*</span></label>
         <select id="educational-doc-type-1"
                 class="form-select"
                 name="educationalDocType"
@@ -80,7 +84,7 @@
                         value="{{ $item->id }}"
                         @if($item->id == old('educationalDocType') ||
                         (isset($educational) && $educational->ed_doc_type_id == $item->id))
-                        selected
+                            selected
                         @endif>
                         {{ $item->name }}
                     </option>
@@ -96,7 +100,8 @@
     </div>
 
     <div class="col-3">
-        <label for="educational-doc-number-1" class="form-label">Серия и номер документа*</label>
+        <label for="educational-doc-number-1" class="form-label">Серия и номер документа<span
+                class="custom-st-required-field">*</span></label>
         <input id="educational-doc-number-1"
                class="form-control @error('educationalDocNumber') is-invalid @enderror"
                name="educationalDocNumber"
@@ -112,7 +117,8 @@
     </div>
 
     <div class="col-2">
-        <label for="issue-date-educational-doc-1" class="form-label">Дата выдачи*</label>
+        <label for="issue-date-educational-doc-1" class="form-label">Дата выдачи<span
+                class="custom-st-required-field">*</span></label>
         <input id="issue-date-educational-doc-1"
                class="form-control @error('issueDateEducationalDoc') is-invalid @enderror"
                name="issueDateEducationalDoc"
@@ -130,7 +136,7 @@
 
     @include('personal-files.form.blocks.avg-calculator')
     <div class="col-2 d-flex flex-column justify-content-end pb-3">
-        <label for="avg-rating-1" class="form-label">Средний балл*</label>
+        <label for="avg-rating-1" class="form-label">Средний балл<span class="custom-st-required-field">*</span></label>
         <input id="avg-rating-1"
                class="form-control @error('avgRating') is-invalid @enderror"
                name="avgRating"

@@ -18,7 +18,7 @@
                     required
                     placeholder="Т-АТZ0825000">
             </div>
-            <button type="submit" class="btn btn-success col-2 ms-2 px-5">Поиск</button>
+            <button type="submit" class="btn btn-success col-1">Поиск</button>
         </div>
         @if(isset($student))
             @if(empty($student))
