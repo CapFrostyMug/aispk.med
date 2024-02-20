@@ -76,8 +76,8 @@ body {
 }
 
 .custom-st-form-button-size {
-    width: 241px;
-    height: 38px;
+    width: 165px;
+    height: 40px;
     padding: 6px 12px;
 }
 
@@ -113,4 +113,8 @@ body {
 
 .custom-st-icon-remove-hover:hover {
     fill: #FF7373;
+}
+
+.custom-st-required-field {
+    color: #FF0000;
 }

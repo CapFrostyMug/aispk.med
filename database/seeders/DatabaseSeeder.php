@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FacultiesSeeder::class);
         $this->call(DecreesSeeder::class);
         $this->call(SpecialCircumstancesSeeder::class);
+        $this->call(UsersSeeder::class);
 
         /**
          * Главная и второстепенные таблицы

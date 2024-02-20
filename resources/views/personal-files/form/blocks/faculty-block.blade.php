@@ -2,7 +2,7 @@
     <div class="col-6">
         <label for="{{ isset($facultiesBlocks) && isset($blockName) ? "faculty_$blockName" : 'faculty_block_1' }}"
                class="form-label">
-            Специальность*
+            Специальность<span class="custom-st-required-field">*</span>
         </label>
 
         <select id="{{ isset($facultiesBlocks) && isset($blockName) ? "faculty_$blockName" : 'faculty_block_1' }}"
@@ -51,7 +51,7 @@
     <div class="col-3">
         <label for="{{ isset($facultiesBlocks) && isset($blockName) ? "financing_$blockName" : 'financing_block_1' }}"
                class="form-label">
-            Финансирование*
+            Финансирование<span class="custom-st-required-field">*</span>
         </label>
 
         <select id="{{ isset($facultiesBlocks) && isset($blockName) ? "financing_$blockName" : 'financing_block_1' }}"

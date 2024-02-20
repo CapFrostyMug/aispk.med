@@ -1,4 +1,4 @@
-export default function viewFileFieldsHandler() {
+export default function disablingFields() {
 
     function tagsHandler() {
 

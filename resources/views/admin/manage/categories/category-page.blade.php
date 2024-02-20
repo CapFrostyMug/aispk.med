@@ -8,7 +8,7 @@
     <a href="{{ route('admin.manage.categories.index') }}"
        class="text-decoration-none">@include('icons.other.arrow-left-circle')К списку категорий</a>
 
-    <h2 class="fw-bold py-5">Управление категорией: «{{ request()->query('category') }}»</h2>
+    <h2 class="col-9 fw-bold py-5">Управление категорией: «{{ request()->query('category') }}»</h2>
 
     <div class="row">
         @include('session-message')

@@ -35,13 +35,15 @@
             @include('menu.reports')
         </ul>
     </li>
-    <li class="nav-item dropdown custom-st-dropdown-navbar px-2">
-        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownLists" role="button"
-           data-bs-toggle="dropdown" aria-expanded="false">
-            Админка
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdownLists">
-            @include('menu.admin')
-        </ul>
-    </li>
+    @if(Auth::user()->is_admin)
+        <li class="nav-item dropdown custom-st-dropdown-navbar px-2">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownLists" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+                Админка
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownLists">
+                @include('menu.admin')
+            </ul>
+        </li>
+    @endif
 </ul>

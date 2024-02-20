@@ -1,73 +1,82 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+    <title>{{ config('app.name', 'АИС «Приёмная комиссия»') }} | Войти</title>
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+    <!-- Scripts -->
+    @vite(['resources/js/app.js'])
+    <style>
+        .custom-st-border-radius {
+            border-radius: 15px;
+        }
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+        .custom-st-background-color {
+            background-color: #41A49E;
+        }
+
+        .custom-st-letter-spacing {
+            letter-spacing: 0.02em;
+        }
+    </style>
+</head>
+<body class="row justify-content-center align-items-center bg-secondary bg-opacity-10">
+<div id="app">
+    <main class="container">
+        <div class="row mb-5">
+            <div class="col-4 m-auto">
+                <div class="card text-center border border-white border-5 shadow-lg custom-st-border-radius custom-st-background-color p-3">
+                    <img src="/img/aispk-logo.svg" class="card-img-top my-4" alt="logo" width="168px" height="179px">
+                    <div class="card-body">
+                        <div>
+                            <h4 class="card-title text-white fw-bold custom-st-letter-spacing m-0">АИС</h4>
+                            <h4 class="card-title text-white fw-bold custom-st-letter-spacing m-0">"Приёмная комиссия"</h4>
                         </div>
+                        <form action="{{ route('login') }}" method="POST" class="mt-3">
+                            @csrf
+                            <label for="email" class="col-md-4 col-form-label text-md-end"></label>
+                            <input id="email"
+                                   class="form-control shadow bg-body rounded py-2 @error('email') is-invalid @enderror"
+                                   name="email"
+                                   value="{{ old('email') }}"
+                                   type="email"
+                                   required
+                                   autofocus
+                                   placeholder="Имя пользователя">
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-end"></label>
+                            <input id="password"
+                                   class="form-control shadow bg-body rounded py-2 @error('password') is-invalid @enderror"
+                                   name="password"
+                                   type="password"
+                                   required
+                                   placeholder="Пароль">
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                            @error('password')
+                            <span class="invalid-feedback fs-6 bg-danger text-white rounded-1 mt-3 p-1" role="alert">{{ $message }}</span>
+                            @enderror
+                            @error('email')
+                            <span class="invalid-feedback fs-6 bg-danger text-white rounded-1 mt-3 p-1" role="alert">{{ $message }}</span>
+                            @enderror
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <div class="text-center mt-5">
+                                <button class="btn btn-light shadow bg-body rounded px-4">Войти</button>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 </div>
-@endsection
+</body>
+</html>

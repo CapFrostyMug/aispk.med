@@ -6,7 +6,9 @@
     <h2 class="fw-bold py-5">Управление пользователями</h2>
     <div class="row">
         @include('session-message')
-        <div class="col-6">
+        <div class="col-5">
+            <a class="btn btn-success mb-4" href="{{ route('admin.manage.users.create') }}"
+               role="button">Добавить&nbsp;@include('icons.other.plus-lg')</a>
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -16,21 +18,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row" class="text-center align-middle">1</th>
-                    <td class="text-start align-middle">Екатерина Соколова</td>
-                    <td class="text-center align-middle"><a href="{{ route('admin.manage.users.user.show', 1) }}">*Ссылка*</a></td>
-                </tr>
-                <tr>
-                    <th scope="row" class="text-center align-middle">2</th>
-                    <td class="text-start align-middle">Надежда Юрьева</td>
-                    <td class="text-center align-middle"><a href="{{ route('admin.manage.users.user.show', 2) }}">*Ссылка*</a></td>
-                </tr>
-                <tr>
-                    <th scope="row" class="text-center align-middle">3</th>
-                    <td class="text-start align-middle">Дарья Боброва</td>
-                    <td class="text-center align-middle"><a href="{{ route('admin.manage.users.user.show', 3) }}">*Ссылка*</a></td>
-                </tr>
+                @if(isset($data))
+                    @php $counter = 1; @endphp
+                    @forelse($data as $item)
+                        <tr>
+                            <th scope="row" class="text-center align-middle">{{ $counter }}</th>
+                            <td class="text-start align-middle">{{ $item->name }}&nbsp;{{ $item->surname }}</td>
+                            <td class="d-flex justify-content-between">@include('buttons.button-group-4')</td>
+                        </tr>
+                        @php $counter++; @endphp
+                    @empty
+                        <tr>
+                            <td colspan="2" class="text-center">Список пользователей пуст</td>
+                        </tr>
+                    @endforelse
+                @endif
                 </tbody>
             </table>
         </div>

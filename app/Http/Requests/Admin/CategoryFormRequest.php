@@ -21,6 +21,7 @@ class CategoryFormRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
+     * @param Request $request
      * @return array<string, mixed>
      */
     public function rules(Request $request): array
