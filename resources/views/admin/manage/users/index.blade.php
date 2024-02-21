@@ -24,7 +24,7 @@
                         <tr>
                             <th scope="row" class="text-center align-middle">{{ $counter }}</th>
                             <td class="text-start align-middle">{{ $item->name }}&nbsp;{{ $item->surname }}</td>
-                            <td class="d-flex justify-content-between">@include('buttons.button-group-4')</td>
+                            <td class="d-flex justify-content-between align-items-center">@include('buttons.button-group-4')</td>
                         </tr>
                         @php $counter++; @endphp
                     @empty
