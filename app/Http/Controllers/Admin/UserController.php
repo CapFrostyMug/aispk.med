@@ -101,11 +101,16 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param UserFacade $userFacade
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(UserFacade $userFacade, int $id)//: RedirectResponse
     {
-        //
+        $response = $userFacade->destroy($id);
+
+        return is_object($response) ?
+            back()->withInput()->with('error', config('messages.manageUsers.error.destroy')) :
+            back()->with('success', config('messages.manageUsers.success.destroy'));
     }
 }

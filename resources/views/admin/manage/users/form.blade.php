@@ -32,6 +32,13 @@
           method="post"
           class="row col-7 border border-3 rounded gy-3 mb-5 pt-2 pb-3 px-3">
         @csrf
+
+        @if(!request()->routeIs('admin.manage.users.create'))
+            <div class="d-flex justify-content-end align-items-center mt-2">@include('buttons.button-group-5')</div>
+        @endif
+
+        <div class="w-100"></div>
+
         <div class="col my-2">
             <label for="surname-1" class="form-label">Фамилия<span class="custom-st-required-field">*</span></label>
             <input id="surname-1"
@@ -62,9 +69,12 @@
             </div>
             @enderror
         </div>
+
         <div class="w-100"></div>
+
         <div class="col my-2">
-            <label for="email-1" class="form-label">Электронная почта<span class="custom-st-required-field">*</span></label>
+            <label for="email-1" class="form-label">Электронная почта<span
+                    class="custom-st-required-field">*</span></label>
             <input id="email-1"
                    class="form-control custom-fn-capslock @error('email') is-invalid @enderror"
                    name="email"
@@ -101,39 +111,45 @@
                 </div>
             </div>
         </fieldset>
+
+        <div class="w-100"></div>
+
         @if(!request()->routeIs('admin.manage.users.user.show'))
-        <div class="w-100"></div>
-        <div class="col my-2">
-            @if(request()->routeIs('admin.manage.users.user.edit'))
-                <label for="password" class="form-label">Новый пароль (необязательно)</label>
-            @else
-                <label for="password" class="form-label">Пароль<span class="custom-st-required-field">*</span></label>
-            @endif
-            <input id="password"
-                   class="form-control @error('password') is-invalid @enderror"
-                   name="password"
-                   type="password"
-                   @if(request()->routeIs('admin.manage.users.create')) required @endif
-                   aria-describedby="password-1-validation">
-            @error('password')
-            <div id="password-1-validation" class="invalid-feedback">
-                {{ $message }}
+            <div class="col my-2">
+                @if(request()->routeIs('admin.manage.users.user.edit'))
+                    <label for="password" class="form-label">Новый пароль (необязательно)</label>
+                @else
+                    <label for="password" class="form-label">Пароль<span
+                            class="custom-st-required-field">*</span></label>
+                @endif
+                <input id="password"
+                       class="form-control @error('password') is-invalid @enderror"
+                       name="password"
+                       type="password"
+                       @if(request()->routeIs('admin.manage.users.create')) required @endif
+                       aria-describedby="password-1-validation">
+                @error('password')
+                <div id="password-1-validation" class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </div>
-            @enderror
-        </div>
-        <div class="col my-2">
-            @if(request()->routeIs('admin.manage.users.user.edit'))
-                <label for="password-confirm" class="form-label">Подтверждение нового пароля</label>
-            @else
-                <label for="password-confirm" class="form-label">Подтверждение пароля<span class="custom-st-required-field">*</span></label>
-            @endif
-            <input id="password-confirm"
-                   class="form-control"
-                   name="password_confirmation"
-                   type="password"
-                   @if(request()->routeIs('admin.manage.users.create')) required @endif>
-        </div>
-        <div class="w-100"></div>
+            <div class="col my-2">
+                @if(request()->routeIs('admin.manage.users.user.edit'))
+                    <label for="password-confirm" class="form-label">Подтверждение нового пароля</label>
+                @else
+                    <label for="password-confirm" class="form-label">Подтверждение пароля<span
+                            class="custom-st-required-field">*</span></label>
+                @endif
+                <input id="password-confirm"
+                       class="form-control"
+                       name="password_confirmation"
+                       type="password"
+                       @if(request()->routeIs('admin.manage.users.create')) required @endif>
+            </div>
+
+            <div class="w-100"></div>
+
             <div class="d-flex justify-content-center mt-4">
                 <button type="submit" class="btn btn-success px-4">
                     {{ isset($user->id) ? __('Обновить') : __('Сохранить') }}

@@ -103,11 +103,16 @@ final class UserFacade extends Facade
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @param Request|null $request
-     * @return array|object
+     * @return void|object
      */
-    public function destroy(int $id)
+    public function destroy(int $id)//: void|string
     {
-        // TODO: Implement destroy() method.
+        try {
+            DB::transaction(function () use ($id) {
+                $this->user->find($id)->delete();
+            }, 3);
+        } catch (\Exception $exception) {
+            return $exception;
+        }
     }
 }

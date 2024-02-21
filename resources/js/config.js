@@ -10,6 +10,7 @@ import resetFilter from './custom/lists/resetFilter';
 import resetForm from './custom/personal-files/resetForm';
 import disablingFields from './custom/disablingFields';
 import WindowOnloadFunctions from './custom/windowOnloadFunctions';
+import removeUser from "./custom/removeFuncs/removeUser";
 
 export const CONFIG = {
 
@@ -58,6 +59,7 @@ export const CONFIG = {
     'admin/manage/users': [
         capsLockDetector,
         removeSessionMessage,
+        removeUser,
     ],
 
     '/admin/manage/users/user/profile/view': [
