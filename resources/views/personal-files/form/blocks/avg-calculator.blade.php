@@ -14,7 +14,7 @@
             <input id="grade-3" class="form-control" name="" value="" type="number" min="0" max="20">
         </div>
         <div class="col-3 d-flex justify-content-center align-items-end">
-            <button type="button" class="btn btn-primary px-4 custom-fn-avg-calc-btn">Рассчитать</button>
+            <button type="button" class="btn btn-primary custom-fn-avg-calc-btn custom-fn-remove-during-view px-4">Рассчитать</button>
         </div>
     </div>
 </div>

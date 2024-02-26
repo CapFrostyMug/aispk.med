@@ -64,11 +64,11 @@ final class CategoryFacade extends Facade
      */
     public function show(Request $request): array|null
     {
-        $table = $request->input('table');
+        $tableId = $request->input('id');
 
-        $response = DB::table('categories')->where('table', $table)->get();
+        $response = DB::table('categories')->where('id', $tableId)->first();
 
-        return $response->isNotEmpty() ? ['data' => DB::table($table)->get()] : null;
+        return empty($response) ? null : ['data' => DB::table($response->table)->get()];
     }
 
     /**
@@ -98,14 +98,21 @@ final class CategoryFacade extends Facade
      */
     public function destroy(int $id, Request $request = null)//: void|object
     {
-        $permissionRemove = DB::table($request->query('table'))
-            ->where('id', '=', $id)
-            ->first()->permission_remove;
+        $permissionRemove = null;
+        $tableId = $request->input('id');
+
+        $response = DB::table('categories')->where('id', $tableId)->first();
+
+        if (!empty($response)) {
+            $permissionRemove = DB::table($response->table)
+                ->where('id', '=', $id)
+                ->first()->permission_remove;
+        }
 
         if ($permissionRemove) {
             try {
-                DB::transaction(function () use ($id, $request) {
-                    DB::table($request->query('table'))->where('id', '=', $id)->delete();
+                DB::transaction(function () use ($id, $response) {
+                    DB::table($response->table)->where('id', '=', $id)->delete();
                 }, 3);
 
                 return [];

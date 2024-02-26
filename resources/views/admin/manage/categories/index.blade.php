@@ -22,8 +22,8 @@
                             <th scope="row" class="text-center align-middle">{{ $counter }}</th>
                             <td class="text-start align-middle">
                                 <a href="{{ route('admin.manage.categories.category.show', ['slug' => $item->slug,
-                                                                                            'table' => $item->table,
-                                                                                            'category' => $item->name]) }}"
+                                                                                            'id' => $item->id,
+                                                                                            'title' => $item->name]) }}"
                                    class="text-decoration-none d-block h-100 p-0">{{ $item->name }}</a>
                             </td>
                         </tr>

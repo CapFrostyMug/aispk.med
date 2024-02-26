@@ -1,7 +1,9 @@
-<a href="{{ route('admin.manage.users.user.edit', $user->id) }}" class="text-decoration-none me-2 pt-1"
-   title="Редактировать">
-    @include('icons.buttons.button-group-5.edit')
-</a>
+@if(request()->routeIs('admin.manage.users.user.show'))
+    <a href="{{ route('admin.manage.users.user.edit', $user->id) }}" class="text-decoration-none me-2 pt-1"
+       title="Редактировать">
+        @include('icons.buttons.button-group-5.edit')
+    </a>
+@endif
 
 <button type="button"
         class="btn btn-link custom-fn-remove p-0"

@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      width="20"
      height="20"
-     fill="#666666"
-     class="bi bi-eye-fill custom-st-icon-hover"
+     fill="currentColor"
+     class="bi bi-eye-fill"
      viewBox="0 0 16 16">
     <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
     <path

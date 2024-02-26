@@ -14,7 +14,12 @@
 <div class="row mb-5 gy-3">
     <div class="col-12">
         <button type="button"
-                class="btn btn-link fw-bold text-decoration-none custom-fn-add-faculty p-0">Добавить ещё специальность...
+                class="btn btn-link
+                       fw-bold
+                       text-decoration-none
+                       custom-fn-add-faculty
+                       custom-fn-remove-during-view
+                       p-0">Добавить ещё специальность...
         </button>
     </div>
 </div>

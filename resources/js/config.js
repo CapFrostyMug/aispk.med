@@ -4,12 +4,13 @@ import capsLockDetector from './custom/capsLockDetector';
 import checkboxHandler from './custom/personal-files/checkboxHandler';
 import hideTrashBasketIcon from './custom/personal-files/hideTrashBasketIcon';
 import {clickHandler as removeFacultyBlock} from './custom/personal-files/removeFacultyBlock';
-import removeItem from './custom/removeFuncs/removeItem';
 import removeSessionMessage from './custom/removeSessionMessage';
 import resetFilter from './custom/lists/resetFilter';
 import resetForm from './custom/personal-files/resetForm';
-import disablingFields from './custom/disablingFields';
+import fieldsHandlerDuringView from './custom/fieldsHandlerDuringView';
 import WindowOnloadFunctions from './custom/windowOnloadFunctions';
+import removeCategoryItem from "./custom/removeFuncs/removeCategoryItem";
+import removePersonalFile from "./custom/removeFuncs/removePersonalFile";
 import removeUser from "./custom/removeFuncs/removeUser";
 
 export const CONFIG = {
@@ -33,25 +34,25 @@ export const CONFIG = {
         checkboxHandler,
         hideTrashBasketIcon,
         removeFacultyBlock,
-        removeItem,
+        removePersonalFile,
         removeSessionMessage,
         WindowOnloadFunctions,
     ],
 
     'personal-files/manage/personal-file/view': [
-        hideTrashBasketIcon,
-        removeItem,
+        removePersonalFile,
         removeSessionMessage,
-        disablingFields,
+        fieldsHandlerDuringView,
+        hideTrashBasketIcon,
     ],
 
     'personal-files/manage/personal-file/search': [
-        removeItem,
+        removePersonalFile,
         removeSessionMessage,
     ],
 
     'students-lists': [
-        removeItem,
+        removePersonalFile,
         removeSessionMessage,
         //resetFilter,
     ],
@@ -63,11 +64,11 @@ export const CONFIG = {
     ],
 
     '/admin/manage/users/user/profile/view': [
-        disablingFields,
+        fieldsHandlerDuringView,
     ],
 
     'admin/manage/categories/category': [
-        removeItem,
+        removeCategoryItem,
         removeSessionMessage,
     ],
 };
