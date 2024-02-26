@@ -75,7 +75,12 @@
         </select>
     </div>
 
-    <div class="col-1 d-flex justify-content-center align-items-center custom-fn-remove-cart">
+    <div class="col-1
+                d-flex
+                justify-content-center
+                align-items-center
+                custom-fn-remove-cart
+                custom-fn-remove-during-view">
         <span class="custom-st-trashbasket-icon" title="Удалить строку">
             @include('icons.other.trashbasket')
         </span>

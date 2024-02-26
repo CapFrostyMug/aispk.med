@@ -27,6 +27,5 @@
 <button type="button"
         class="btn btn-danger custom-fn-remove"
         data-item-id="{{ $student->id }}"
-        data-delete-url="{{ route('personal-files.manage.personal-file.destroy', $student->id) }}">
-    Удалить @include('icons.buttons.button-group-2.remove')
+        data-reload-page="">Удалить @include('icons.buttons.button-group-2.remove')
 </button>
