@@ -86,6 +86,7 @@ final class UserFacade extends Facade
             $this->user = $this->user->find($id);
 
             DB::transaction(function () use ($validatedData, $id) {
+
                 $this->user->name = $validatedData['name'];
                 $this->user->surname = $validatedData['surname'];
                 $this->user->email = $validatedData['email'];
@@ -93,6 +94,7 @@ final class UserFacade extends Facade
                 if ($validatedData['password']) $this->user->password = Hash::make($validatedData['password']);
 
                 $this->user->save();
+
             }, 3);
         } catch (\Exception $exception) {
             return $exception;
