@@ -40,7 +40,7 @@
                         <td class="text-center">{{ $student->surname }}</td>
                         <td class="text-center">{{ $student->name }}</td>
                         <td class="text-center">{{ $student->patronymic }}</td>
-                        <td class="text-center d-flex justify-content-around">@include('buttons.button-group-1')</td>
+                        <td class="text-center">@include('buttons.button-group-1')</td>
                     </tr>
                     </tbody>
                 </table>

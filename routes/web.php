@@ -51,9 +51,15 @@ Route::middleware('auth')->group(function () {
      * Списки
      */
     Route::prefix('students-lists')->name('students-lists.')->group(function () {
-        Route::get('/', [ListController::class, 'getList'])->name('common-list');
-        Route::get('/search', [ListController::class, 'getList'])->name('search');
-        Route::get('/manage/enrollment', [ListController::class, 'index'])->name('enrollment');
+
+        Route::get('/', [ListController::class, 'viewStudentLists'])->name('index');
+        Route::get('/search', [ListController::class, 'viewStudentLists'])->name('search');
+
+        Route::prefix('/manage/enrollment')->name('manage.enrollment.')->group(function () {
+            Route::get('/', [ListController::class, 'enrollmentManage'])->name('index');
+            Route::get('/search', [ListController::class, 'enrollmentManage'])->name('search');
+            Route::post('/change-status', [ListController::class, 'changeEnrollmentStatus'])->name('change-status');
+        });
     });
 
     /**
