@@ -1,29 +1,19 @@
 @extends('layouts.app')
 
-@section('title')
-    @if(request()->routeIs('students-lists.common-list') || request()->routeIs('students-lists.search'))
-        Просмотр и печать списков абитуриентов
-    @else
-        Управление зачислением
-    @endif
-@endsection
+@section('title', 'Просмотр списков абитуриентов')
 
 @section('content')
     <div class="#">
-        <h2 class="fw-bold py-5">
-            @if(request()->routeIs('students-lists.common-list') || request()->routeIs('students-lists.search'))
-                Просмотр и печать списков абитуриентов
-            @else
-                Управление зачислением
-            @endif
-        </h2>
+        <h2 class="fw-bold py-5">Просмотр списков абитуриентов</h2>
     </div>
 
     @include('session-message')
 
-    <form action="{{ route('students-lists.search') }}" method="get" class="custom-fn-form">
+    <form action="{{ route('students-lists.search') }}"
+          method="get"
+          class="row custom-fn-form custom-st-search-filter rounded p-3">
         @csrf
-        @include('lists.search-filter')
+        @include('lists.view-lists.search-filter')
     </form>
 
     <div class="col-12 d-flex justify-content-center my-4">

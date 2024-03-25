@@ -2,6 +2,8 @@
 
 namespace App\Facades;
 
+use App\Models\Decree;
+use App\Models\Enrollment;
 use App\Models\Faculty;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -11,19 +13,25 @@ class ListFacade
 {
     protected object $faculty;
     protected object $student;
+    protected object $decree;
+    protected object $enrollment;
 
     public function __construct
     (
-        Faculty $faculty = null,
-        Student $student = null,
+        Faculty    $faculty = null,
+        Student    $student = null,
+        Decree     $decree = null,
+        Enrollment $enrollment = null,
     )
     {
         $this->faculty = $faculty ?: new Faculty();
         $this->student = $student ?: new Student();
+        $this->decree = $decree ?: new Decree();
+        $this->enrollment = $enrollment ?: new Enrollment();
     }
 
     /**
-     * Метод позволяет получить список студентов: либо общий, либо отфильтрованный.
+     * [Method description].
      *
      * @param Request $request
      * @return array
@@ -39,12 +47,10 @@ class ListFacade
 
         $students = DB::table('students')
             ->join('information_for_admission', 'students.id', '=', 'information_for_admission.student_id')
+            ->join('enrollment', 'students.id', '=', 'enrollment.student_id')
             ->join('faculties', 'faculties.id', '=', 'information_for_admission.faculty_id')
             ->join('financing_types', 'financing_types.id', '=', 'information_for_admission.financing_type_id')
-            ->join('enrollment', 'enrollment.student_id', '=', 'students.id')
-
             ->select('students.*', 'faculties.name as faculty')
-
             ->when($facultyId, function ($query, int $facultyId) {
                 return $query->where('faculties.id', $facultyId);
             })
@@ -60,9 +66,7 @@ class ListFacade
             ->when($docsTypes, function ($query, array $docsTypes) {
                 return $query->whereIn('information_for_admission.is_original_docs', array_values($docsTypes));
             })
-
             ->orderBy('students.surname')
-
             ->paginate(config('paginate.studentsList'))->withQueryString();
 
         return [
@@ -72,14 +76,59 @@ class ListFacade
     }
 
     /**
-     * Метод для изменения статуса зачисления студентов.
+     * [Method description].
      *
-     * @param
-     * @param
-     * @return
+     * @param Request $request
+     * @return array
      */
-    public function changeEnrollmentData()
+    public function showFacultyStudents(Request $request): array
     {
-        //
+        $faculties = $this->faculty->all();
+
+        if ($request['faculty_id']) {
+
+            $decrees = $this->decree->all();
+
+            $students = DB::table('students')
+                ->join('information_for_admission', 'students.id', '=', 'information_for_admission.student_id')
+                ->join('faculties', 'faculties.id', '=', 'information_for_admission.faculty_id')
+                ->join('enrollment', 'students.id', '=', 'enrollment.student_id')
+                ->select('students.*', 'enrollment.decree_id as decree')
+                ->where('faculties.id', '=', $request['faculty_id'])
+                ->orderBy('students.surname')
+                ->paginate(config('paginate.studentsList'))->withQueryString();
+
+            return [
+                'faculties' => $faculties,
+                'decrees' => $decrees,
+                'students' => $students,
+            ];
+        }
+
+        return ['faculties' => $faculties];
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param Request $request
+     * @return void|object
+     */
+    public function changeEnrollmentStatus(Request $request)//: void|object
+    {
+        if (is_null($request['decree_id'])) $request['faculty_id'] = null;
+
+        try {
+            DB::transaction(function () use ($request) {
+
+                $this->enrollment->where('student_id', $request['student_id'])->update([
+                    'faculty_id' => $request['faculty_id'],
+                    'decree_id' => $request['decree_id'],
+                ]);
+
+            }, 3);
+        } catch (\Exception $exception) {
+            return $exception;
+        }
     }
 }

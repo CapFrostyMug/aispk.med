@@ -1,11 +1,11 @@
 import addFacultyBlock from './custom/personal-files/addFacultyBlock';
 import avgCalculator from './custom/personal-files/avgCalculator';
 import capsLockDetector from './custom/capsLockDetector';
+import changeEnrollmentStatus from './custom/lists/changeEnrollmentStatus';
 import checkboxHandler from './custom/personal-files/checkboxHandler';
 import hideTrashBasketIcon from './custom/personal-files/hideTrashBasketIcon';
 import {clickHandler as removeFacultyBlock} from './custom/personal-files/removeFacultyBlock';
 import removeSessionMessage from './custom/removeSessionMessage';
-import resetFilter from './custom/lists/resetFilter';
 import resetForm from './custom/personal-files/resetForm';
 import fieldsHandlerDuringView from './custom/fieldsHandlerDuringView';
 import WindowOnloadFunctions from './custom/windowOnloadFunctions';
@@ -54,7 +54,7 @@ export const CONFIG = {
     'students-lists': [
         removePersonalFile,
         removeSessionMessage,
-        //resetFilter,
+        changeEnrollmentStatus,
     ],
 
     'admin/manage/users': [

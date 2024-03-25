@@ -1,6 +1,6 @@
 <li>
-    <a class="dropdown-item" href="{{ route('students-lists.common-list') }}">Просмотр и печать списков абитуриентов</a>
+    <a class="dropdown-item" href="{{ route('students-lists.index') }}">Просмотр списков абитуриентов</a>
 </li>
 <li>
-    <a class="dropdown-item" href="{{ route('students-lists.enrollment') }}">Управление зачислением</a>
+    <a class="dropdown-item" href="{{ route('students-lists.manage.enrollment.index') }}">Управление зачислением</a>
 </li>

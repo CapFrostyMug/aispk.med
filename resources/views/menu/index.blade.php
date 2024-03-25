@@ -20,15 +20,6 @@
     <li class="nav-item dropdown custom-st-dropdown-navbar px-2">
         <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownLists" role="button"
            data-bs-toggle="dropdown" aria-expanded="false">
-            Журналы регистрации
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdownLists">
-            @include('menu.registration-logs')
-        </ul>
-    </li>
-    <li class="nav-item dropdown custom-st-dropdown-navbar px-2">
-        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownLists" role="button"
-           data-bs-toggle="dropdown" aria-expanded="false">
             Отчётность
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdownLists">
