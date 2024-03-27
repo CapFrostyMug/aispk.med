@@ -14,7 +14,7 @@
         @include('session-message')
         <div class="col-6">
             <form
-                action="{{ route('admin.manage.categories.category.store', ['table' => request()->query('table')]) }}"
+                action="{{ route('admin.manage.categories.category.store', ['table' => request()->query('id')]) }}"
                 method="post"
                 class="mb-5">
                 @csrf

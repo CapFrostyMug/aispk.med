@@ -45,10 +45,6 @@ class ListController extends Controller
     public function changeEnrollmentStatus(Request $request, ListFacade $listFacade)//: RedirectResponse
     {
         $response = $listFacade->changeEnrollmentStatus($request);
-
-        /*return is_object() ?
-            //*/
-
-        return [];
+        return response()->json();
     }
 }

@@ -46,9 +46,12 @@ final class CategoryFacade extends Facade
      */
     public function store(array $validatedData)//: void|object
     {
+        $tableId = $validatedData['table'];
+        $tableName = DB::table('categories')->where('id', $tableId)->first()->table;
+
         try {
-            DB::transaction(function () use ($validatedData) {
-                DB::table($validatedData['table'])->insert(['name' => $validatedData['newItem']]);
+            DB::transaction(function () use ($validatedData, $tableName) {
+                DB::table($tableName)->insert(['name' => $validatedData['newItem']]);
             }, 3);
 
         } catch (\Exception $exception) {

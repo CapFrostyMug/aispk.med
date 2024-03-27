@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
@@ -26,14 +27,15 @@ class CategoryFormRequest extends FormRequest
      */
     public function rules(Request $request): array
     {
-        $table = $request->query('table');
+        $tableId = $request->query('table');
+        $tableName = DB::table('categories')->where('id', $tableId)->first()->table;
 
         return [
             'newItem' => [
                 'string', 'between:2,100', 'required',
-                Rule::unique($table, 'name')->ignore($this->id),
+                Rule::unique($tableName, 'name')->ignore($this->id),
             ],
-            'table' => 'alpha_dash|max:30|required',
+            'table' => 'integer|between:1,100|required',
         ];
     }
 

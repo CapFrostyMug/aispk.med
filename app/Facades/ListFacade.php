@@ -46,11 +46,14 @@ class ListFacade
         $docsTypes = $request->input('docs_types'); // array
 
         $students = DB::table('students')
+
             ->join('information_for_admission', 'students.id', '=', 'information_for_admission.student_id')
             ->join('enrollment', 'students.id', '=', 'enrollment.student_id')
             ->join('faculties', 'faculties.id', '=', 'information_for_admission.faculty_id')
             ->join('financing_types', 'financing_types.id', '=', 'information_for_admission.financing_type_id')
+
             ->select('students.*', 'faculties.name as faculty')
+
             ->when($facultyId, function ($query, int $facultyId) {
                 return $query->where('faculties.id', $facultyId);
             })
@@ -66,6 +69,7 @@ class ListFacade
             ->when($docsTypes, function ($query, array $docsTypes) {
                 return $query->whereIn('information_for_admission.is_original_docs', array_values($docsTypes));
             })
+
             ->orderBy('students.surname')
             ->paginate(config('paginate.studentsList'))->withQueryString();
 
@@ -90,11 +94,16 @@ class ListFacade
             $decrees = $this->decree->all();
 
             $students = DB::table('students')
+
                 ->join('information_for_admission', 'students.id', '=', 'information_for_admission.student_id')
                 ->join('faculties', 'faculties.id', '=', 'information_for_admission.faculty_id')
                 ->join('enrollment', 'students.id', '=', 'enrollment.student_id')
+
                 ->select('students.*', 'enrollment.decree_id as decree')
-                ->where('faculties.id', '=', $request['faculty_id'])
+
+                ->where('information_for_admission.faculty_id', '=', $request['faculty_id'])
+                ->where('information_for_admission.is_original_docs', '=', 1)
+
                 ->orderBy('students.surname')
                 ->paginate(config('paginate.studentsList'))->withQueryString();
 
