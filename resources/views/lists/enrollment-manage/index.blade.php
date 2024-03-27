@@ -15,7 +15,7 @@
         @csrf
         <div class="col-9">
             <label for="faculty-id-1" class="form-label fw-bold">Специальность</label>
-            <select id="faculty-id-1" class="form-select faculty-select" name="faculty_id" required>
+            <select id="faculty-id-1" class="form-select custom-fn-faculty-select" name="faculty_id" required>
                 <option value="">Выберите...</option>
                 @if(isset($faculties))
                     @foreach($faculties as $item)
@@ -37,7 +37,7 @@
             <span>Найдено записей: {{ $students->total() }}</span>
         </div>
 
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered">
             <thead>
             <tr class="custom-results-table-bg-color">
                 <th scope="col" class="col-1 text-center">Дело,&nbsp;№</th>
@@ -50,13 +50,13 @@
             </thead>
             <tbody>
             @forelse ($students as $student)
-                <tr>
+                <tr class="custom-fn-toggle-row-color {{ $student->decree ? 'table-success' : 'table-danger' }}">
                     <th scope="row" class="text-center align-middle">{{ $student->id }}</th>
                     <td class="text-center text-truncate align-middle">{{ $student->surname }}</td>
                     <td class="text-center text-truncate align-middle">{{ $student->name }}</td>
                     <td class="text-center text-truncate align-middle">{{ $student->patronymic }}</td>
                     <td class="text-center">
-                        <select class="form-select decree-select" name="decree" data-student-id="{{ $student->id }}">
+                        <select class="form-select custom-fn-decree-select" name="decree" data-student-id="{{ $student->id }}">
                             <option value="">Выберите...</option>
                             @foreach($decrees as $item)
                                 <option value="{{ $item->id }}"

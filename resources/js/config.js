@@ -12,6 +12,7 @@ import WindowOnloadFunctions from './custom/windowOnloadFunctions';
 import removeCategoryItem from "./custom/removeFuncs/removeCategoryItem";
 import removePersonalFile from "./custom/removeFuncs/removePersonalFile";
 import removeUser from "./custom/removeFuncs/removeUser";
+import toggleTableRowColor from "./custom/lists/toggleTableRowColor";
 
 export const CONFIG = {
 
@@ -55,6 +56,7 @@ export const CONFIG = {
         removePersonalFile,
         removeSessionMessage,
         changeEnrollmentStatus,
+        toggleTableRowColor,
     ],
 
     'admin/manage/users': [

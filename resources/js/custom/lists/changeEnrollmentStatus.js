@@ -1,10 +1,10 @@
 export default function changeEnrollmentStatus() {
 
-    let facultyId = document.querySelector('.faculty-select').value;
-    let tagsSelectDecree = document.querySelectorAll('.decree-select');
+    let facultyId = document.querySelector('.custom-fn-faculty-select').value;
+    let tagsSelectDecree = document.querySelectorAll('.custom-fn-decree-select');
 
     tagsSelectDecree.forEach((item) => {
-        item.addEventListener('change', () => {
+        item.addEventListener("change", () => {
 
             let studentId = item.dataset.studentId;
             let decreeId = item.value;
@@ -24,8 +24,13 @@ export default function changeEnrollmentStatus() {
                         })
                     });
 
-                    let result = await response.json();
-                    return result.ok;
+                    let result = await response;
+
+                    if (result.status === 200) {
+                        alert('Статус зачисления успешно обновлён')
+                    } else {
+                        alert('Системная ошибка: не удалось изменить статус зачисления. Попробуйте еще раз')
+                    }
                 }
             )();
         })
