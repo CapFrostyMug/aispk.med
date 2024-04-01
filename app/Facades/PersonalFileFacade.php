@@ -488,9 +488,9 @@ final class PersonalFileFacade extends Facade
             'faculty_with_original_docs' => $facultyWithOriginalDocs ?: 'Отсутствуют',
             'is_original_docs' => $facultyWithOriginalDocs ? 'оригинал' : 'копия',
 
-            'special_circumstances_dormitory' => $specialCircumstances[1] ? 'Да' : 'Нет', // Общежитие
+            'special_circumstances_spec_conditions' => $specialCircumstances[1] ? 'Да' : 'Нет', // Специальные условия
             'special_circumstances_disability' => $specialCircumstances[2] ? 'Да' : 'Нет', // Инвалидность
-            'special_circumstances_spec_conditions' => $specialCircumstances[5] ? 'Да' : 'Нет', // Специальные условия
+            'special_circumstances_dormitory' => $specialCircumstances[3] ? 'Да' : 'Нет', // Общежитие
 
             'current_date' => date('d.m.Y'),
         ]);

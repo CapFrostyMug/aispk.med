@@ -22,7 +22,7 @@ class SpecialCircumstancesSeeder extends Seeder
     {
         return [
             [
-                'name' => 'Потребность в общежитии',
+                'name' => 'Абитуриент нуждается в создании специальных условий при проведении вступительных испытаний',
                 'permission_remove' => 0,
             ],
             [
@@ -30,17 +30,21 @@ class SpecialCircumstancesSeeder extends Seeder
                 'permission_remove' => 0,
             ],
             [
-                'name' => 'Абитуриент является сиротой',
-                'permission_remove' => 1,
+                'name' => 'Потребность в общежитии',
+                'permission_remove' => 0,
+            ],
+            [
+                'name' => 'Ребёнок или участник СВО',
+                'permission_remove' => 0,
             ],
             [
                 'name' => 'Абитуриент является иностранцем',
                 'permission_remove' => 1,
             ],
             [
-                'name' => 'Абитуриент нуждается в создании специальных условий при проведении вступительных испытаний',
-                'permission_remove' => 0,
-            ],
+                'name' => 'Абитуриент является сиротой',
+                'permission_remove' => 1,
+            ]
         ];
     }
 }
