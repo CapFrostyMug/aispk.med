@@ -5,27 +5,23 @@ namespace App\Facades;
 use App\Models\Decree;
 use App\Models\Enrollment;
 use App\Models\Faculty;
-use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ListFacade
 {
     protected object $faculty;
-    protected object $student;
     protected object $decree;
     protected object $enrollment;
 
     public function __construct
     (
         Faculty    $faculty = null,
-        Student    $student = null,
         Decree     $decree = null,
         Enrollment $enrollment = null,
     )
     {
         $this->faculty = $faculty ?: new Faculty();
-        $this->student = $student ?: new Student();
         $this->decree = $decree ?: new Decree();
         $this->enrollment = $enrollment ?: new Enrollment();
     }
@@ -96,7 +92,7 @@ class ListFacade
             $students = DB::table('students')
 
                 ->join('information_for_admission', 'students.id', '=', 'information_for_admission.student_id')
-                ->join('faculties', 'faculties.id', '=', 'information_for_admission.faculty_id')
+                //->join('faculties', 'faculties.id', '=', 'information_for_admission.faculty_id')
                 ->join('enrollment', 'students.id', '=', 'enrollment.student_id')
 
                 ->select('students.*', 'enrollment.decree_id as decree')

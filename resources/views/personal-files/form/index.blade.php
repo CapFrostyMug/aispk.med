@@ -12,7 +12,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center">
-        <h2 class="fw-bold py-5">
+        <h2 class="fw-bold pt-4 pb-5">
             @if(request()->routeIs('personal-files.create'))
                 Создание личного дела
             @elseif(request()->routeIs('personal-files.manage.personal-file.show'))

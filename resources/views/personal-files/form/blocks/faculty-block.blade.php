@@ -1,4 +1,4 @@
-<div class="row mb-4 custom-fn-faculty-block-child">
+<div class="row my-3 custom-fn-faculty-block-child">
     <div class="col-6">
         <label for="{{ isset($facultiesBlocks) && isset($blockName) ? "faculty_$blockName" : 'faculty_block_1' }}"
                class="form-label">

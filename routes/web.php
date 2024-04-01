@@ -5,10 +5,12 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ListController;
+use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PersonalFileController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +71,17 @@ Route::middleware('auth')->group(function () {
     /**
      * Отчётность
      */
+    Route::prefix('reporting')->name('reporting.')->group(function () {
+
+        Route::get('', [])->name('');
+        Route::get('', [])->name('');
+
+        Route::prefix('/rating')->name('rating.')->group(function () {
+            Route::get('/', [ReportController::class, 'showRating'])->name('index')->withoutMiddleware([Authenticate::class]);
+            Route::get('/generate-rating', [ReportController::class, 'showRating'])->name('generate')->withoutMiddleware([Authenticate::class]);
+            Route::get('/print-list', [])->name('print-list');
+        });
+    });
 
     /**
      * Админка

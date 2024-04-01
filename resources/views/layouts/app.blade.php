@@ -17,17 +17,19 @@
     @vite(['resources/js/app.js'])
 </head>
 <body class="bg-secondary bg-opacity-10">
-<div id="app">
+<div id="app" class="custom-st-wrapper">
     <nav class="navbar navbar-expand-md navbar-light shadow-sm custom-st-master-navbar p-1">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 <img src="/img/aispk-logo.svg" alt="logo" width="50" height="54">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            @if(Auth::check())
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            @endif
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
@@ -62,7 +64,7 @@
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                         document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 
@@ -76,17 +78,11 @@
             </div>
         </div>
     </nav>
-    <div class="container custom-st-wrapper shadow-sm bg-body p-3">
-        <main class="custom-st-fullscreen p-4">
-            <div class="custom-st-fullscreen-body">
-                @yield('content')
-            </div>
-        </main>
-    </div>
-    <footer class="bg-body-secondary">
-        <div class="container">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, pariatur!</p>
-        </div>
+    <main class="container custom-st-main shadow-sm bg-body p-lg-5">
+        @yield('content')
+    </main>
+    <footer class="container bg-body-secondary">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, pariatur!</p>
     </footer>
 </div>
 </body>

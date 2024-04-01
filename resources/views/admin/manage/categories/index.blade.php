@@ -3,7 +3,7 @@
 @section('title', 'Управление категориями')
 
 @section('content')
-    <h2 class="fw-bold py-5">Управление категориями</h2>
+    <h2 class="fw-bold pt-4 pb-5">Управление категориями</h2>
     <div class="row">
         @include('session-message')
         <div class="col-6">

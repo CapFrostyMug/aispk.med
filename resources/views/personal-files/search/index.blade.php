@@ -3,7 +3,7 @@
 @section('title', 'Поиск анкеты')
 
 @section('content')
-    <h2 class="fw-bold py-5">Поиск анкеты</h2>
+    <h2 class="fw-bold pt-4 pb-5">Поиск анкеты</h2>
     @include('session-message')
     <p class="fs-5 mb-4">Введите серию и номер паспорта <strong>без пробелов</strong></p>
     <form action="{{ route('personal-files.manage.personal-file.search') }}" method="get">

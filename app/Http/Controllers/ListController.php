@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Facades\ListFacade;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -40,9 +40,9 @@ class ListController extends Controller
      *
      * @param Request $request
      * @param ListFacade $listFacade
-     * @return
+     * @return JsonResponse
      */
-    public function changeEnrollmentStatus(Request $request, ListFacade $listFacade)//: RedirectResponse
+    public function changeEnrollmentStatus(Request $request, ListFacade $listFacade): JsonResponse
     {
         $response = $listFacade->changeEnrollmentStatus($request);
         return response()->json();
