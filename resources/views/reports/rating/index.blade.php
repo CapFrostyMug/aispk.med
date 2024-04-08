@@ -13,12 +13,12 @@
             @include('session-message')
         </div>--}}
 
-        <div class="col-lg-7 rounded-2 custom-st-search-filter ms-lg-2">
+        <div class="col-lg-auto rounded-2 custom-st-search-filter ms-lg-2">
             <form action="{{ route('reporting.rating.generate') }}"
                   method="get"
                   class="row d-lg-flex justify-content-lg-start align-items-lg-end p-2 pb-lg-3">
                 @csrf
-                <div class="col-lg-10">
+                <div class="col-lg-auto">
                     <label for="faculty-id-1" class="form-label fw-bold">Выберите специальность из списка ниже:</label>
                     <select id="faculty-id-1" class="form-select custom-fn-faculty-select" name="faculty_id" required>
                         <option value="">Выберите...</option>
@@ -32,9 +32,17 @@
                         @endif
                     </select>
                 </div>
-                <div class="d-grid gap-2 d-lg-block col-lg-2 my-4 my-lg-0">
-                    <button class="btn btn-success px-3" type="submit">Поиск</button>
+                <div class="d-grid gap-2 d-lg-block col-lg-2 my-4 my-lg-0 text-center">
+                    <button class="btn btn-success" type="submit" style="min-width: 105px">Поиск</button>
                 </div>
+                @if(Auth::check() && isset($students) && $students->isNotEmpty())
+                    <div class="d-grid gap-2 d-lg-block col-lg-2 mb-4 mb-lg-0 text-center">
+                        <a class="btn btn-primary"
+                           href="{{ route('reporting.rating.export-list', request()->input('faculty_id')) }}"
+                           role="button"
+                           style="min-width: 105px">Печать</a>
+                    </div>
+                @endif
             </form>
         </div>
 
@@ -64,13 +72,17 @@
                     @forelse($students as $student)
                         <tr @if($student->special_circumstance) class="table-warning" @endif>
                             <th scope="row"
-                                class="text-center align-content-center">{{ $student->id }}</th> {{-- Поменять --}}
+                                class="text-center align-content-center">
+                                {{ ($students->perPage() * ($students->currentPage() - 1)) + $loop->iteration }}
+                            </th>
                             <td class="text-center align-content-center">{{ $student->surname }}</td>
                             <td class="text-center align-content-center">{{ $student->name }}</td>
                             <td class="text-center align-content-center">{{ $student->patronymic }}</td>
                             <td class="text-center align-content-center">{{ $student->avg_rating }}</td>
                             <td class="text-center align-content-center">{{ $student->admission_testing }}</td>
-                            <td class="text-center align-content-center">{{ $student->is_original_docs ? 'Оригиналы' : 'Копии' }}</td>
+                            <td class="text-center align-content-center">
+                                {{ $student->is_original_docs ? 'Оригиналы' : 'Копии' }}
+                            </td>
                             <td class="text-center align-content-center"
                                 style="min-width: 150px">{{ $student->financing_type }}</td>
                             @if(Auth::check())

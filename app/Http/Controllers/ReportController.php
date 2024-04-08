@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Facades\ReportFacade;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ReportController extends Controller
 {
@@ -17,7 +18,20 @@ class ReportController extends Controller
      */
     public function showRating(Request $request, ReportFacade $reportFacade): view
     {
-        $data = $reportFacade->generateRating($request);
+        $data = $reportFacade->showRating($request);
         return view('reports.rating.index', $data);
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param ReportFacade $reportFacade
+     * @param int $facultyId
+     * @return BinaryFileResponse
+     */
+    public function exportRatingToWord(ReportFacade $reportFacade, int $facultyId): BinaryFileResponse
+    {
+        $fileName = $reportFacade->exportRatingToWord($facultyId);
+        return response()->download($fileName . '.docx')->deleteFileAfterSend(true);
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Управление категорией: {{ request()->query('category') }}
+    Управление категорией: {{ request()->query('title') }}
 @endsection
 
 @section('content')

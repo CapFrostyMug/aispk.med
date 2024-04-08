@@ -79,7 +79,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('/rating')->name('rating.')->group(function () {
             Route::get('/', [ReportController::class, 'showRating'])->name('index')->withoutMiddleware([Authenticate::class]);
             Route::get('/generate-rating', [ReportController::class, 'showRating'])->name('generate')->withoutMiddleware([Authenticate::class]);
-            Route::get('/print-list', [])->name('print-list');
+            Route::get('/export-list/{id}', [ReportController::class, 'exportRatingToWord'])->name('export-list');
         });
     });
 
@@ -115,8 +115,6 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::prefix('database')->name('database.')->group(function () {
-            });
-            Route::prefix('calendar')->name('calendar.')->group(function () {
             });
             Route::prefix('website')->name('website.')->group(function () {
             });
