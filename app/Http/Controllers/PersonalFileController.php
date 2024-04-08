@@ -155,7 +155,6 @@ class PersonalFileController extends Controller
     public function exportApplicationToWord(PersonalFileFacade $personalFileFacade, int $id): BinaryFileResponse
     {
         $fileName = $personalFileFacade->exportApplicationToWord($id);
-
         return response()->download($fileName . '.docx')->deleteFileAfterSend(true);
     }
 }
