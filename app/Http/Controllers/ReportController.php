@@ -34,4 +34,17 @@ class ReportController extends Controller
         $fileName = $reportFacade->exportRatingToWord($facultyId);
         return response()->download($fileName . '.docx')->deleteFileAfterSend(true);
     }
+
+    /**
+     * [Method description].
+     *
+     * @param Request $request
+     * @param ReportFacade $reportFacade
+     * @return View
+     */
+    public function showUniversalReport(Request $request, ReportFacade $reportFacade): view
+    {
+        $data = $reportFacade->showUniversalReport($request);
+        return view('reports.universal-report.index', $data);
+    }
 }

@@ -38,11 +38,11 @@ class SpecialCircumstancesSeeder extends Seeder
                 'permission_remove' => 0,
             ],
             [
-                'name' => 'Абитуриент является иностранцем',
-                'permission_remove' => 1,
+                'name' => 'Абитуриент является сиротой',
+                'permission_remove' => 0,
             ],
             [
-                'name' => 'Абитуриент является сиротой',
+                'name' => 'Абитуриент является иностранцем',
                 'permission_remove' => 1,
             ]
         ];

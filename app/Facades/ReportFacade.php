@@ -3,6 +3,7 @@
 namespace App\Facades;
 
 use App\Models\Faculty;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -15,13 +16,16 @@ use PhpOffice\PhpWord\SimpleType\Jc;
 class ReportFacade
 {
     protected object $faculty;
+    protected object $student;
 
     public function __construct
     (
         Faculty $faculty = null,
+        Student $student = null,
     )
     {
         $this->faculty = $faculty ?: new Faculty();
+        $this->student = $student ?: new Student();
     }
 
     /**
@@ -142,5 +146,39 @@ class ReportFacade
         $objWriter->save($facultyName . '.docx');
 
         return $facultyName;
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function showUniversalReport(Request $request): array
+    {
+        if ($request->query()) {
+
+            dd($request->query());
+
+            $students = $this->student
+                ->with('passport')
+                ->with('faculties')
+                ->with('educational')
+                ->with('seniority')
+                ->with('specialCircumstances')
+                ->with('enrollment')
+                ->get();
+
+            foreach ($students as $key => $student) {
+                foreach ($student->faculties as $faculty) {
+                    dump($faculty->financingTypes);
+                }
+            }
+
+            dd();
+
+        }
+
+        return [];
     }
 }
