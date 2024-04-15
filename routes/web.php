@@ -74,7 +74,12 @@ Route::middleware('auth')->group(function () {
     Route::prefix('reporting')->name('reporting.')->group(function () {
 
         Route::get('', [])->name('');
-        Route::get('', [])->name('');
+
+        Route::prefix('/universal-report')->name('universal-report.')->group(function () {
+            Route::get('/', [ReportController::class, 'showUniversalReport'])->name('index');
+            Route::get('/generate-report', [ReportController::class, 'showUniversalReport'])->name('generate');
+            Route::get('/export-list', [ReportController::class, ''])->name('export-list');
+        });
 
         Route::prefix('/rating')->name('rating.')->group(function () {
             Route::get('/', [ReportController::class, 'showRating'])->name('index')->withoutMiddleware([Authenticate::class]);
