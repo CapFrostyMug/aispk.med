@@ -13,6 +13,9 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}">
+
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
 </head>
@@ -78,11 +81,32 @@
             </div>
         </div>
     </nav>
-    <main class="container custom-st-main shadow-sm bg-body p-lg-5">
+    <main class="container custom-st-main bg-body p-lg-5">
         @yield('content')
     </main>
-    <footer class="container bg-body-secondary">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, pariatur!</p>
+    <footer class="bg-secondary bg-opacity-25 py-3">
+        <div class="container mt-3">
+            <div class="row d-flex justify-content-between border-bottom border-2 pb-2 mb-2">
+                <ul class="col-12 col-lg-3 list-unstyled">
+                    <li class="fw-bold text-secondary">Тюменский медицинский колледж</li>
+                    <li><a href="https://www.goutmk.ru" class="d-inline-block text-muted text-decoration-none p-0">goutmk.ru</a></li>
+                </ul>
+                <ul class="col-12 col-lg-3 list-unstyled">
+                    <li class="fw-bold text-secondary">Приёмная комиссия</li>
+                    <li class="text-secondary">8 (3452) 40-30-00</li>
+                </ul>
+                <ul class="col-12 col-lg-3 list-unstyled">
+                    <li class="fw-bold text-secondary">Директор</li>
+                    <li class="text-secondary">8 (3452) 40-64-50</li>
+                </ul>
+                <ul class="col-12 col-lg-3 list-unstyled">
+                    <li class="fw-bold text-secondary">Почта</li>
+                    <li class="text-secondary">pk@goutmk.ru</li>
+                    <li class="text-secondary">gapou-mk-tmn@med-to.ru</li>
+                </ul>
+            </div>
+            <p class="text-center text-secondary m-0">&copy; 2022-@php echo date("Y"); @endphp</p>
+        </div>
     </footer>
 </div>
 </body>

@@ -1,12 +1,12 @@
 <div class="row mb-5 gy-3"> {{-- КОНТАКТНАЯ ИНФОРМАЦИЯ --}}
     <div class="col-3">
-        <label for="phone-1" class="form-label">Телефон</label>
+        <label for="phone-1" class="form-label">Телефон (только цифры)</label>
         <input id="phone-1"
                class="form-control @error('phone') is-invalid @enderror"
                name="phone"
                value="{{ old('phone') ?? $student->phone ?? '' }}"
                type="tel"
-               placeholder="7ХХХХХХХХХХ"
+               placeholder="71234567890"
                aria-describedby="phone-1-validation">
         @error('phone')
         <div id="phone-1-validation" class="invalid-feedback">

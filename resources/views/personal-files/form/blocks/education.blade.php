@@ -1,5 +1,5 @@
 <div class="row mb-5 gy-3"> {{--СВЕДЕНИЯ ОБ ОБРАЗОВАНИИ: БЛОК 1--}}
-    <div class="col-12">
+    <div class="col-9">
         <label for="educationalInstitutionName-1" class="form-label">Наименование учебного заведения<span
                 class="custom-st-required-field">*</span></label>
         <input
@@ -41,7 +41,7 @@
             @endif
         </select>
     </div>
-    <div class="col-3">
+    <div class="col-2">
         <label for="language-1" class="form-label">Иностранный язык<span
                 class="custom-st-required-field">*</span></label>
         <select id="language-1"
@@ -68,7 +68,7 @@
 </div>
 
 <div class="row mb-5 gy-3"> {{--СВЕДЕНИЯ ОБ ОБРАЗОВАНИИ: БЛОК 2--}}
-    <div class="col-4">
+    <div class="col-3">
         <label for="educational-doc-type-1" class="form-label">Документ об образовании<span
                 class="custom-st-required-field">*</span></label>
         <select id="educational-doc-type-1"
@@ -124,7 +124,7 @@
                name="issueDateEducationalDoc"
                value="{{ old('issueDateEducationalDoc') ?? $educational->issue_date ?? '' }}"
                type="date"
-               min="1923-01-01" max="2023-01-01"
+               min="1950-01-01" max="2030-01-01"
                required
                aria-describedby="issue-date-educational-doc-1-validation">
         @error('issueDateEducationalDoc')

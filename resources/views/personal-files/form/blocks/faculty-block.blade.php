@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div class="col-3">
+    <div class="col-2">
         <label for="{{ isset($facultiesBlocks) && isset($blockName) ? "financing_$blockName" : 'financing_block_1' }}"
                class="form-label">
             Финансирование<span class="custom-st-required-field">*</span>

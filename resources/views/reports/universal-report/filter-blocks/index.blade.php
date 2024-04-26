@@ -1,6 +1,6 @@
-@include('reports.universal-report.filter-blocks.passport')
 @include('reports.universal-report.filter-blocks.admission')
+@include('reports.universal-report.filter-blocks.passport')
 @include('reports.universal-report.filter-blocks.education')
+@include('reports.universal-report.filter-blocks.enrollment')
 @include('reports.universal-report.filter-blocks.seniority')
 @include('reports.universal-report.filter-blocks.other-info')
-@include('reports.universal-report.filter-blocks.enrollment')

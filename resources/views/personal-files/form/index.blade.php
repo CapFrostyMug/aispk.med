@@ -46,7 +46,7 @@
     <form
         action="{{ isset($student->id) ? route('personal-files.manage.personal-file.update', $student->id) : route('personal-files.store') }}"
         method="post"
-        class="custom-fn-form">
+        class="custom-fn-form pb-5">
         @csrf
         @if(request()->routeIs('personal-files.manage.personal-file.update'))
             @method('put')
@@ -57,7 +57,7 @@
         @include('personal-files.form.blocks.index')
 
         @if(!request()->routeIs('personal-files.manage.personal-file.show'))
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center mt-4">
                 <button class="btn btn-success custom-st-form-button-size me-4" type="submit">
                     {{ isset($student->id) ? __('Обновить') : __('Сохранить') }}
                 </button>
