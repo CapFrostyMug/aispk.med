@@ -3,6 +3,7 @@
 namespace App\Facades;
 
 use App\Models\Faculty;
+use App\Models\FinancingType;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -12,19 +13,24 @@ use PhpOffice\PhpWord\IOFactory;
 use Illuminate\Pagination\LengthAwarePaginator;
 use PhpOffice\PhpWord\SimpleType\JcTable;
 use PhpOffice\PhpWord\SimpleType\Jc;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Database\Eloquent\Builder;
 
 class ReportFacade
 {
     protected object $faculty;
+    protected object $financing;
     protected object $student;
 
     public function __construct
     (
-        Faculty $faculty = null,
-        Student $student = null,
+        Faculty       $faculty = null,
+        FinancingType $financing = null,
+        Student       $student = null,
     )
     {
         $this->faculty = $faculty ?: new Faculty();
+        $this->financing = $financing ?: new FinancingType();
         $this->student = $student ?: new Student();
     }
 
@@ -68,27 +74,83 @@ class ReportFacade
      * @param Request $request
      * @return array
      */
+    private function generateReport(Request $request): array
+    {
+        $mainQuery = DB::table('students')
+            ->join('passports', 'students.passport_id', '=', 'passports.id')
+            ->join('nationality', 'passports.nationality_id', '=', 'nationality.id')
+            ->join('educational', 'students.id', '=', 'educational.student_id')
+            ->join('educational_institution_types', 'educational.ed_institution_type_id', '=', 'educational_institution_types.id')
+            ->join('educational_doc_types', 'educational.ed_doc_type_id', '=', 'educational_doc_types.id')
+            ->join('seniority', 'students.id', '=', 'seniority.student_id')
+            ->join('enrollment', 'students.id', '=', 'enrollment.student_id')
+            ->leftJoin('faculties', 'enrollment.faculty_id', '=', 'faculties.id')
+            ->leftJoin('decrees', 'enrollment.decree_id', '=', 'decrees.id');
+
+        $userQuery = [];
+        $cellHeaders = [];
+
+        foreach ($request->query() as $table => $inputs) {
+            foreach ($inputs as $name => $value) {
+                $userQuery[] = $table . '.' . $name . ' as ' . $table . '_' . $name;
+                $cellHeaders[] = $value;
+            }
+        }
+
+        $students = $mainQuery->addSelect($userQuery)->get();
+
+        return [
+            'students' => $students,
+            'cellHeaders' => $cellHeaders,
+        ];
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param Request $request
+     * @return
+     */
+    private function generateStatistics(Request $request)
+    {
+        //
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param Request $request
+     * @return
+     */
+    private function customPaginator(Request $request, $students)
+    {
+        $total = count($students);
+        $per_page = config('paginate.studentsList');
+        $current_page = $request->input("page") ?? 1;
+        $starting_point = ($current_page * $per_page) - $per_page;
+
+        $students = array_slice($students->toArray(), $starting_point, $per_page, true);
+
+        return new LengthAwarePaginator($students, $total, $per_page, $current_page, [
+            'path' => $request->url(),
+            'query' => $request->query(),
+        ]);
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param Request $request
+     * @return array
+     */
     public function showRating(Request $request): array
     {
         $faculties = $this->faculty->all();
         $students = null;
 
         if ($request['faculty_id']) {
-
             $students = $this->generateRating($request['faculty_id']);
-
-            // Создаём кастомный пагинатор
-            $total = count($students);
-            $per_page = config('paginate.studentsList');
-            $current_page = $request->input("page") ?? 1;
-            $starting_point = ($current_page * $per_page) - $per_page;
-
-            $students = array_slice($students->toArray(), $starting_point, $per_page, true);
-
-            $students = new LengthAwarePaginator($students, $total, $per_page, $current_page, [
-                'path' => $request->url(),
-                'query' => $request->query(),
-            ]);
+            $students = $this->customPaginator($request, $students);
         }
 
         return [
@@ -157,28 +219,31 @@ class ReportFacade
     public function showUniversalReport(Request $request): array
     {
         if ($request->query()) {
-
-            dd($request->query());
-
-            $students = $this->student
-                ->with('passport')
-                ->with('faculties')
-                ->with('educational')
-                ->with('seniority')
-                ->with('specialCircumstances')
-                ->with('enrollment')
-                ->get();
-
-            foreach ($students as $key => $student) {
-                foreach ($student->faculties as $faculty) {
-                    dump($faculty->financingTypes);
-                }
-            }
-
-            dd();
-
+            return $this->generateReport($request);
         }
 
         return [];
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param Request $request
+     * @return
+     */
+    public function exportUniversalReportToExcel(Request $request)
+    {
+        //
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param Request $request
+     * @return
+     */
+    public function showStatistics(Request $request)
+    {
+        $this->generateStatistics($request);
     }
 }

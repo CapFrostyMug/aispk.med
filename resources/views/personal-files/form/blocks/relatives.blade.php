@@ -1,6 +1,6 @@
 <div class="row mb-5 gy-3"> {{-- ИНФОРМАЦИЯ О РОДСТВЕННИКАХ --}}
     <p class="mb-0 mt-3 fw-bold">Отец</p>
-    <div class="col-4">
+    <div class="col-3">
         <label for="father-surname-1" class="form-label">Фамилия</label>
         <input id="father-surname-1"
                class="form-control custom-fn-capslock @error('fatherSurname') is-invalid @enderror"
@@ -14,7 +14,7 @@
         </div>
         @enderror
     </div>
-    <div class="col-4">
+    <div class="col-3 offset-1">
         <label for="father-name-1" class="form-label">Имя</label>
         <input id="father-name-1"
                class="form-control custom-fn-capslock @error('fatherName') is-invalid @enderror"
@@ -28,7 +28,7 @@
         </div>
         @enderror
     </div>
-    <div class="col-4">
+    <div class="col-3 offset-1">
         <label for="father-patronymic-1" class="form-label">Отчество</label>
         <input id="father-patronymic-1"
                class="form-control custom-fn-capslock @error('fatherPatronymic') is-invalid @enderror"
@@ -43,13 +43,13 @@
         @enderror
     </div>
     <div class="col-3 mb-2">
-        <label for="father-phone-1" class="form-label">Телефон</label>
+        <label for="father-phone-1" class="form-label">Телефон (только цифры)</label>
         <input id="father-phone-1"
                class="form-control @error('fatherPhone') is-invalid @enderror"
                name="fatherPhone"
                value="{{ old('fatherPhone') ?? $studentsParentFather->phone ?? '' }}"
                type="tel"
-               placeholder="7ХХХХХХХХХХ"
+               placeholder="71234567890"
                aria-describedby="father-phone-1-validation">
         @error('fatherPhone')
         <div id="father-phone-1-validation" class="invalid-feedback">
@@ -59,7 +59,7 @@
     </div>
 
     <p class="mb-0 mt-4 fw-bold">Мать</p>
-    <div class="col-4">
+    <div class="col-3">
         <label for="mother-surname-1" class="form-label">Фамилия</label>
         <input id="mother-surname-1"
                class="form-control custom-fn-capslock @error('motherSurname') is-invalid @enderror"
@@ -73,7 +73,7 @@
         </div>
         @enderror
     </div>
-    <div class="col-4">
+    <div class="col-3 offset-1">
         <label for="mother-name-1" class="form-label">Имя</label>
         <input id="mother-name-1"
                class="form-control custom-fn-capslock @error('motherName') is-invalid @enderror"
@@ -87,7 +87,7 @@
         </div>
         @enderror
     </div>
-    <div class="col-4">
+    <div class="col-3 offset-1">
         <label for="mother-patronymic-1" class="form-label">Отчество</label>
         <input id="mother-patronymic-1"
                class="form-control custom-fn-capslock @error('motherPatronymic') is-invalid @enderror"
@@ -102,13 +102,13 @@
         @enderror
     </div>
     <div class="col-3">
-        <label for="mother-phone-1" class="form-label">Телефон</label>
+        <label for="mother-phone-1" class="form-label">Телефон (только цифры)</label>
         <input id="mother-phone-1"
                class="form-control @error('motherPhone') is-invalid @enderror"
                name="motherPhone"
                value="{{ old('motherPhone') ?? $studentsParentMother->phone ?? '' }}"
                type="tel"
-               placeholder="7ХХХХХХХХХХ"
+               placeholder="71234567890"
                aria-describedby="mother-phone-1-validation">
         @error('motherPhone')
         <div id="mother-phone-1-validation" class="invalid-feedback">

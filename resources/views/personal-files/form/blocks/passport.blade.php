@@ -1,5 +1,5 @@
 <div class="row mb-5 gy-3"> {{-- ПАСПОРТНЫЕ ДАННЫЕ: БЛОК 1 --}}
-    <div class="col-4">
+    <div class="col-3">
         <label for="lastName-1" class="form-label">Фамилия<span class="custom-st-required-field">*</span></label>
         <input id="lastName-1"
                class="form-control custom-fn-capslock @error('surname') is-invalid @enderror"
@@ -14,7 +14,7 @@
         </div>
         @enderror
     </div>
-    <div class="col-4">
+    <div class="col-3 offset-1">
         <label for="firstName-1" class="form-label">Имя<span class="custom-st-required-field">*</span></label>
         <input id="firstName-1"
                class="form-control custom-fn-capslock @error('name') is-invalid @enderror"
@@ -29,7 +29,7 @@
         </div>
         @enderror
     </div>
-    <div class="col-4">
+    <div class="col-3 offset-1">
         <label for="patronymic-1" class="form-label">Отчество</label>
         <input id="patronymic-1"
                class="form-control custom-fn-capslock @error('patronymic') is-invalid @enderror"
@@ -80,7 +80,7 @@
         </div>
         @enderror
     </div>
-    <div class="col-4 offset-2">
+    <div class="col-2 offset-2">
         <label for="nationality-1" class="form-label">Гражданство<span class="custom-st-required-field">*</span></label>
         <select id="nationality-1" class="form-select" name="nationality" required>
             <option
@@ -99,7 +99,7 @@
             @endif
         </select>
     </div>
-    <div class="col-12">
+    <div class="col-8">
         <label for="birthplace-1" class="form-label">Место рождения<span
                 class="custom-st-required-field">*</span></label>
         <input id="birthplace-1"
@@ -118,7 +118,7 @@
 </div>
 
 <div class="row mb-5 gy-3"> {{-- ПАСПОРТНЫЕ ДАННЫЕ: БЛОК 2 --}}
-    <div class="col-4">
+    <div class="col-3">
         <label for="passport-number-1" class="form-label">Серия и номер паспорта<span
                 class="custom-st-required-field">*</span></label>
         <input id="passport-number-1"
@@ -135,7 +135,7 @@
         </div>
         @enderror
     </div>
-    <div class="col-2">
+    <div class="col-2 offset-1">
         <label for="issue-date-passport-1" class="form-label">Дата выдачи<span class="custom-st-required-field">*</span></label>
         <input id="issue-date-passport-1"
                class="form-control @error('issueDatePassport') is-invalid @enderror"
@@ -151,10 +151,10 @@
         </div>
         @enderror
     </div>
-    <div class="col-12">
+    <div class="col-8">
         <label for="issue-by-1" class="form-label">Паспорт выдан<span class="custom-st-required-field">*</span></label>
         <input id="issue-by-1"
-               class="form-control custom-fn-capslock @error('issueBy') is-invalid @enderror"
+               class="form-control @error('issueBy') is-invalid @enderror"
                name="issueBy"
                value="{{ old('issueBy') ?? $passport->issue_by ?? '' }}"
                type="text"
@@ -169,7 +169,7 @@
 </div>
 
 <div class="row mb-5 gy-3"> {{-- ПАСПОРТНЫЕ ДАННЫЕ: БЛОК 3 --}}
-    <div class="col-12">
+    <div class="col-8">
         <label for="address-registered-1" class="form-label">Адрес по прописке<span
                 class="custom-st-required-field">*</span></label>
         <input id="address-registered-1"
@@ -185,7 +185,7 @@
         </div>
         @enderror
     </div>
-    <div class="col-12">
+    <div class="col-8">
         <label for="address-residential-1" class="form-label">Адрес проживания<span
                 class="custom-st-required-field">*</span></label>
         <input id="address-residential-1"

@@ -47,4 +47,28 @@ class ReportController extends Controller
         $data = $reportFacade->showUniversalReport($request);
         return view('reports.universal-report.index', $data);
     }
+
+    /**
+     * [Method description].
+     *
+     * @param Request $request
+     * @param ReportFacade $reportFacade
+     * @return
+     */
+    public function exportUniversalReportToExcel(Request $request, ReportFacade $reportFacade)
+    {
+        $reportFacade->exportUniversalReportToExcel($request);
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param Request $request
+     * @param ReportFacade $reportFacade
+     * @return
+     */
+    public function showStatistics(Request $request, ReportFacade $reportFacade)
+    {
+        $reportFacade->showStatistics($request);
+    }
 }

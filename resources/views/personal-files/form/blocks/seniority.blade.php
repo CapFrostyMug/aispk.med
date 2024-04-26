@@ -1,5 +1,5 @@
 <div class="row mb-5 gy-3"> {{-- СВЕДЕНИЯ О ТРУДОВОМ СТАЖЕ --}}
-    <div class="col-12">
+    <div class="col-5">
         <label for="place-work-1" class="form-label">Место работы</label>
         <input id="place-work-1"
                class="form-control custom-fn-capslock @error('placeWork') is-invalid @enderror"
@@ -13,7 +13,7 @@
         </div>
         @enderror
     </div>
-    <div class="col-7">
+    <div class="col-5 offset-1">
         <label for="profession-1" class="form-label">Должность, специализация</label>
         <input id="profession-1"
                class="form-control custom-fn-capslock @error('profession') is-invalid @enderror"
@@ -27,7 +27,7 @@
         </div>
         @enderror
     </div>
-    <div class="col-2 offset-1">
+    <div class="col-2">
         <label for="seniority-years-1" class="form-label">Стаж, лет</label>
         <input id="seniority-years-1"
                class="form-control @error('seniorityYears') is-invalid @enderror"

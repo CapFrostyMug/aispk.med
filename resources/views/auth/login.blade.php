@@ -13,6 +13,9 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}">
+
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
     <style>
