@@ -20,6 +20,8 @@ class Enrollment extends Model
         'is_pickup_docs',
     ];
 
+    protected $with = ['faculty', 'decree'];
+
     public function student()
     {
         return $this->belongsTo(

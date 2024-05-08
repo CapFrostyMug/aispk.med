@@ -25,6 +25,8 @@ class Passport extends Model
         'address_residential',
     ];
 
+    protected $with = ['nationality'];
+
     public function student()
     {
         return $this->hasOne(

@@ -14,6 +14,9 @@ $line-height-base: 1.6;
 // Style
 $custom-app-main-color: #41A49E;
 
+$black: #000;
+$form-check-input-border: 2px solid rgba($black, .25);
+
 // Убирает смещение страницы влево при появлении scrollbar-а
 html {
     overflow-x: hidden;
@@ -98,4 +101,32 @@ body {
 
 .custom-st-required-field {
     color: #FF0000;
+}
+
+.custom-st-min-width-75 {
+    min-width: 75px;
+}
+
+.custom-st-min-width-125 {
+    min-width: 125px;
+}
+
+.custom-st-min-width-175 {
+    min-width: 175px;
+}
+
+.custom-st-min-width-225 {
+    min-width: 225px;
+}
+
+.custom-st-min-width-275 {
+    min-width: 275px;
+}
+
+.custom-st-min-width-325 {
+    min-width: 325px;
+}
+
+.custom-st-min-width-375 {
+    min-width: 375px;
 }

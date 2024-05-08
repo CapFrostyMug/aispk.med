@@ -30,7 +30,7 @@
         @endforeach
     @endif
 </div>
-<div class="row mb-5 gy-3">
+<div class="row mt-3 mb-5 gy-3">
     <div class="col-6">
         <label for="about-me-1" class="form-label">О себе</label>
         <textarea id="about-me-1"

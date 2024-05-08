@@ -13,8 +13,6 @@ use PhpOffice\PhpWord\IOFactory;
 use Illuminate\Pagination\LengthAwarePaginator;
 use PhpOffice\PhpWord\SimpleType\JcTable;
 use PhpOffice\PhpWord\SimpleType\Jc;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Database\Eloquent\Builder;
 
 class ReportFacade
 {
@@ -71,49 +69,17 @@ class ReportFacade
     /**
      * [Method description].
      *
-     * @param Request $request
-     * @return array
+     * @param array $relations
+     * @return Collection
      */
-    private function generateReport(Request $request): array
+    private function generateReport(array $relations): Collection
     {
-        $mainQuery = DB::table('students')
-            ->join('passports', 'students.passport_id', '=', 'passports.id')
-            ->join('nationality', 'passports.nationality_id', '=', 'nationality.id')
-            ->join('educational', 'students.id', '=', 'educational.student_id')
-            ->join('educational_institution_types', 'educational.ed_institution_type_id', '=', 'educational_institution_types.id')
-            ->join('educational_doc_types', 'educational.ed_doc_type_id', '=', 'educational_doc_types.id')
-            ->join('seniority', 'students.id', '=', 'seniority.student_id')
-            ->join('enrollment', 'students.id', '=', 'enrollment.student_id')
-            ->leftJoin('faculties', 'enrollment.faculty_id', '=', 'faculties.id')
-            ->leftJoin('decrees', 'enrollment.decree_id', '=', 'decrees.id');
+        $students = $this->student->with($relations)->get();
 
-        $userQuery = [];
-        $cellHeaders = [];
+        //dd($students[0]);
 
-        foreach ($request->query() as $table => $inputs) {
-            foreach ($inputs as $name => $value) {
-                $userQuery[] = $table . '.' . $name . ' as ' . $table . '_' . $name;
-                $cellHeaders[] = $value;
-            }
-        }
-
-        $students = $mainQuery->addSelect($userQuery)->get();
-
-        return [
-            'students' => $students,
-            'cellHeaders' => $cellHeaders,
-        ];
-    }
-
-    /**
-     * [Method description].
-     *
-     * @param Request $request
-     * @return
-     */
-    private function generateStatistics(Request $request)
-    {
-        //
+        return $students;
+        //return collect();
     }
 
     /**
@@ -214,36 +180,20 @@ class ReportFacade
      * [Method description].
      *
      * @param Request $request
-     * @return array
+     * @return
      */
-    public function showUniversalReport(Request $request): array
+    public function showUniversalReport(Request $request)
     {
+        $students = null;
+        $relations = array_keys($request->input());
+
         if ($request->query()) {
-            return $this->generateReport($request);
+            $students = $this->generateReport($relations);
         }
 
-        return [];
-    }
-
-    /**
-     * [Method description].
-     *
-     * @param Request $request
-     * @return
-     */
-    public function exportUniversalReportToExcel(Request $request)
-    {
-        //
-    }
-
-    /**
-     * [Method description].
-     *
-     * @param Request $request
-     * @return
-     */
-    public function showStatistics(Request $request)
-    {
-        $this->generateStatistics($request);
+        return [
+            'students' => $students,
+            'relations' => $relations,
+        ];
     }
 }
