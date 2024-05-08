@@ -26,6 +26,8 @@ class Educational extends Model
         'issue_date',
     ];
 
+    protected $with = ['educationalInstitutionType', 'educationalDocType'];
+
     public function student()
     {
         return $this->belongsTo(

@@ -57,7 +57,7 @@ class ReportController extends Controller
      */
     public function exportUniversalReportToExcel(Request $request, ReportFacade $reportFacade)
     {
-        $reportFacade->exportUniversalReportToExcel($request);
+        //
     }
 
     /**
@@ -69,6 +69,6 @@ class ReportController extends Controller
      */
     public function showStatistics(Request $request, ReportFacade $reportFacade)
     {
-        $reportFacade->showStatistics($request);
+        //
     }
 }

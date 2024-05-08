@@ -3,9 +3,7 @@
 @section('title', 'Главная')
 
 @section('content')
-    <div class="#">
-        <h2 class="fw-bold">
-            {{----}}
-        </h2>
+    <div class="text-center">
+        <img src="/img/homepage-background.svg" alt="homepage-background" width="530" height="530">
     </div>
 @endsection
