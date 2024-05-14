@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-check mb-2">
                             <input id="faculties-1" class="form-check-input" name="faculties" type="checkbox"
-                                   @if (request()->input('faculties')) checked @endif disabled>
+                                   @if (request()->input('faculties')) checked @endif>
                             <label for="faculties-1" class="form-check-label">Поступление</label>
                         </div>
                         <div class="form-check mb-2">
@@ -40,7 +40,7 @@
                         </div>
                         <div class="form-check mb-2">
                             <input id="specialCircumstances-1" class="form-check-input" name="specialCircumstances" type="checkbox"
-                                   @if (request()->input('specialCircumstances')) checked @endif disabled>
+                                   @if (request()->input('specialCircumstances')) checked @endif>
                             <label for="specialCircumstances-1" class="form-check-label">Дополнительно</label>
                         </div>
                         <div class="form-check mb-2">
@@ -52,7 +52,11 @@
 
                     <div class="d-flex flex-column align-items-center">
                         <button type="submit" class="btn btn-success mb-3" style="min-width: 130px">Сформировать</button>
-                        <a class="btn btn-secondary" href="{{ route('reporting.universal-report.index') }}" role="button" style="min-width: 130px">Очистить</a>
+                        <a class="btn btn-secondary"
+                           href="{{ route('reporting.universal-report.index') }}"
+                           role="button"
+                           style="min-width: 130px">Очистить
+                        </a>
                     </div>
 
                 </form>
@@ -79,8 +83,12 @@
                             <tbody>
                             @forelse($students as $student)
                                 <tr>
-                                    <td class="text-center align-content-center"></td>
-                                    <td class="text-center align-content-center">{{ $student->id }}</td>
+                                    <td class="text-center align-content-center">
+                                        {{ ($students->perPage() * ($students->currentPage() - 1)) + $loop->iteration }}
+                                    </td>
+                                    <td class="text-center align-content-center">
+                                        <a href="{{ route('personal-files.manage.personal-file.show', $student->id) }}">{{ $student->id }}</a>
+                                    </td>
                                     <td class="text-center align-content-center">{{ $student->surname }}</td>
                                     <td class="text-center align-content-center">{{ $student->name }}</td>
                                     <td class="text-center align-content-center">{!! $student->patronymic ?? '&mdash;' !!}</td>
@@ -95,6 +103,10 @@
                             @endforelse
                             </tbody>
                         </table>
+                    </div>
+
+                    <div class="col-12 my-3">
+                        {{ $students->links() }}
                     </div>
                 @endif
             </div>

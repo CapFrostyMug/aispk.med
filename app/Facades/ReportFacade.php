@@ -8,6 +8,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -70,25 +71,24 @@ class ReportFacade
      * [Method description].
      *
      * @param array $relations
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    private function generateReport(array $relations): Collection
+    private function generateReport(array $relations): LengthAwarePaginator
     {
-        $students = $this->student->with($relations)->get();
-
-        //dd($students[0]);
-
-        return $students;
-        //return collect();
+        return $this->student
+            ->with($relations)
+            ->paginate(config('paginate.studentsList'))
+            ->withQueryString();
     }
 
     /**
      * [Method description].
      *
      * @param Request $request
-     * @return
+     * @param Collection $students
+     * @return LengthAwarePaginator
      */
-    private function customPaginator(Request $request, $students)
+    private function customPaginator(Request $request, Collection $students): LengthAwarePaginator
     {
         $total = count($students);
         $per_page = config('paginate.studentsList');
@@ -130,6 +130,7 @@ class ReportFacade
      *
      * @param int $facultyId
      * @return string
+     * @throws Exception
      */
     public function exportRatingToWord(int $facultyId): string
     {
@@ -180,20 +181,29 @@ class ReportFacade
      * [Method description].
      *
      * @param Request $request
-     * @return
+     * @return array
      */
-    public function showUniversalReport(Request $request)
+    public function showUniversalReport(Request $request): array
     {
         $students = null;
-        $relations = array_keys($request->input());
 
         if ($request->query()) {
+
+            $relations = array_diff(array_keys($request->input()), ['page']); // Удаляем из запроса слово 'page'
+
+            if (in_array('faculties', $relations)) {
+                $relations[] = 'financingTypes';
+            }
+
             $students = $this->generateReport($relations);
+            $relations = array_diff($relations, ['financingTypes']);
+
+            return [
+                'students' => $students,
+                'relations' => $relations,
+            ];
         }
 
-        return [
-            'students' => $students,
-            'relations' => $relations,
-        ];
+        return ['students' => $students];
     }
 }
