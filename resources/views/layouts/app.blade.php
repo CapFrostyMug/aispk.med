@@ -20,6 +20,11 @@
     @vite(['resources/js/app.js'])
 </head>
 <body class="bg-secondary bg-opacity-10">
+
+<div id="btn-back-to-top" class="slide-top">
+    @include('icons.other.arrow-up-circle')
+</div>
+
 <div id="app" class="custom-st-wrapper">
     <nav class="navbar navbar-expand-md navbar-light shadow-sm custom-st-master-navbar p-1">
         <div class="container">

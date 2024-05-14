@@ -4,5 +4,8 @@ export default function hideTrashBasketIcon() {
 
     let facultyBlockParent = document.querySelector('.custom-fn-faculty-block-parent');
     let firstElem = facultyBlockParent.firstElementChild.querySelector('.custom-fn-remove-cart');
-    firstElem.classList.add('d-none');
+
+    if (firstElem !== null) {
+        firstElem.classList.add('d-none');
+    }
 };

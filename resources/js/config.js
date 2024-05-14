@@ -4,17 +4,23 @@ import capsLockDetector from './custom/capsLockDetector';
 import changeEnrollmentStatus from './custom/lists/changeEnrollmentStatus';
 import checkboxHandler from './custom/personal-files/checkboxHandler';
 import hideTrashBasketIcon from './custom/personal-files/hideTrashBasketIcon';
-import {clickHandler as removeFacultyBlock} from './custom/personal-files/removeFacultyBlock';
+import {clickHandler} from './custom/personal-files/removeFacultyBlock';
 import removeSessionMessage from './custom/removeSessionMessage';
 import resetForm from './custom/personal-files/resetForm';
 import fieldsHandlerDuringView from './custom/fieldsHandlerDuringView';
-import WindowOnloadFunctions from './custom/windowOnloadFunctions';
 import removeCategoryItem from "./custom/removeFuncs/removeCategoryItem";
 import removePersonalFile from "./custom/removeFuncs/removePersonalFile";
 import removeUser from "./custom/removeFuncs/removeUser";
 import toggleTableRowColor from "./custom/lists/toggleTableRowColor";
+import checkboxHandlerFlag from './custom/personal-files/checkboxHandlerFlag';
+import {removeFacultyBlock} from './custom/personal-files/removeFacultyBlock';
+import backTopButton from './custom/backTopButton';
 
 export const CONFIG = {
+
+    '/': [
+        backTopButton,
+    ],
 
     '/personal-files/create-personal-file': [
         addFacultyBlock,
@@ -22,10 +28,11 @@ export const CONFIG = {
         capsLockDetector,
         checkboxHandler,
         hideTrashBasketIcon,
-        removeFacultyBlock,
+        clickHandler,
         removeSessionMessage,
         resetForm,
-        WindowOnloadFunctions,
+        checkboxHandlerFlag,
+        removeFacultyBlock,
     ],
 
     'personal-files/manage/personal-file/edit': [
@@ -34,10 +41,11 @@ export const CONFIG = {
         capsLockDetector,
         checkboxHandler,
         hideTrashBasketIcon,
-        removeFacultyBlock,
+        clickHandler,
         removePersonalFile,
         removeSessionMessage,
-        WindowOnloadFunctions,
+        checkboxHandlerFlag,
+        removeFacultyBlock,
     ],
 
     'personal-files/manage/personal-file/view': [
@@ -55,6 +63,9 @@ export const CONFIG = {
     'students-lists': [
         removePersonalFile,
         removeSessionMessage,
+    ],
+
+    'students-lists/manage/enrollment/search': [
         changeEnrollmentStatus,
         toggleTableRowColor,
     ],
