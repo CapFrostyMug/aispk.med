@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Services\ReportGeneratorService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(FromCollection::class, ReportGeneratorService::class);
     }
 
     /**

@@ -71,31 +71,32 @@ class ReportFacade
      * [Method description].
      *
      * @param array $relations
-     * @return LengthAwarePaginator
+     * @return Collection
      */
-    private function generateReport(array $relations): LengthAwarePaginator
+    private function generateReport(array $relations): Collection
     {
-        return $this->student
-            ->with($relations)
-            ->paginate(config('paginate.studentsList'))
-            ->withQueryString();
+        return $this->student->with($relations)->get();
     }
 
     /**
      * [Method description].
      *
      * @param Request $request
-     * @param Collection $students
+     * @param array|Collection $students
      * @return LengthAwarePaginator
      */
-    private function customPaginator(Request $request, Collection $students): LengthAwarePaginator
+    private function customPaginator(Request $request, array|Collection $students): LengthAwarePaginator
     {
         $total = count($students);
         $per_page = config('paginate.studentsList');
         $current_page = $request->input("page") ?? 1;
         $starting_point = ($current_page * $per_page) - $per_page;
 
-        $students = array_slice($students->toArray(), $starting_point, $per_page, true);
+        if (is_array($students)) {
+            $students = array_slice($students, $starting_point, $per_page, true);
+        } else {
+            $students = $students->slice($starting_point, $per_page);
+        }
 
         return new LengthAwarePaginator($students, $total, $per_page, $current_page, [
             'path' => $request->url(),
@@ -115,7 +116,7 @@ class ReportFacade
         $students = null;
 
         if ($request['faculty_id']) {
-            $students = $this->generateRating($request['faculty_id']);
+            $students = $this->generateRating($request['faculty_id'])->toArray();
             $students = $this->customPaginator($request, $students);
         }
 
@@ -196,6 +197,8 @@ class ReportFacade
             }
 
             $students = $this->generateReport($relations);
+            $students = $this->customPaginator($request, $students);
+
             $relations = array_diff($relations, ['financingTypes']);
 
             return [
@@ -205,5 +208,16 @@ class ReportFacade
         }
 
         return ['students' => $students];
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param
+     * @return
+     */
+    public function showStatistics()
+    {
+        //
     }
 }
