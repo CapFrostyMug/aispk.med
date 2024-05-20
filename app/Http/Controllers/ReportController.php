@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Facades\ReportFacade;
+use App\Services\ReportGeneratorService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -52,12 +53,11 @@ class ReportController extends Controller
      * [Method description].
      *
      * @param Request $request
-     * @param ReportFacade $reportFacade
-     * @return
+     * @return ReportGeneratorService
      */
-    public function exportUniversalReportToExcel(Request $request, ReportFacade $reportFacade)
+    public function exportUniversalReportToExcel(Request $request): ReportGeneratorService
     {
-        //
+        return new ReportGeneratorService($request);
     }
 
     /**
@@ -69,6 +69,6 @@ class ReportController extends Controller
      */
     public function showStatistics(Request $request, ReportFacade $reportFacade)
     {
-        //
+        $reportFacade->showStatistics();
     }
 }

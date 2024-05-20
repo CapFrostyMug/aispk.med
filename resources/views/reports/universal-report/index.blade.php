@@ -50,12 +50,17 @@
                         </div>
                     </div>
 
-                    <div class="d-flex flex-column align-items-center">
-                        <button type="submit" class="btn btn-success mb-3" style="min-width: 130px">Сформировать</button>
+                    <div class="d-flex flex-column">
+                        <button type="submit" class="btn btn-success mb-3">Сформировать</button>
+                        @if(request()->input())
+                            <a class="btn btn-primary mb-3"
+                               href="{{ route('reporting.universal-report.export-list', request()->input()) }}"
+                               role="button">Печать
+                            </a>
+                        @endif
                         <a class="btn btn-secondary"
                            href="{{ route('reporting.universal-report.index') }}"
-                           role="button"
-                           style="min-width: 130px">Очистить
+                           role="button">Очистить
                         </a>
                     </div>
 
@@ -73,11 +78,12 @@
                                 <th scope="col" class="text-center align-middle">Фамилия</th>
                                 <th scope="col" class="text-center align-middle">Имя</th>
                                 <th scope="col" class="text-center align-middle">Отчество</th>
-                                @if(isset($students[0]))
-                                    @foreach($relations as $item)
-                                        @include('reports.universal-report.table-blocks.thead.' . $item)
-                                    @endforeach
-                                @endif
+                                @foreach($relations as $item)
+                                    @include('reports.universal-report.table-blocks.thead.' . $item)
+                                @endforeach
+                                {{--@if(isset($students[0]))
+
+                                @endif--}}
                             </tr>
                             </thead>
                             <tbody>
