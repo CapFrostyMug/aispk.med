@@ -6,8 +6,7 @@
                class="form-control custom-fn-capslock @error('fatherSurname') is-invalid @enderror"
                name="fatherSurname"
                value="{{ old('fatherSurname') ?? $studentsParentFather->surname ?? '' }}"
-               type="text"
-               aria-describedby="father-surname-1-validation">
+               type="text">
         @error('fatherSurname')
         <div id="father-surname-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -20,8 +19,7 @@
                class="form-control custom-fn-capslock @error('fatherName') is-invalid @enderror"
                name="fatherName"
                value="{{ old('fatherName') ?? $studentsParentFather->name ?? '' }}"
-               type="text"
-               aria-describedby="father-name-1-validation">
+               type="text">
         @error('fatherName')
         <div id="father-name-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -34,8 +32,7 @@
                class="form-control custom-fn-capslock @error('fatherPatronymic') is-invalid @enderror"
                name="fatherPatronymic"
                value="{{ old('fatherPatronymic') ?? $studentsParentFather->patronymic ?? '' }}"
-               type="text"
-               aria-describedby="father-patronymic-1-validation">
+               type="text">
         @error('fatherPatronymic')
         <div id="father-patronymic-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -49,8 +46,7 @@
                name="fatherPhone"
                value="{{ old('fatherPhone') ?? $studentsParentFather->phone ?? '' }}"
                type="tel"
-               placeholder="71234567890"
-               aria-describedby="father-phone-1-validation">
+               placeholder="71234567890">
         @error('fatherPhone')
         <div id="father-phone-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -65,8 +61,7 @@
                class="form-control custom-fn-capslock @error('motherSurname') is-invalid @enderror"
                name="motherSurname"
                value="{{ old('motherSurname') ?? $studentsParentMother->surname ?? '' }}"
-               type="text"
-               aria-describedby="mother-surname-1-validation">
+               type="text">
         @error('motherSurname')
         <div id="mother-surname-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -79,8 +74,7 @@
                class="form-control custom-fn-capslock @error('motherName') is-invalid @enderror"
                name="motherName"
                value="{{ old('motherName') ?? $studentsParentMother->name ?? '' }}"
-               type="text"
-               aria-describedby="mother-name-1-validation">
+               type="text">
         @error('motherName')
         <div id="mother-name-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -93,8 +87,7 @@
                class="form-control custom-fn-capslock @error('motherPatronymic') is-invalid @enderror"
                name="motherPatronymic"
                value="{{ old('motherPatronymic') ?? $studentsParentMother->patronymic ?? '' }}"
-               type="text"
-               aria-describedby="mother-patronymic-1-validation">
+               type="text">
         @error('motherPatronymic')
         <div id="mother-patronymic-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -108,8 +101,7 @@
                name="motherPhone"
                value="{{ old('motherPhone') ?? $studentsParentMother->phone ?? '' }}"
                type="tel"
-               placeholder="71234567890"
-               aria-describedby="mother-phone-1-validation">
+               placeholder="71234567890">
         @error('motherPhone')
         <div id="mother-phone-1-validation" class="invalid-feedback">
             {{ $message }}

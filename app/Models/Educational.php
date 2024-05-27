@@ -22,7 +22,6 @@ class Educational extends Model
         'is_first_spo',
         'is_excellent_student',
         'avg_rating',
-        'admission_testing',
         'issue_date',
     ];
 

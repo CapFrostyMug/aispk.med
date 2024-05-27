@@ -24,7 +24,7 @@ class Faculty extends Model
             'information_for_admission',
             'faculty_id',
             'student_id'
-        )->withPivot('is_original_docs', 'financing_type_id');
+        )->withPivot('is_original_docs', 'financing_type_id', 'testing');
     }
 
     public function financingTypes()
@@ -34,7 +34,7 @@ class Faculty extends Model
             'information_for_admission',
             'faculty_id',
             'financing_type_id'
-        )->withPivot('is_original_docs', 'faculty_id');
+        )->withPivot('is_original_docs', 'faculty_id', 'testing');
     }
 
     public function enrollment()

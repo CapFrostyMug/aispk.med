@@ -1,5 +1,5 @@
 @php
-    if (@old('data')) $facultiesBlocks = @old('data');
+    if (old('data')) $facultiesBlocks = old('data');
 @endphp
 
 <div class="row gy-3 custom-fn-faculty-block-parent">

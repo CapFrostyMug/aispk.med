@@ -6,8 +6,7 @@
                name="surname"
                value="{{ old('surname') ?? $student->surname ?? '' }}"
                type="text"
-               required
-               aria-describedby="lastName-1-validation">
+               required>
         @error('surname')
         <div id="lastName-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -21,8 +20,7 @@
                name="name"
                value="{{ old('name') ?? $student->name ?? '' }}"
                type="text"
-               required
-               aria-describedby="firstName-1-validation">
+               required>
         @error('name')
         <div id="firstName-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -35,8 +33,7 @@
                class="form-control custom-fn-capslock @error('patronymic') is-invalid @enderror"
                name="patronymic"
                value="{{ old('patronymic') ?? $student->patronymic ?? '' }}"
-               type="text"
-               aria-describedby="patronymic-1-validation">
+               type="text">
         @error('patronymic')
         <div id="patronymic-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -72,8 +69,7 @@
                value="{{ old('birthday') ?? $passport->birthday ?? '' }}"
                type="date"
                min="1923-01-01" max="2023-01-01"
-               required
-               aria-describedby="birthday-1-validation">
+               required>
         @error('birthday')
         <div id="birthday-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -107,8 +103,7 @@
                name="birthplace"
                value="{{ old('birthplace') ?? $passport->birthplace ?? '' }}"
                type="text"
-               required
-               aria-describedby="birthplace-validation">
+               required>
         @error('birthplace')
         <div id="birthplace-validation" class="invalid-feedback">
             {{ $message }}
@@ -127,8 +122,7 @@
                value="{{ old('passportNumber') ?? $passport->number ?? '' }}"
                type="text"
                placeholder="Т-АТZ0825000"
-               required
-               aria-describedby="passport-number-1-validation">
+               required>
         @error('passportNumber')
         <div id="passport-number-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -142,9 +136,8 @@
                name="issueDatePassport"
                value="{{ old('issueDatePassport') ?? $passport->issue_date ?? '' }}"
                type="date"
-               min="1923-01-01" max="2023-01-01"
-               required
-               aria-describedby="issue-date-passport-1-validation">
+               min="1900-01-01" max="2030-01-01"
+               required>
         @error('issueDatePassport')
         <div id="issue-date-passport-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -158,8 +151,7 @@
                name="issueBy"
                value="{{ old('issueBy') ?? $passport->issue_by ?? '' }}"
                type="text"
-               required
-               aria-describedby="issue-by-1-validation">
+               required>
         @error('issueBy')
         <div id="issue-by-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -177,8 +169,7 @@
                name="addressRegistered"
                value="{{ old('addressRegistered') ?? $passport->address_registered ?? '' }}"
                type="text"
-               required
-               aria-describedby="address-registered-1-validation">
+               required>
         @error('addressRegistered')
         <div id="address-registered-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -193,8 +184,7 @@
                name="addressResidential"
                value="{{ old('addressResidential') ?? $passport->address_residential ?? '' }}"
                type="text"
-               required
-               aria-describedby="address-residential-1-validation">
+               required>
         @error('addressResidential')
         <div id="address-residential-1-validation" class="invalid-feedback">
             {{ $message }}

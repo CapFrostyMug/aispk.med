@@ -30,6 +30,7 @@ class InformationForAdmissionSeeder extends Seeder
                 'faculty_id' => fake()->numberBetween(1, 10),
                 'financing_type_id' => fake()->numberBetween(1, 3),
                 'is_original_docs' => fake()->numberBetween(0, 1),
+                'testing' => fake()->randomFloat(2, 0, 9.99),
             ];
         }
 

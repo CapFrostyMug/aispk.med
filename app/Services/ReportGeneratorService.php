@@ -3,9 +3,9 @@
 namespace App\Services;
 
 use App\Models\Student;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -26,17 +26,24 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ReportGeneratorService
     extends DefaultValueBinder
-    implements Responsable, FromQuery, WithMapping, WithHeadings, WithCustomValueBinder, ShouldAutoSize, WithStyles, WithDefaultStyles
+    implements  Responsable,
+                FromQuery,
+                ShouldQueue,
+                WithMapping,
+                WithHeadings,
+                WithCustomValueBinder,
+                ShouldAutoSize,
+                WithStyles,
+                WithDefaultStyles
 {
     use Exportable;
 
-    private string $fileName = 'aispk_universal_report.xlsx';
     private string $writerType = Excel::XLSX;
-    private Request $request;
+    private array $inputs;
 
-    public function __construct(Request $request)
+    public function __construct(array $inputs)
     {
-        $this->request = $request;
+        $this->inputs = $inputs;
     }
 
     /**
@@ -56,7 +63,7 @@ class ReportGeneratorService
     {
         $result = [];
 
-        $functionsList = array_diff(array_keys($this->request->input()), ['page']);
+        $functionsList = array_diff(array_keys($this->inputs), ['page']);
 
         foreach ($functionsList as $item) {
             $data[] = $this->$item($row);
@@ -70,7 +77,7 @@ class ReportGeneratorService
     }
 
     /**
-     * @param Student $row
+     * @param Model $row
      * @return array
      */
     public function map($row): array
@@ -121,7 +128,7 @@ class ReportGeneratorService
     public function styles(Worksheet $sheet): array
     {
         return [
-             1  => ['font' => ['bold' => true], 'alignment' => ['horizontal' => 'center', 'vertical' => 'center']],
+            1 => ['font' => ['bold' => true], 'alignment' => ['horizontal' => 'center', 'vertical' => 'center']],
             'A' => ['alignment' => ['horizontal' => 'center', 'vertical' => 'center']],
             'B' => ['alignment' => ['horizontal' => 'center', 'vertical' => 'center']],
             'C' => ['alignment' => ['horizontal' => 'center', 'vertical' => 'center']],
@@ -173,24 +180,28 @@ class ReportGeneratorService
             return $headers;
         }
 
-        foreach ($attributes as $attribute) {
+        try {
+            foreach ($attributes as $attribute) {
 
-            if ($attribute === 'nationality_id') {
-                $data[] = $row->passport->nationality->name;
-                continue;
+                if ($attribute === 'nationality_id') {
+                    $data[] = $row->passport->nationality->name;
+                    continue;
+                }
+
+                if ($attribute === 'gender') {
+                    $data[] = $row->passport->gender === 'male' ? 'муж.' : 'жен.';
+                    continue;
+                }
+
+                if ($attribute === 'birthday' || $attribute === 'issue_date') {
+                    $data[] = date('d.m.Y', strtotime($row->passport->$attribute));
+                    continue;
+                }
+
+                $data[] = $row->passport->$attribute;
             }
-
-            if ($attribute === 'gender') {
-                $data[] = $row->passport->gender === 'male' ? 'муж.' : 'жен.';
-                continue;
-            }
-
-            if ($attribute === 'birthday' || $attribute === 'issue_date') {
-                $data[] = date('d.m.Y', strtotime($row->passport->$attribute));
-                continue;
-            }
-
-            $data[] = $row->passport->$attribute;
+        } catch (\Exception $exception) {
+            return $data;
         }
 
         return $data;
@@ -204,18 +215,32 @@ class ReportGeneratorService
     {
         $data = [];
         $faculties = '';
+        $testingResults = '';
 
-        $headers = ['Специальности', 'Дата подачи документов'];
+        $headers = ['Специальности', 'Тестирование', 'Дата подачи документов'];
 
         if (is_null($row)) {
             return $headers;
         }
 
-        foreach ($row->faculties as $item) {
-            $faculties .= $item->name . '; ';
+        try {
+            foreach ($row->faculties as $item) {
+
+                $faculties .= $item->name . '; ';
+
+                if (is_null($item->pivot->testing)) {
+                    $testingResults .= '— ; ';
+                } else {
+                    $testingResults .= $item->pivot->testing . '; ';
+                }
+
+            }
+        } catch (\Exception $exception) {
+            return $data;
         }
 
-        $data[] = $faculties;
+        $data[] = substr_replace($faculties, '', strripos($faculties, ';'));
+        $data[] = substr_replace($testingResults, '', strripos($testingResults, ';'));
         $data[] = date('d.m.Y', strtotime($row->created_at));
 
         return $data;
@@ -234,7 +259,6 @@ class ReportGeneratorService
             'Серия и номер документа',
             'Дата выдачи документа',
             'Средний балл',
-            'Тестирование',
             'Отличник',
             'СПО впервые'
         ];
@@ -243,19 +267,20 @@ class ReportGeneratorService
             return $headers;
         }
 
-        return [
-
-            $row->educational->ed_institution_name,
-            $row->educational->educationalInstitutionType->name,
-            $row->educational->educationalDocType->name,
-            $row->educational->ed_doc_number,
-            date('d.m.Y', strtotime($row->educational->issue_date)),
-            $row->educational->avg_rating,
-            $row->educational->admission_testing ?? '—',
-            $row->educational->is_excellent_student ? 'Да' : 'Нет',
-            $row->educational->is_first_spo ? 'Да' : 'Нет',
-
-        ];
+        try {
+            return [
+                $row->educational->ed_institution_name,
+                $row->educational->educationalInstitutionType->name,
+                $row->educational->educationalDocType->name,
+                $row->educational->ed_doc_number,
+                date('d.m.Y', strtotime($row->educational->issue_date)),
+                $row->educational->avg_rating,
+                $row->educational->is_excellent_student ? 'Да' : 'Нет',
+                $row->educational->is_first_spo ? 'Да' : 'Нет',
+            ];
+        } catch (\Exception $exception) {
+            return [];
+        }
     }
 
     /**
@@ -270,10 +295,14 @@ class ReportGeneratorService
             return $headers;
         }
 
-        return [
-            $row->seniority->place_work ?? '—',
-            $row->seniority->profession ?? '—'
-        ];
+        try {
+            return [
+                $row->seniority->place_work ?? '—',
+                $row->seniority->profession ?? '—'
+            ];
+        } catch (\Exception $exception) {
+            return $data;
+        }
     }
 
     /**
@@ -283,21 +312,26 @@ class ReportGeneratorService
     private function specialCircumstances(model|null $row = null): array
     {
         $data = [];
-        $indexes = [0, 1, 2, 5];
 
         $headers = [
             'Спец. условия',
             'Инвалидность',
             'Общежитие',
-            'Сирота'
+            'Ребёнок/участник СВО',
+            'Сирота',
+            'Иностранец'
         ];
 
         if (is_null($row)) {
             return $headers;
         }
 
-        foreach ($indexes as $index) {
-            $data[] = $row->specialCircumstances[$index]->pivot->status ? 'Да' : 'Нет';
+        try {
+            for ($i = 0; $i <= 5; $i++) {
+                $data[] = $row->specialCircumstances[$i]->pivot->status ? 'Да' : 'Нет';
+            }
+        } catch (\Exception $exception) {
+            return $data;
         }
 
         return $data;
@@ -315,10 +349,14 @@ class ReportGeneratorService
             return $headers;
         }
 
-        return [
-            $row->enrollment->faculty->name ?? '—',
-            $row->enrollment->decree->name ?? '—',
-            $row->enrollment->is_pickup_docs ? 'Да' : 'Нет'
-        ];
+        try {
+            return [
+                $row->enrollment->faculty->name ?? '—',
+                $row->enrollment->decree->name ?? '—',
+                $row->enrollment->is_pickup_docs ? 'Да' : 'Нет'
+            ];
+        } catch (\Exception $exception) {
+            return [];
+        }
     }
 }

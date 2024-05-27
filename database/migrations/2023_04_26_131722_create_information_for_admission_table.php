@@ -32,6 +32,7 @@ return new class extends Migration
                 ->onDelete('restrict');
             $table->boolean('is_original_docs')
                 ->nullable(false);
+            $table->decimal('testing')->nullable();
             $table->timestamps();
         });
     }

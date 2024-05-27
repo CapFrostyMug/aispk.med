@@ -137,7 +137,6 @@ final class PersonalFileFacade extends Facade
                     'is_first_spo' => $validatedData['firstProfession'],
                     'is_excellent_student' => $validatedData['excellentStudent'],
                     'avg_rating' => $validatedData['avgRating'],
-                    'admission_testing' => $validatedData['admissionTesting'],
                     'issue_date' => $validatedData['issueDateEducationalDoc'],
                 ]);
 
@@ -179,6 +178,7 @@ final class PersonalFileFacade extends Facade
                             'student_id' => $this->student->id,
                             'financing_type_id' => $blockContent['financing_type_id'],
                             'is_original_docs' => $blockContent['is_original_docs'],
+                            'testing' => $blockContent['testing']
                         ]
                     );
                 }
@@ -270,7 +270,6 @@ final class PersonalFileFacade extends Facade
                     'is_first_spo' => $validatedData['firstProfession'],
                     'is_excellent_student' => $validatedData['excellentStudent'],
                     'avg_rating' => $validatedData['avgRating'],
-                    'admission_testing' => $validatedData['admissionTesting'],
                     'issue_date' => $validatedData['issueDateEducationalDoc'],
                 ]);
 
@@ -298,7 +297,7 @@ final class PersonalFileFacade extends Facade
                 $this->enrollment->where('student_id', $student->id)->update([
                     'faculty_id' => $validatedData['facultyAdmitted'],
                     'decree_id' => $validatedData['decree'],
-                    'is_pickup_docs' => $validatedData['pickupDocs'],
+                    'is_pickup_docs' => $validatedData['pickupDocs']
                 ]);
 
                 $this->student->updateInformationForAdmissionTable($validatedData, $student);

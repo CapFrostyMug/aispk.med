@@ -5,8 +5,7 @@
                class="form-control custom-fn-capslock @error('placeWork') is-invalid @enderror"
                name="placeWork"
                value="{{ old('placeWork') ?? $seniority->place_work ?? '' }}"
-               type="text"
-               aria-describedby="place-work-1-validation">
+               type="text">
         @error('placeWork')
         <div id="place-work-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -19,8 +18,7 @@
                class="form-control custom-fn-capslock @error('profession') is-invalid @enderror"
                name="profession"
                value="{{ old('profession') ?? $seniority->profession ?? '' }}"
-               type="text"
-               aria-describedby="profession-1-validation">
+               type="text">
         @error('profession')
         <div id="profession-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -34,7 +32,6 @@
                name="seniorityYears"
                value="{{ old('seniorityYears') ?? $seniority->years ?? '' }}"
                type="number"
-               aria-describedby="seniority-years-1-validation"
                min="0"
                max="100">
         @error('seniorityYears')
@@ -50,7 +47,6 @@
                name="seniorityMonths"
                value="{{ old('seniorityMonths') ?? $seniority->months ?? '' }}"
                type="number"
-               aria-describedby="seniority-months-1-validation"
                min="0"
                max="12">
         @error('seniorityMonths')

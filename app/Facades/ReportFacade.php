@@ -49,8 +49,12 @@ class ReportFacade
             ->join('student_special_circumstance', 'students.id', '=', 'student_special_circumstance.student_id')
 
             ->select(
-                'students.id', 'students.name as name', 'students.surname as surname', 'students.patronymic as patronymic',
-                'educational.avg_rating as avg_rating', 'educational.admission_testing as admission_testing',
+                'students.id',
+                'students.name as name',
+                'students.surname as surname',
+                'students.patronymic as patronymic',
+                'educational.avg_rating as avg_rating',
+                'information_for_admission.testing as testing',
                 'information_for_admission.is_original_docs as is_original_docs',
                 'financing_types.name as financing_type',
                 'student_special_circumstance.status as special_circumstance',
@@ -167,7 +171,7 @@ class ReportFacade
             $table->addCell(2000, $cellVCentered)->addText($students[$r - 1]->name, $tableTextStyle, $cellHCentered);
             $table->addCell(2000, $cellVCentered)->addText($students[$r - 1]->patronymic, $tableTextStyle, $cellHCentered);
             $table->addCell(1200, $cellVCentered)->addText($students[$r - 1]->avg_rating, $tableTextStyle, $cellHCentered);
-            $table->addCell(700, $cellVCentered)->addText($students[$r - 1]->admission_testing, $tableTextStyle, $cellHCentered);
+            $table->addCell(700, $cellVCentered)->addText($students[$r - 1]->testing, $tableTextStyle, $cellHCentered);
             $table->addCell(1500, $cellVCentered)->addText($students[$r - 1]->is_original_docs ? 'Оригиналы' : 'Копии', $tableTextStyle, $cellHCentered);
             $table->addCell(2300, $cellVCentered)->addText($students[$r - 1]->financing_type, $tableTextStyle, $cellHCentered);
         }
