@@ -9,9 +9,9 @@
             <h2 class="fw-bold pt-4 pb-3 pb-lg-5 ps-2 ps-lg-0">Универсальный отчёт</h2>
         </div>
 
-        {{--<div class="col-12">
+        <div class="col-12">
             @include('session-message')
-        </div>--}}
+        </div>
 
         <div class="row">
             <div class="col-3">
@@ -39,7 +39,8 @@
                             <label for="seniority-1" class="form-check-label">Трудовой стаж</label>
                         </div>
                         <div class="form-check mb-2">
-                            <input id="specialCircumstances-1" class="form-check-input" name="specialCircumstances" type="checkbox"
+                            <input id="specialCircumstances-1" class="form-check-input" name="specialCircumstances"
+                                   type="checkbox"
                                    @if (request()->input('specialCircumstances')) checked @endif>
                             <label for="specialCircumstances-1" class="form-check-label">Дополнительно</label>
                         </div>
@@ -53,10 +54,14 @@
                     <div class="d-flex flex-column">
                         <button type="submit" class="btn btn-success mb-3">Сформировать</button>
                         @if(request()->input())
-                            <a class="btn btn-primary mb-3"
+                            <a class="btn btn-primary custom-fn-spinner mb-3"
                                href="{{ route('reporting.universal-report.export-list', request()->input()) }}"
                                role="button">Печать
                             </a>
+                            {{--<button class="btn btn-primary custom-fn-spinner mb-3" type="button" disabled hidden>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Загрузка...
+                            </button>--}}
                         @endif
                         <a class="btn btn-secondary"
                            href="{{ route('reporting.universal-report.index') }}"
@@ -78,12 +83,11 @@
                                 <th scope="col" class="text-center align-middle">Фамилия</th>
                                 <th scope="col" class="text-center align-middle">Имя</th>
                                 <th scope="col" class="text-center align-middle">Отчество</th>
-                                @foreach($relations as $item)
-                                    @include('reports.universal-report.table-blocks.thead.' . $item)
-                                @endforeach
-                                {{--@if(isset($students[0]))
-
-                                @endif--}}
+                                @if($students->isNotEmpty())
+                                    @foreach($relations as $item)
+                                        @include('reports.universal-report.table-blocks.thead.' . $item)
+                                    @endforeach
+                                @endif
                             </tr>
                             </thead>
                             <tbody>

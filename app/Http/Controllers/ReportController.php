@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Facades\ReportFacade;
 use App\Services\ReportGeneratorService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -53,11 +54,12 @@ class ReportController extends Controller
      * [Method description].
      *
      * @param Request $request
-     * @return ReportGeneratorService
+     * @return RedirectResponse
      */
-    public function exportUniversalReportToExcel(Request $request): ReportGeneratorService
+    public function exportUniversalReportToExcel(Request $request): RedirectResponse
     {
-        return new ReportGeneratorService($request);
+        (new ReportGeneratorService($request->input()))->store('aispk_universal_report.xlsx');
+        return back()->with('success', config('messages.universalReport.success'));
     }
 
     /**

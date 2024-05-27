@@ -15,6 +15,7 @@ import toggleTableRowColor from "./custom/lists/toggleTableRowColor";
 import checkboxHandlerFlag from './custom/personal-files/checkboxHandlerFlag';
 import {removeFacultyBlock} from './custom/personal-files/removeFacultyBlock';
 import backTopButton from './custom/backTopButton';
+import spinnerForButton from "./custom/reports/spinnerForButton";
 
 export const CONFIG = {
 
@@ -68,6 +69,11 @@ export const CONFIG = {
     'students-lists/manage/enrollment/search': [
         changeEnrollmentStatus,
         toggleTableRowColor,
+    ],
+
+    'reporting/universal-report': [
+        //spinnerForButton,
+        removeSessionMessage,
     ],
 
     'admin/manage/users': [

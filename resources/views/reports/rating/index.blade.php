@@ -79,12 +79,9 @@
                             <td class="text-center align-content-center">{{ $student->name }}</td>
                             <td class="text-center align-content-center">{{ $student->patronymic }}</td>
                             <td class="text-center align-content-center">{{ $student->avg_rating }}</td>
-                            <td class="text-center align-content-center">{{ $student->admission_testing }}</td>
-                            <td class="text-center align-content-center">
-                                {{ $student->is_original_docs ? 'Оригиналы' : 'Копии' }}
-                            </td>
-                            <td class="text-center align-content-center"
-                                style="min-width: 150px">{{ $student->financing_type }}</td>
+                            <td class="text-center align-content-center">{!! $student->testing ?? '&mdash;' !!}</td>
+                            <td class="text-center align-content-center">{{ $student->is_original_docs ? 'Оригиналы' : 'Копии' }}</td>
+                            <td class="text-center align-content-center" style="min-width: 150px">{{ $student->financing_type }}</td>
                             @if(Auth::check())
                                 <td class="text-center align-content-center">@include('buttons.button-group-6')</td>
                             @endif

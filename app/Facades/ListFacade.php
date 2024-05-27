@@ -92,7 +92,6 @@ class ListFacade
             $students = DB::table('students')
 
                 ->join('information_for_admission', 'students.id', '=', 'information_for_admission.student_id')
-                //->join('faculties', 'faculties.id', '=', 'information_for_admission.faculty_id')
                 ->join('enrollment', 'students.id', '=', 'enrollment.student_id')
 
                 ->select('students.*', 'enrollment.decree_id as decree')

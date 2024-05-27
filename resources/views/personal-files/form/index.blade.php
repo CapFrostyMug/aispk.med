@@ -22,7 +22,7 @@
             @endif
         </h2>
         @if(!request()->routeIs('personal-files.create'))
-            <div class="btn-group" role="group" aria-label="#">
+            <div class="btn-group" role="group">
                 @include('buttons.button-group-2')
             </div>
         @endif

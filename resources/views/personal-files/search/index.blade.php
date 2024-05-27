@@ -11,7 +11,6 @@
             <div class="col-3 me-4">
                 <input
                     class="form-control"
-                    aria-label="Поиск"
                     name="passport-number"
                     value=""
                     type="search"

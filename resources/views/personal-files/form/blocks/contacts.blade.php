@@ -6,8 +6,7 @@
                name="phone"
                value="{{ old('phone') ?? $student->phone ?? '' }}"
                type="tel"
-               placeholder="71234567890"
-               aria-describedby="phone-1-validation">
+               placeholder="71234567890">
         @error('phone')
         <div id="phone-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -22,8 +21,7 @@
             name="email"
             value="{{ old('email') ?? $student->email ?? '' }}"
             type="email"
-            placeholder=""
-            aria-describedby="email-1-validation">
+            placeholder="">
         @error('email')
         <div id="email-1-validation" class="invalid-feedback">
             {{ $message }}

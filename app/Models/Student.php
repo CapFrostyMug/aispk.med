@@ -94,7 +94,7 @@ class Student extends Model
             'information_for_admission',
             'student_id',
             'faculty_id'
-        )->withPivot('is_original_docs', 'financing_type_id');
+        )->withPivot('is_original_docs', 'financing_type_id', 'testing');
     }
 
     public function financingTypes()
@@ -104,7 +104,7 @@ class Student extends Model
             'information_for_admission',
             'student_id',
             'financing_type_id'
-        )->withPivot('is_original_docs', 'faculty_id');
+        )->withPivot('is_original_docs', 'faculty_id', 'testing');
     }
 
     public function enrollment()
@@ -129,6 +129,7 @@ class Student extends Model
                     'student_id' => $student->id,
                     'financing_type_id' => $blockContent['financing_type_id'],
                     'is_original_docs' => $blockContent['is_original_docs'],
+                    'testing' => $blockContent['testing']
                 ]
             );
         }

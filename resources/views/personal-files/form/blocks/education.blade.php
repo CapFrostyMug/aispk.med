@@ -8,8 +8,7 @@
             name="educationalInstitutionName"
             value="{{ old('educationalInstitutionName') ?? $educational->ed_institution_name ?? '' }}"
             type="text"
-            required
-            aria-describedby="educationalInstitutionName-1-validation">
+            required>
         @error('educationalInstitutionName')
         <div id="educationalInstitutionName-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -107,8 +106,7 @@
                name="educationalDocNumber"
                value="{{ old('educationalDocNumber') ?? $educational->ed_doc_number ?? '' }}"
                type="text"
-               required
-               aria-describedby="educational-doc-number-1-validation">
+               required>
         @error('educationalDocNumber')
         <div id="educational-doc-number-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -124,9 +122,8 @@
                name="issueDateEducationalDoc"
                value="{{ old('issueDateEducationalDoc') ?? $educational->issue_date ?? '' }}"
                type="date"
-               min="1950-01-01" max="2030-01-01"
-               required
-               aria-describedby="issue-date-educational-doc-1-validation">
+               min="1900-01-01" max="2030-01-01"
+               required>
         @error('issueDateEducationalDoc')
         <div id="issue-date-educational-doc-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -142,24 +139,9 @@
                name="avgRating"
                value="{{ old('avgRating') ?? $educational->avg_rating ?? '' }}"
                type="text"
-               required
-               aria-describedby="avg-rating-1-validation">
+               required>
         @error('avgRating')
         <div id="avg-rating-1-validation" class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <div class="col-2 d-flex flex-column justify-content-end pb-3">
-        <label for="admission-testing-1" class="form-label">Тестирование</label>
-        <input id="admission-testing-1"
-               class="form-control @error('admissionTesting') is-invalid @enderror"
-               name="admissionTesting"
-               value="{{ old('admissionTesting') ?? $educational->admission_testing ?? '' }}"
-               type="text"
-               aria-describedby="admission-testing-1-validation">
-        @error('admissionTesting')
-        <div id="admission-testing-1-validation" class="invalid-feedback">
             {{ $message }}
         </div>
         @enderror
