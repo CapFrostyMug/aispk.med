@@ -46,7 +46,7 @@
                name="fatherPhone"
                value="{{ old('fatherPhone') ?? $studentsParentFather->phone ?? '' }}"
                type="tel"
-               placeholder="71234567890">
+               placeholder="7XXXXXXXXXX">
         @error('fatherPhone')
         <div id="father-phone-1-validation" class="invalid-feedback">
             {{ $message }}
@@ -101,7 +101,7 @@
                name="motherPhone"
                value="{{ old('motherPhone') ?? $studentsParentMother->phone ?? '' }}"
                type="tel"
-               placeholder="71234567890">
+               placeholder="7XXXXXXXXXX">
         @error('motherPhone')
         <div id="mother-phone-1-validation" class="invalid-feedback">
             {{ $message }}

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Facades\ReportFacade;
-use App\Services\ReportGeneratorService;
+use App\Services\Reports\ExportReportService;
+use App\Services\Reports\ExportStatisticsService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -58,19 +59,28 @@ class ReportController extends Controller
      */
     public function exportUniversalReportToExcel(Request $request): RedirectResponse
     {
-        (new ReportGeneratorService($request->input()))->store('aispk_universal_report.xlsx');
+        (new ExportReportService($request->input()))->store('aispk_universal_report.xlsx');
         return back()->with('success', config('messages.universalReport.success'));
     }
 
     /**
      * [Method description].
      *
-     * @param Request $request
      * @param ReportFacade $reportFacade
-     * @return
+     * @return View
      */
-    public function showStatistics(Request $request, ReportFacade $reportFacade)
+    public function showStatistics(ReportFacade $reportFacade): view
     {
-        $reportFacade->showStatistics();
+        $data = $reportFacade->generateStatistics();
+        return view('reports.statistics.index', $data);
+    }
+
+    /**
+     * @param ReportFacade $reportFacade
+     * @return RedirectResponse
+     */
+    public function exportStatisticsToExcel(ReportFacade $reportFacade)//: RedirectResponse
+    {
+        (new ExportStatisticsService($reportFacade->generateStatistics()))->store('aispk_application_statistics.xlsx');
     }
 }

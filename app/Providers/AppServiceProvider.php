@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Services\ReportGeneratorService;
+use App\Services\Reports\ExportReportService;
+use App\Services\Reports\ExportStatisticsService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -16,7 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(FromCollection::class, ReportGeneratorService::class);
+        $this->app->bind(FromCollection::class, ExportReportService::class);
+        $this->app->bind(FromCollection::class, ExportStatisticsService::class);
     }
 
     /**
