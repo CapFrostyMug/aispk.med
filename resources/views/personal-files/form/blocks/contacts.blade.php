@@ -6,7 +6,7 @@
                name="phone"
                value="{{ old('phone') ?? $student->phone ?? '' }}"
                type="tel"
-               placeholder="71234567890">
+               placeholder="7XXXXXXXXXX">
         @error('phone')
         <div id="phone-1-validation" class="invalid-feedback">
             {{ $message }}

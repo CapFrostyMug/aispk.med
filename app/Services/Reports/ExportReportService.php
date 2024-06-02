@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Reports;
 
 use App\Models\Student;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
@@ -14,8 +15,6 @@ use Maatwebsite\Excel\Concerns\WithDefaultStyles;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStyles;
-use Maatwebsite\Excel\Excel;
-use Illuminate\Database\Eloquent\Builder;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
@@ -24,7 +23,7 @@ use PhpOffice\PhpSpreadsheet\Style\Font;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ReportGeneratorService
+class ExportReportService
     extends DefaultValueBinder
     implements  Responsable,
                 FromQuery,
@@ -38,7 +37,6 @@ class ReportGeneratorService
 {
     use Exportable;
 
-    private string $writerType = Excel::XLSX;
     private array $inputs;
 
     public function __construct(array $inputs)

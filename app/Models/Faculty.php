@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Faculty extends Model
 {
@@ -17,7 +19,10 @@ class Faculty extends Model
         'name',
     ];
 
-    public function students()
+    /**
+     * @return BelongsToMany
+     */
+    public function students(): BelongsToMany
     {
         return $this->belongsToMany(
             Student::class,
@@ -27,7 +32,24 @@ class Faculty extends Model
         )->withPivot('is_original_docs', 'financing_type_id', 'testing');
     }
 
-    public function financingTypes()
+    /**
+     * @param $id
+     * @return BelongsToMany
+     */
+    public function studentsPivotFinancing($id): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Student::class,
+            'information_for_admission',
+            'faculty_id',
+            'student_id'
+        )->wherePivot('financing_type_id', '=', $id);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function financingTypes(): BelongsToMany
     {
         return $this->belongsToMany(
             FinancingType::class,
@@ -37,7 +59,10 @@ class Faculty extends Model
         )->withPivot('is_original_docs', 'faculty_id', 'testing');
     }
 
-    public function enrollment()
+    /**
+     * @return HasMany
+     */
+    public function enrollment(): HasMany
     {
         return $this->hasMany(
             Enrollment::class,

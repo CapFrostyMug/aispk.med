@@ -72,18 +72,18 @@
                     @forelse($students as $student)
                         <tr @if($student->special_circumstance) class="table-warning" @endif>
                             <th scope="row"
-                                class="text-center align-content-center">
+                                class="text-center align-center">
                                 {{ ($students->perPage() * ($students->currentPage() - 1)) + $loop->iteration }}
                             </th>
-                            <td class="text-center align-content-center">{{ $student->surname }}</td>
-                            <td class="text-center align-content-center">{{ $student->name }}</td>
-                            <td class="text-center align-content-center">{{ $student->patronymic }}</td>
-                            <td class="text-center align-content-center">{{ $student->avg_rating }}</td>
-                            <td class="text-center align-content-center">{!! $student->testing ?? '&mdash;' !!}</td>
-                            <td class="text-center align-content-center">{{ $student->is_original_docs ? 'Оригиналы' : 'Копии' }}</td>
-                            <td class="text-center align-content-center" style="min-width: 150px">{{ $student->financing_type }}</td>
+                            <td class="text-center align-center">{{ $student->surname }}</td>
+                            <td class="text-center align-center">{{ $student->name }}</td>
+                            <td class="text-center align-center">{{ $student->patronymic }}</td>
+                            <td class="text-center align-center">{{ $student->avg_rating }}</td>
+                            <td class="text-center align-center">{!! $student->testing ?? '&mdash;' !!}</td>
+                            <td class="text-center align-center">{{ $student->is_original_docs ? 'Оригиналы' : 'Копии' }}</td>
+                            <td class="text-center align-center" style="min-width: 150px">{{ $student->financing_type }}</td>
                             @if(Auth::check())
-                                <td class="text-center align-content-center">@include('buttons.button-group-6')</td>
+                                <td class="text-center align-center">@include('buttons.button-group-6')</td>
                             @endif
                         </tr>
                     @empty

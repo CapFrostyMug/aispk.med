@@ -14,6 +14,7 @@ use PhpOffice\PhpWord\IOFactory;
 use Illuminate\Pagination\LengthAwarePaginator;
 use PhpOffice\PhpWord\SimpleType\JcTable;
 use PhpOffice\PhpWord\SimpleType\Jc;
+use function Symfony\Component\String\b;
 
 class ReportFacade
 {
@@ -217,11 +218,42 @@ class ReportFacade
     /**
      * [Method description].
      *
-     * @param
-     * @return
+     * @return array
      */
-    public function showStatistics()
+    public function generateStatistics(): array
     {
-        //
+        $data = [];
+        $faculties = $this->faculty->all();
+        $financingTypes = [1 => 'budget', 2 => 'contract', 3 => 'contractPossible'];
+        $totalCountAllPersonalFilesForAllFinancingTypes = [];
+
+        // Формируем данные по КАЖДОЙ специальности
+        foreach ($faculties as $faculty) {
+
+            $data['faculties'][$faculty->id]['name'] = $faculty->name;
+
+            foreach ($financingTypes as $key => $value) {
+                // Запись одного значения сразу в две переменные
+                $data['faculties'][$faculty->id][$value] = $totalCountAllPersonalFilesForCurrentFaculty[] = $faculty->studentsPivotFinancing($key)->get()->count();
+            }
+
+            $data['faculties'][$faculty->id]['totalCount'] = array_sum($totalCountAllPersonalFilesForCurrentFaculty);
+            $totalCountAllPersonalFilesForCurrentFaculty = [];
+        }
+
+        // Формируем данные по ВСЕМ специальностям (строка "Итого")
+        foreach ($financingTypes as $key => $value) {
+            foreach ($data['faculties'] as $faculty) {
+                // Запись одного значения сразу в две переменные
+                $totalCountPersonalFilesForCurrentFinancingType[] = $totalCountAllPersonalFilesForAllFinancingTypes[] = $faculty[$value];
+            }
+
+            $data['calc'][$value] = array_sum($totalCountPersonalFilesForCurrentFinancingType);
+            $totalCountPersonalFilesForCurrentFinancingType = [];
+        }
+
+        $data['calc']['totalCount'] = array_sum($totalCountAllPersonalFilesForAllFinancingTypes);
+
+        return ['data' => $data];
     }
 }
