@@ -71,6 +71,11 @@ export const CONFIG = {
         toggleTableRowColor,
     ],
 
+    'reporting/application-statistics': [
+        spinnerForButton,
+        removeSessionMessage,
+    ],
+
     'reporting/universal-report': [
         //spinnerForButton,
         removeSessionMessage,

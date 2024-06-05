@@ -52,7 +52,7 @@ $inputTestingName = isset($facultiesBlocks) && isset($blockName) ? "data[$blockN
         </div>
     </div>
 
-    <div class="col-2">
+    <div class="col-3 pe-0">
         <label for="{{ isset($facultiesBlocks) && isset($blockName) ? "financing_$blockName" : 'financing_block_1' }}"
                class="form-label">
             Финансирование<span class="custom-st-required-field">*</span>
@@ -61,7 +61,7 @@ $inputTestingName = isset($facultiesBlocks) && isset($blockName) ? "data[$blockN
         <select id="{{ isset($facultiesBlocks) && isset($blockName) ? "financing_$blockName" : 'financing_block_1' }}"
                 class="form-select"
                 name="{{ isset($facultiesBlocks) && isset($blockName) ? "data[$blockName][financing_type_id]" : 'data[block_1][financing_type_id]' }}"
-                required>
+                required style="max-width: 200px;">
 
             <option value=""
                     @if(isset($facultiesBlocks) && isset($blockContent) && !$blockContent['financing_type_id']) selected @endif>
@@ -79,7 +79,7 @@ $inputTestingName = isset($facultiesBlocks) && isset($blockName) ? "data[$blockN
         </select>
     </div>
 
-    <div class="col-2">
+    <div class="col-2 ps-0">
         <label for="{{ isset($facultiesBlocks) && isset($blockName) ? "testing_$blockName" : 'testing_block_1' }}"
                class="form-label">Тестирование
         </label>

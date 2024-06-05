@@ -8,8 +8,8 @@ export default function backTopButton() {
 
     function scrollFunction() {
         if (
-            document.body.scrollTop > 150 ||
-            document.documentElement.scrollTop > 150
+            document.body.scrollTop > 200 ||
+            document.documentElement.scrollTop > 200
         ) {
             myButton.style.display = "block";
         } else {
