@@ -9,7 +9,7 @@ export default function spinnerForButton() {
 
                     handler();
 
-                    const response = await fetch('export-list', {
+                    const response = await fetch(`${window.location.href}/export-list`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json;charset=utf-8',
@@ -21,9 +21,6 @@ export default function spinnerForButton() {
 
                     if (result) {
                         handler();
-                    }
-                    if (result.status !== 200) {
-                        alert('Системная ошибка. Попробуйте еще раз');
                     }
                 }
             )();

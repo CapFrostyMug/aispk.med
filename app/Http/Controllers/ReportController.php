@@ -7,6 +7,7 @@ use App\Services\Reports\ExportReportService;
 use App\Services\Reports\ExportStatisticsService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -77,10 +78,11 @@ class ReportController extends Controller
 
     /**
      * @param ReportFacade $reportFacade
-     * @return RedirectResponse
+     * @return Response|BinaryFileResponse
      */
-    public function exportStatisticsToExcel(ReportFacade $reportFacade)//: RedirectResponse
+    public function exportStatisticsToExcel(ReportFacade $reportFacade): Response|BinaryFileResponse
     {
-        (new ExportStatisticsService($reportFacade->generateStatistics()))->store('aispk_application_statistics.xlsx');
+        return (new ExportStatisticsService($reportFacade->generateStatistics()))
+            ->download('aispk_application_statistics.xlsx');
     }
 }

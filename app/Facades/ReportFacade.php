@@ -195,7 +195,7 @@ class ReportFacade
 
         if ($request->query()) {
 
-            $relations = array_diff(array_keys($request->input()), ['page']); // Удаляем из запроса слово 'page'
+            $relations = array_diff(array_keys($request->input()), ['page']); // Удаляем из запроса ключ 'page'
 
             if (in_array('faculties', $relations)) {
                 $relations[] = 'financingTypes';
@@ -223,37 +223,47 @@ class ReportFacade
     public function generateStatistics(): array
     {
         $data = [];
-        $faculties = $this->faculty->all();
-        $financingTypes = [1 => 'budget', 2 => 'contract', 3 => 'contractPossible'];
-        $totalCountAllPersonalFilesForAllFinancingTypes = [];
+        $financing = [];
+        $totalCountAllFinancing = [];
 
-        // Формируем данные по КАЖДОЙ специальности
-        foreach ($faculties as $faculty) {
+        if ($this->faculty->all()->isnotEmpty()) {
 
-            $data['faculties'][$faculty->id]['name'] = $faculty->name;
-
-            foreach ($financingTypes as $key => $value) {
+            foreach ($this->financing->all() as $item) {
                 // Запись одного значения сразу в две переменные
-                $data['faculties'][$faculty->id][$value] = $totalCountAllPersonalFilesForCurrentFaculty[] = $faculty->studentsPivotFinancing($key)->get()->count();
+                $data['financingNames'][$item->id] = $financing[$item->id] = $item->name;
             }
 
-            $data['faculties'][$faculty->id]['totalCount'] = array_sum($totalCountAllPersonalFilesForCurrentFaculty);
-            $totalCountAllPersonalFilesForCurrentFaculty = [];
-        }
+            // Формируем данные по КАЖДОЙ специальности
+            foreach ($this->faculty->all() as $faculty) {
 
-        // Формируем данные по ВСЕМ специальностям (строка "Итого")
-        foreach ($financingTypes as $key => $value) {
-            foreach ($data['faculties'] as $faculty) {
-                // Запись одного значения сразу в две переменные
-                $totalCountPersonalFilesForCurrentFinancingType[] = $totalCountAllPersonalFilesForAllFinancingTypes[] = $faculty[$value];
+                $data['faculties'][$faculty->id]['name'] = $faculty->name;
+
+                foreach ($financing as $key => $name) {
+                    // Запись одного значения сразу в две переменные
+                    $data['faculties'][$faculty->id]['financing'][$name] = $fieldTotalForOneFaculty[] =
+                        $faculty->studentsPivotFinancing($key)->get()->count();
+                }
+
+                $data['faculties'][$faculty->id]['totalCount'] = array_sum($fieldTotalForOneFaculty);
+                $fieldTotalForOneFaculty = [];
             }
 
-            $data['calc'][$value] = array_sum($totalCountPersonalFilesForCurrentFinancingType);
-            $totalCountPersonalFilesForCurrentFinancingType = [];
+            // Формируем данные по ВСЕМ специальностям (строка "Итого")
+            foreach ($financing as $key => $name) {
+                foreach ($data['faculties'] as $faculty) {
+                    // Запись одного значения сразу в две переменные
+                    $totalCountForOneFinancing[] = $totalCountAllFinancing[] = $faculty['financing'][$name];
+                }
+
+                $data['rowTotal']['financing'][$name] = array_sum($totalCountForOneFinancing);
+                $totalCountForOneFinancing = [];
+            }
+
+            $data['rowTotal']['totalCount'] = array_sum($totalCountAllFinancing);
+
+            return ['data' => $data];
         }
 
-        $data['calc']['totalCount'] = array_sum($totalCountAllPersonalFilesForAllFinancingTypes);
-
-        return ['data' => $data];
+        return ['data' => null];
     }
 }
