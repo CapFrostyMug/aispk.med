@@ -77,7 +77,7 @@ export const CONFIG = {
     ],
 
     'reporting/universal-report': [
-        //spinnerForButton,
+        spinnerForButton,
         removeSessionMessage,
     ],
 

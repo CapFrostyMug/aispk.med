@@ -18,7 +18,7 @@
                   method="get"
                   class="row p-2 pb-lg-3">
                 @csrf
-                @include('lists.view-lists.search-filter')
+                @include('lists.view-lists.filter')
             </form>
         </div>
 

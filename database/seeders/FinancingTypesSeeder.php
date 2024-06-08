@@ -30,6 +30,9 @@ class FinancingTypesSeeder extends Seeder
             [
                 'name' => 'Возможен договор'
             ],
+            [
+                'name' => 'Целевое обучение'
+            ],
         ];
 
         return $data;

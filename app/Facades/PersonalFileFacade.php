@@ -12,6 +12,7 @@ use App\Models\FinancingType;
 use App\Models\Language;
 use App\Models\Nationality;
 use App\Models\Passport;
+use App\Models\PensionInsurance;
 use App\Models\Seniority;
 use App\Models\SpecialCircumstance;
 use App\Models\Student;
@@ -38,6 +39,7 @@ final class PersonalFileFacade extends Facade
     protected object $studentsParentFather;
     protected object $studentsParentMother;
     protected object $enrollment;
+    protected object $pensionInsurance;
 
     public function __construct
     (
@@ -56,6 +58,7 @@ final class PersonalFileFacade extends Facade
         StudentsParentFather       $studentsParentFather = null,
         StudentsParentMother       $studentsParentMother = null,
         Enrollment                 $enrollment = null,
+        PensionInsurance           $pensionInsurance = null,
     )
     {
         $this->nationality = $nationality ?: new Nationality();
@@ -73,6 +76,7 @@ final class PersonalFileFacade extends Facade
         $this->studentsParentFather = $studentsParentFather ?: new StudentsParentFather();
         $this->studentsParentMother = $studentsParentMother ?: new StudentsParentMother();
         $this->enrollment = $enrollment ?: new Enrollment();
+        $this->pensionInsurance = $pensionInsurance ?: new PensionInsurance();
     }
 
     /**
@@ -169,6 +173,11 @@ final class PersonalFileFacade extends Facade
                     'faculty_id' => $validatedData['facultyAdmitted'],
                     'decree_id' => $validatedData['decree'],
                     'is_pickup_docs' => $validatedData['pickupDocs'],
+                ]);
+
+                $this->pensionInsurance->create([
+                    'student_id' => $this->student->id,
+                    'number' => $validatedData['pensionInsurance'],
                 ]);
 
                 $admissionInfo = $validatedData['data'];
@@ -300,6 +309,10 @@ final class PersonalFileFacade extends Facade
                     'is_pickup_docs' => $validatedData['pickupDocs']
                 ]);
 
+                $this->pensionInsurance->where('student_id', $student->id)->update([
+                    'number' => $validatedData['pensionInsurance'],
+                ]);
+
                 $this->student->updateInformationForAdmissionTable($validatedData, $student);
                 $this->student->updateStudentSpecialCircumstanceTable($validatedData, $student);
 
@@ -357,15 +370,16 @@ final class PersonalFileFacade extends Facade
      */
     private function getStudentWithRelatedModels(int $id): null|array
     {
-        $student = $this->student
-            ->with('passport')
-            ->with('educational')
-            ->with('seniority')
-            ->with('studentsParentFather')
-            ->with('studentsParentMother')
-            ->with('specialCircumstances')
-            ->with('enrollment')
-            ->find($id);
+        $student = $this->student->with([
+            'passport',
+            'educational',
+            'seniority',
+            'studentsParentFather',
+            'studentsParentMother',
+            'specialCircumstances',
+            'enrollment',
+            'pensionInsurance',
+        ])->find($id);
 
         if (is_null($student)) {
             return null;
@@ -389,6 +403,7 @@ final class PersonalFileFacade extends Facade
             'specialCircumstancesForEdit' => $student->specialCircumstances,
             'enrollment' => $student->enrollment,
             'facultiesBlocks' => $facultiesBlocks,
+            'pensionInsurance' => $student->pensionInsurance,
         ];
     }
 
@@ -492,6 +507,7 @@ final class PersonalFileFacade extends Facade
             'special_circumstances_dormitory' => $specialCircumstances[3] ? 'Да' : 'Нет', // Общежитие
 
             'current_date' => date('d.m.Y'),
+            'current_year' => date('Y'),
         ]);
 
         $fileName = $data['student']->surname . ' ' . $data['student']->name;

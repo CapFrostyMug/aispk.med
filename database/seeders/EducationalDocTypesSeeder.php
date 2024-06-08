@@ -25,6 +25,12 @@ class EducationalDocTypesSeeder extends Seeder
                 'name' => 'Аттестат'
             ],
             [
+                'name' => 'Аттестат основного общего'
+            ],
+            [
+                'name' => 'Аттестат среднего общего'
+            ],
+            [
                 'name' => 'Диплом'
             ],
             [

@@ -48,40 +48,32 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
-                    @guest
-                        {{--@if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link custom-st-font-color-white" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                        @endif
-
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link custom-st-font-color-white" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif--}}
-                    @else
+                    @auth
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle text-decoration-underline" href="#"
+                            <a id="navbarDropdown"
+                               class="nav-link dropdown-toggle text-decoration-none"
+                               href="#"
                                role="button"
-                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre
-                               style="color: #FFCFAA">
-                                {{ Auth::user()->name }}&nbsp;{{ Auth::user()->surname }}
+                               data-bs-toggle="dropdown"
+                               aria-haspopup="true"
+                               aria-expanded="false"
+                               v-pre
+                               style="color: #FFFFFF;">@include('icons.other.person-circle')
                             </a>
-
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li>
+                                    <h6 class="dropdown-header">{{ Auth::user()->name }}&nbsp;{{ Auth::user()->surname }}</h6>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                       href="{{ route('logout') }}"
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}
+                                    </a>
+                                </li>
+                            </ul>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
                         </li>
-                    @endguest
+                    @endauth
                 </ul>
             </div>
         </div>
@@ -98,16 +90,24 @@
                 </ul>
                 <ul class="col-12 col-lg-3 list-unstyled">
                     <li class="fw-bold text-secondary">Приёмная комиссия</li>
-                    <li class="text-secondary">8 (3452) 40-30-00</li>
+                    <li class="text-secondary">
+                        <a href="tel:+73452403000" class="text-muted text-decoration-none">8 (3452) 40-30-00</a>
+                    </li>
                 </ul>
                 <ul class="col-12 col-lg-3 list-unstyled">
                     <li class="fw-bold text-secondary">Директор</li>
-                    <li class="text-secondary">8 (3452) 40-64-50</li>
+                    <li class="text-secondary">
+                        <a href="tel:+73452406450" class="text-muted text-decoration-none">8 (3452) 40-64-50</a>
+                    </li>
                 </ul>
                 <ul class="col-12 col-lg-3 list-unstyled">
                     <li class="fw-bold text-secondary">Почта</li>
-                    <li class="text-secondary">pk@goutmk.ru</li>
-                    <li class="text-secondary">gapou-mk-tmn@med-to.ru</li>
+                    <li class="text-secondary mb-1">
+                        <a href="mailto:pk@goutmk.ru" class="text-muted text-decoration-none">pk@goutmk.ru</a>
+                    </li>
+                    <li class="text-secondary">
+                        <a href="mailto:gapou-mk-tmn@med-to.ru" class="text-muted text-decoration-none">gapou-mk-tmn@med-to.ru</a>
+                    </li>
                 </ul>
             </div>
             <p class="text-center text-secondary m-0">&copy; 2022-@php echo date("Y"); @endphp</p>
