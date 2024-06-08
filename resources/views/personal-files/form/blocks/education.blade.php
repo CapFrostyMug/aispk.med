@@ -131,7 +131,7 @@
         @enderror
     </div>
 
-    @include('personal-files.form.blocks.avg-calculator')
+    @include('personal-files.form.blocks.gpa-calculator')
     <div class="col-2 d-flex flex-column justify-content-end pb-3">
         <label for="avg-rating-1" class="form-label">Средний балл<span class="custom-st-required-field">*</span></label>
         <input id="avg-rating-1"

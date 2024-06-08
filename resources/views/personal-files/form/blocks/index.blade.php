@@ -4,6 +4,11 @@
 </fieldset>
 
 <fieldset class="border-bottom border-2 mb-5">
+    <legend><h5 class="fw-bold">Дополнительные документы</h5></legend>
+    @include('personal-files.form.blocks.additional-docs')
+</fieldset>
+
+<fieldset class="border-bottom border-2 mb-5">
     <legend><h5 class="fw-bold">Контактная информация</h5></legend>
     @include('personal-files.form.blocks.contacts')
 </fieldset>
@@ -25,7 +30,7 @@
 
 <fieldset class="border-bottom border-2 mb-5">
     <legend><h5 class="fw-bold">Дополнительная информация</h5></legend>
-    @include('personal-files.form.blocks.other-info')
+    @include('personal-files.form.blocks.additional-info')
 </fieldset>
 
 <fieldset class="border-bottom border-2 mb-5">

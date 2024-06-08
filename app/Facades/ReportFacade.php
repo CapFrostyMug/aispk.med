@@ -75,12 +75,20 @@ class ReportFacade
     /**
      * [Method description].
      *
-     * @param array $relations
+     * @param string $reportName
      * @return Collection
      */
-    private function generateReport(array $relations): Collection
+    private function generateReport(string $reportName): Collection
     {
-        return $this->student->with($relations)->get();
+        $students = $this->student->all()->sortBy('surname');
+
+        if ($reportName !== 'accounting') {
+            $students->load('educational', 'specialCircumstances', 'faculties');
+        }
+
+        $students->load('passport', 'enrollment', 'pensionInsurance');
+
+        return $students;
     }
 
     /**
@@ -193,23 +201,12 @@ class ReportFacade
     {
         $students = null;
 
-        if ($request->query()) {
+        if ($request->input('report')) {
 
-            $relations = array_diff(array_keys($request->input()), ['page']); // Удаляем из запроса ключ 'page'
+            $reportName = $request->input('report');
 
-            if (in_array('faculties', $relations)) {
-                $relations[] = 'financingTypes';
-            }
-
-            $students = $this->generateReport($relations);
+            $students = $this->generateReport($reportName);
             $students = $this->customPaginator($request, $students);
-
-            $relations = array_diff($relations, ['financingTypes']);
-
-            return [
-                'students' => $students,
-                'relations' => $relations,
-            ];
         }
 
         return ['students' => $students];

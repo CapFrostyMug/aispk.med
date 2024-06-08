@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Student extends Model
 {
@@ -111,6 +111,18 @@ class Student extends Model
     {
         return $this->hasOne(
             Enrollment::class,
+            'student_id',
+            'id'
+        );
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function pensionInsurance(): HasOne
+    {
+        return $this->hasOne(
+            PensionInsurance::class,
             'student_id',
             'id'
         );

@@ -78,7 +78,7 @@
     </div>
     <div class="col-2 offset-2">
         <label for="nationality-1" class="form-label">Гражданство<span class="custom-st-required-field">*</span></label>
-        <select id="nationality-1" class="form-select" name="nationality" required>
+        <select id="nationality-1" class="form-select" name="nationality" required style="min-width: 170px;">
             <option
                 value="" @if(!old('nationality') || !isset($passport)) selected @endif>Выберите...
             </option>

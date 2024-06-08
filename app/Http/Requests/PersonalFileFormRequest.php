@@ -47,6 +47,11 @@ class PersonalFileFormRequest extends FormRequest
             'addressRegistered' => 'string|between:10,180|required',
             'addressResidential' => 'string|between:10,180|required',
 
+            'pensionInsurance' => [
+                'alpha_dash', 'between:11,20', 'nullable',
+                Rule::unique('pension_insurance', 'number')->ignore($this->id, 'student_id'),
+            ],
+
             'phone' => [
                 'digits:11', 'integer', 'nullable',
                 Rule::unique('students', 'phone')->ignore($this->id),
@@ -114,6 +119,7 @@ class PersonalFileFormRequest extends FormRequest
             'issueBy' => '«паспорт выдан»',
             'addressRegistered' => '«адрес по прописке»',
             'addressResidential' => '«адрес проживания»',
+            'pensionInsurance' => '«СНИЛС»',
             'data' => '«»',
             'educationalInstitutionName' => '«наименование учебного заведения»',
             'educationalInstitutionType' => '«тип учебного заведения»',
