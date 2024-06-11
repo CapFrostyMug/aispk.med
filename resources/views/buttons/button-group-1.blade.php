@@ -34,7 +34,7 @@
             class="btn btn-link custom-fn-remove p-0"
             data-item-id="{{ $student->id }}"
             data-reload-page="{{ request()->routeIs('students-lists.index') ? '1' : '' }}"
-            title="Удалить">@include('icons.buttons.button-group-1.remove')
+            title="Удалить анкету">@include('icons.buttons.button-group-1.remove')
     </button>
 
 </div>

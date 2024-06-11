@@ -22,10 +22,10 @@ class UsersSeeder extends Seeder
     {
         return [
             [
-                'name' => 'Bruce',
-                'surname' => 'Wayne',
-                'email' => 'example@mail.com',
-                'password' => '$2y$10$b4BBJK7LL6.pBDiheZG5lewynyt1lUFcU0ROjIsoGrNPv31dbsvJ2',
+                'name' => 'Николай',
+                'surname' => 'Яргин',
+                'email' => 'nickolas7159@gmail.com',
+                'password' => '$2y$10$1TVM0vbkw4RjE2TZfMblLOqSd2/25zypbpuIxgsU68f0ZA9Nj2GKi',
                 'is_admin' => 1,
             ],
         ];

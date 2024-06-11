@@ -39,6 +39,12 @@ class DecreesSeeder extends Seeder
             [
                 'name' => '377/У'
             ],
+            [
+                'name' => '445/У'
+            ],
+            [
+                'name' => '447/У'
+            ],
         ];
 
         return $data;

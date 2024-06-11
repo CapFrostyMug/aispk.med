@@ -5,6 +5,7 @@ namespace App\Facades;
 use App\Models\Decree;
 use App\Models\Enrollment;
 use App\Models\Faculty;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,17 +14,20 @@ class ListFacade
     protected object $faculty;
     protected object $decree;
     protected object $enrollment;
+    protected object $student;
 
     public function __construct
     (
         Faculty    $faculty = null,
         Decree     $decree = null,
         Enrollment $enrollment = null,
+        Student    $student = null,
     )
     {
         $this->faculty = $faculty ?: new Faculty();
         $this->decree = $decree ?: new Decree();
         $this->enrollment = $enrollment ?: new Enrollment();
+        $this->student = $student ?: new Student();
     }
 
     /**
@@ -118,21 +122,44 @@ class ListFacade
      * @param Request $request
      * @return void|object
      */
-    public function changeEnrollmentStatus(Request $request)//: void|object
+    public function changeEnrollmentStatus(Request $request)
     {
-        if (is_null($request['decree_id'])) $request['faculty_id'] = null;
+        if (is_null($request['decree_id'])) $request['faculty_id'] = null; // Если decree_id отсутствует, тогда обнуляем faculty_id.
+
+        $isBudget = $this->budgetCheck($request);
 
         try {
-            DB::transaction(function () use ($request) {
+            DB::transaction(function () use ($request, $isBudget) {
 
                 $this->enrollment->where('student_id', $request['student_id'])->update([
                     'faculty_id' => $request['faculty_id'],
                     'decree_id' => $request['decree_id'],
+                    'is_budget' => $isBudget,
                 ]);
 
             }, 3);
         } catch (\Exception $exception) {
             return $exception;
         }
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param Request $request
+     * @return bool
+     */
+    private function budgetCheck(Request $request): bool
+    {
+        $isBudget = false;
+
+        $this->student = $this->student->find($request['student_id']);
+        $facultyWithFinancingBudget = $this->student->facultiesPivotFinancing($request['faculty_id'])->get();
+
+        if (!is_null($request['decree_id']) && $facultyWithFinancingBudget->isNotEmpty()) {
+            $isBudget = true;
+        }
+
+        return $isBudget;
     }
 }
