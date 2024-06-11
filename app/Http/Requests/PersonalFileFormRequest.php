@@ -28,6 +28,8 @@ class PersonalFileFormRequest extends FormRequest
         $student = Student::find($this->id);
         $passportId = $student->passport->id ?? null;
 
+        $this->getFacultyIdWithOrigDocs();
+
         return [
             'surname' => 'alpha_dash|between:2,30|required',
             'name' => 'alpha_dash|between:2,30|required',
@@ -100,8 +102,8 @@ class PersonalFileFormRequest extends FormRequest
                 Rule::unique('student_parent_mothers', 'phone')->ignore($this->id, 'student_id'),
             ],
 
-            'facultyAdmitted' => 'integer|exists:App\Models\Faculty,id|nullable',
-            'decree' => 'integer|exists:App\Models\Decree,id|nullable',
+            'facultyAdmitted' => 'integer|exists:App\Models\Faculty,id|same:facultyWithOrigDocs|required_with:decree|nullable',
+            'decree' => 'integer|exists:App\Models\Decree,id|required_with:facultyAdmitted|nullable',
             'pickupDocs' => 'boolean|required',
         ];
     }
@@ -114,38 +116,55 @@ class PersonalFileFormRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'passportNumber' => '«серия и номер паспорта»',
-            'issueDatePassport' => '«дата выдачи»',
-            'issueBy' => '«паспорт выдан»',
-            'addressRegistered' => '«адрес по прописке»',
-            'addressResidential' => '«адрес проживания»',
+            'passportNumber' => '«Серия и номер паспорта»',
+            'issueDatePassport' => '«Дата выдачи»',
+            'issueBy' => '«Паспорт выдан»',
+            'addressRegistered' => '«Адрес по прописке»',
+            'addressResidential' => '«Адрес проживания»',
             'pensionInsurance' => '«СНИЛС»',
             'data' => '«»',
-            'educationalInstitutionName' => '«наименование учебного заведения»',
-            'educationalInstitutionType' => '«тип учебного заведения»',
-            'language' => '«иностранный язык»',
-            'educationalDocType' => '«тип документа об образовании»',
-            'excellentStudent' => '«окончил обучение с отличием»',
-            'educationalDocNumber' => '«серия и номер документа»',
-            'issueDateEducationalDoc' => '«дата выдачи»',
-            'avgRating' => '«средний балл»',
-            'firstProfession' => '«абитуриент получает СПО впервые»',
-            'placeWork' => '«место работы»',
-            'profession' => '«должность, специализация»',
-            'seniorityYears' => '«стаж, лет»',
-            'seniorityMonths' => '«стаж, месяцев»',
-            'aboutMe' => '«о себе»',
-            'fatherSurname' => '«фамилия»',
-            'fatherName' => '«имя»',
-            'fatherPatronymic' => '«отчество»',
-            'fatherPhone' => '«телефон»',
-            'motherSurname' => '«фамилия»',
-            'motherName' => '«имя»',
-            'motherPatronymic' => '«отчество»',
-            'motherPhone' => '«телефон»',
-            'facultyAdmitted' => '«зачислен на специальность»',
-            'decree' => '«номер приказа»',
-            'pickupDocs' => '«абитуриент забрал документы»',
+            'educationalInstitutionName' => '«Наименование учебного заведения»',
+            'educationalInstitutionType' => '«Тип учебного заведения»',
+            'language' => '«Иностранный язык»',
+            'educationalDocType' => '«Тип документа об образовании»',
+            'excellentStudent' => '«Окончил обучение с отличием»',
+            'educationalDocNumber' => '«Серия и номер документа»',
+            'issueDateEducationalDoc' => '«Дата выдачи»',
+            'avgRating' => '«Средний балл»',
+            'firstProfession' => '«Абитуриент получает СПО впервые»',
+            'placeWork' => '«Место работы»',
+            'profession' => '«Должность, специализация»',
+            'seniorityYears' => '«Стаж, лет»',
+            'seniorityMonths' => '«Стаж, месяцев»',
+            'aboutMe' => '«О себе»',
+            'fatherSurname' => '«Фамилия»',
+            'fatherName' => '«Имя»',
+            'fatherPatronymic' => '«Отчество»',
+            'fatherPhone' => '«Телефон»',
+            'motherSurname' => '«Фамилия»',
+            'motherName' => '«Имя»',
+            'motherPatronymic' => '«Отчество»',
+            'motherPhone' => '«Телефон»',
+            'facultyAdmitted' => '«Зачислен на специальность»',
+            'decree' => '«Номер приказа»',
+            'facultyWithOrigDocs' => '«Специальность»',
+            'pickupDocs' => '«Абитуриент забрал документы»',
         ];
+    }
+
+    /**
+     * [Method description].
+     *
+     * @return void
+     */
+    private function getFacultyIdWithOrigDocs(): void
+    {
+        $faculties = $this->data;
+
+        foreach ($faculties as $faculty) {
+            if ($faculty['is_original_docs'] === '1') {
+                $this['facultyWithOrigDocs'] = $faculty['faculty_id'];
+            }
+        }
     }
 }

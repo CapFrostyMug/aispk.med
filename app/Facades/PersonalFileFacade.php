@@ -106,6 +106,8 @@ final class PersonalFileFacade extends Facade
      */
     public function store(array $validatedData): string|object
     {
+        $validatedData['typeTrainingBudget'] = $this->budgetCheck($validatedData);
+
         try {
             DB::transaction(function () use ($validatedData) {
 
@@ -172,6 +174,7 @@ final class PersonalFileFacade extends Facade
                     'student_id' => $this->student->id,
                     'faculty_id' => $validatedData['facultyAdmitted'],
                     'decree_id' => $validatedData['decree'],
+                    'is_budget' => $validatedData['typeTrainingBudget'],
                     'is_pickup_docs' => $validatedData['pickupDocs'],
                 ]);
 
@@ -246,6 +249,8 @@ final class PersonalFileFacade extends Facade
         $student = $this->student->find($id);
         $passportId = $student->passport->id;
 
+        $validatedData['typeTrainingBudget'] = $this->budgetCheck($validatedData);
+
         try {
             DB::transaction(function () use ($student, $passportId, $validatedData) {
 
@@ -306,6 +311,7 @@ final class PersonalFileFacade extends Facade
                 $this->enrollment->where('student_id', $student->id)->update([
                     'faculty_id' => $validatedData['facultyAdmitted'],
                     'decree_id' => $validatedData['decree'],
+                    'is_budget' => $validatedData['typeTrainingBudget'],
                     'is_pickup_docs' => $validatedData['pickupDocs']
                 ]);
 
@@ -351,14 +357,14 @@ final class PersonalFileFacade extends Facade
     private function getLists(): array
     {
         return [
-            'nationality' => $this->nationality->all(),
-            'faculties' => $this->faculty->all(),
+            'nationality' => $this->nationality->all()->sortBy('name'),
+            'faculties' => $this->faculty->all()->sortBy('name'),
             'financing' => $this->financing->all(),
             'educationalInstitutionTypes' => $this->edInstitutionType->all(),
             'languages' => $this->language->all(),
-            'educationalDocTypes' => $this->edDocType->all(),
+            'educationalDocTypes' => $this->edDocType->all()->sortBy('name'),
             'specialCircumstances' => $this->specialCircumstance->all(),
-            'decrees' => $this->decree->all(),
+            'decrees' => $this->decree->all()->sortBy('name'),
         ];
     }
 
@@ -514,5 +520,27 @@ final class PersonalFileFacade extends Facade
         $templateProcessor->saveAs($fileName . '.docx');
 
         return $fileName;
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param array $validatedData
+     * @return bool
+     */
+    private function budgetCheck(array $validatedData): bool
+    {
+        if (!is_null($validatedData['facultyAdmitted'])) {
+
+            $facultyAdmittedId = $validatedData['facultyAdmitted'];
+
+            foreach ($validatedData['data'] as $item) {
+                if ($item['faculty_id'] === $facultyAdmittedId && $item['financing_type_id'] === '1') {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

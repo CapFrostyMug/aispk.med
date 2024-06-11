@@ -30,6 +30,7 @@ return new class extends Migration
                 ->constrained('decrees')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
+            $table->boolean('is_budget')->nullable(false);
             $table->boolean('is_pickup_docs')->nullable();
             $table->timestamps();
         });

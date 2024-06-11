@@ -32,16 +32,13 @@
         @include('personal-files.form.blocks.faculty-block')
     </div>
 
-    @if(!empty($errors->all()))
-        <div class="col-12 alert alert-danger">
-                <span>
-                    Какие-то из&nbsp;обязательных полей <strong>не&nbsp;заполнены</strong> или заполнены <strong>некорректно</strong>.
-                    Пожалуйста, проверьте поля, отмеченные <strong>красным цветом</strong>.
-                </span>
-        </div>
-    @endif
-
-    @include('session-message')
+    <div class="col-12">
+        @if(!empty($errors->all()))
+            <p class="alert alert-danger">{{ config('messages.personalFiles.validatorError') }}</p>
+        @else
+            @include('session-message')
+        @endif
+    </div>
 
     <form
         action="{{ isset($student->id) ? route('personal-files.manage.personal-file.update', $student->id) : route('personal-files.store') }}"

@@ -17,6 +17,7 @@ class Enrollment extends Model
         'student_id',
         'faculty_id',
         'decree_id',
+        'is_budget',
         'is_pickup_docs',
     ];
 
