@@ -22,6 +22,7 @@ class EnrollmentFactory extends Factory
             'student_id' => fake()->numberBetween(1, $studentMax),
             'faculty_id' => fake()->numberBetween(1, 10),
             'decree_id' => fake()->numberBetween(1, 6),
+            'is_budget' => fake()->boolean(),
             'is_pickup_docs' => fake()->boolean(),
         ];
     }

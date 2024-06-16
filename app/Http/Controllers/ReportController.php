@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Facades\ReportFacade;
 use App\Services\Reports\ExportReportService;
 use App\Services\Reports\ExportStatisticsService;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ReportController extends Controller
 {
@@ -56,12 +57,20 @@ class ReportController extends Controller
      * [Method description].
      *
      * @param Request $request
-     * @return RedirectResponse
+     * @return void
      */
-    public function exportUniversalReportToExcel(Request $request): RedirectResponse
+    public function exportUniversalReportToExcel(Request $request): void
     {
-        (new ExportReportService($request->input()))->store('aispk_universal_report.xlsx');
-        return back()->with('success', config('messages.universalReport.success'));
+        (new ExportReportService($request->input('report')))
+            ->store('aispk_universal_report.xlsx');
+    }
+
+    /**
+     * @return StreamedResponse
+     */
+    public function downloadReport(): StreamedResponse
+    {
+        return Storage::download('aispk_universal_report.xlsx');
     }
 
     /**
