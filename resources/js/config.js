@@ -15,7 +15,7 @@ import toggleTableRowColor from "./custom/lists/toggleTableRowColor";
 import checkboxHandlerFlag from './custom/personal-files/checkboxHandlerFlag';
 import {removeFacultyBlock} from './custom/personal-files/removeFacultyBlock';
 import backTopButton from './custom/backTopButton';
-import spinnerForButton from "./custom/reports/spinnerForButton";
+import downloadReport from "./custom/reports/downloadReport";
 
 export const CONFIG = {
 
@@ -72,13 +72,15 @@ export const CONFIG = {
     ],
 
     'reporting/application-statistics': [
-        spinnerForButton,
         removeSessionMessage,
     ],
 
     'reporting/universal-report': [
-        spinnerForButton,
         removeSessionMessage,
+    ],
+
+    'reporting/universal-report/generate-report': [
+        downloadReport,
     ],
 
     'admin/manage/users': [

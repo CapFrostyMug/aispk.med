@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [ReportController::class, 'showUniversalReport'])->name('index');
             Route::get('/generate-report', [ReportController::class, 'showUniversalReport'])->name('generate');
             Route::get('/export-list', [ReportController::class, 'exportUniversalReportToExcel'])->name('export-list');
+            Route::get('/download', [ReportController::class, 'downloadReport'])->name('download');
         });
 
         Route::prefix('/rating')->name('rating.')->group(function () {

@@ -25,23 +25,23 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ExportReportService
     extends DefaultValueBinder
-    implements  Responsable,
-                FromQuery,
-                ShouldQueue,
-                WithMapping,
-                WithHeadings,
-                WithCustomValueBinder,
-                ShouldAutoSize,
-                WithStyles,
-                WithDefaultStyles
+    implements Responsable,
+    FromQuery,
+    ShouldQueue,
+    WithMapping,
+    WithHeadings,
+    WithCustomValueBinder,
+    ShouldAutoSize,
+    WithStyles,
+    WithDefaultStyles
 {
     use Exportable;
 
-    private array $inputs;
+    private string $filterInput;
 
-    public function __construct(array $inputs)
+    public function __construct(string $filterInput)
     {
-        $this->inputs = $inputs;
+        $this->filterInput = $filterInput;
     }
 
     /**
@@ -53,6 +53,8 @@ class ExportReportService
     }
 
     /**
+     * [Method description].
+     *
      * @param array $data
      * @param Model|null $row
      * @return array
@@ -61,10 +63,26 @@ class ExportReportService
     {
         $result = [];
 
-        $functionsList = array_diff(array_keys($this->inputs), ['page']);
+        switch ($this->filterInput) {
+            case 'department':
+                $data[] = $this->getReportForDepartment($row);
+                break;
 
-        foreach ($functionsList as $item) {
-            $data[] = $this->$item($row);
+            case 'accounting':
+                $data[] = $this->getReportForAccounting($row);
+                break;
+
+            case 'educational':
+                $data[] = $this->getReportForEducational($row);
+                break;
+
+            case 'inclusive':
+                $data[] = $this->getReportForInclusive($row);
+                break;
+
+            case 'committee':
+                $data[] = $this->getReportForCommittee($row);
+                break;
         }
 
         array_walk_recursive($data, function ($item) use (&$result) {
@@ -84,8 +102,31 @@ class ExportReportService
             $row->id,
             $row->surname,
             $row->name,
-            $row->patronymic ?? '—'
+            $row->patronymic ?? '—',
+
+            $row->passport->gender === 'male' ? 'муж.' : 'жен.',
+            date('d.m.Y', strtotime($row->passport->birthday)),
+            $row->passport->nationality->name,
+            $row->passport->birthplace,
+            $row->passport->number,
+            date('d.m.Y', strtotime($row->passport->issue_date)),
+            $row->passport->issue_by,
+            $row->passport->address_registered,
+            $row->passport->address_residential,
+
+            $row->pensionInsurance->number ?? '—',
+            $row->enrollment->faculty->name ?? '—',
         ];
+
+        if ($this->filterInput !== 'accounting') {
+            $data[] = [
+                $row->educational->avg_rating,
+                $row->enrollment->is_budget ? 'Да' : 'Нет',
+                $row->enrollment->is_budget || is_null($row->enrollment->faculty_id) ? 'Нет' : 'Да',
+                $row->specialCircumstances[1]->pivot->status ? 'Да' : 'Нет',
+                $row->specialCircumstances[2]->pivot->status ? 'Да' : 'Нет',
+            ];
+        }
 
         return $this->handler($data, $row);
     }
@@ -99,8 +140,29 @@ class ExportReportService
             'Дело, №',
             'Фамилия',
             'Имя',
-            'Отчество'
+            'Отчество',
+            'Пол',
+            'Дата рождения',
+            'Гражданство',
+            'Место рождения',
+            'Серия и номер паспорта',
+            'Дата выдачи паспорта',
+            'Паспорт выдан',
+            'Адрес по прописке',
+            'Адрес проживания',
+            'СНИЛС',
+            'Зачислен на специальность',
         ];
+
+        $extraData = [
+            'Ср.балл',
+            'Бюджет',
+            'Внебюджет',
+            'Инвалидность',
+            'Общежитие',
+        ];
+
+        if ($this->filterInput !== 'accounting') $data[] = $extraData;
 
         return $this->handler($data);
     }
@@ -128,9 +190,10 @@ class ExportReportService
         return [
             1 => ['font' => ['bold' => true], 'alignment' => ['horizontal' => 'center', 'vertical' => 'center']],
             'A' => ['alignment' => ['horizontal' => 'center', 'vertical' => 'center']],
-            'B' => ['alignment' => ['horizontal' => 'center', 'vertical' => 'center']],
-            'C' => ['alignment' => ['horizontal' => 'center', 'vertical' => 'center']],
-            'D' => ['alignment' => ['horizontal' => 'center', 'vertical' => 'center']],
+            'E' => ['alignment' => ['horizontal' => 'center', 'vertical' => 'center']],
+            'F' => ['alignment' => ['horizontal' => 'center', 'vertical' => 'center']],
+            'J' => ['alignment' => ['horizontal' => 'center', 'vertical' => 'center']],
+            'N' => ['alignment' => ['horizontal' => 'center', 'vertical' => 'center']],
         ];
     }
 
@@ -144,122 +207,14 @@ class ExportReportService
     }
 
     /**
+     * [Method description].
+     *
      * @param Model|null $row
      * @return array
      */
-    private function passport(model|null $row = null): array
+    private function getReportForDepartment(model|null $row = null): array
     {
-        $data = [];
-        $attributes = [
-            'gender',
-            'birthday',
-            'nationality_id',
-            'birthplace',
-            'number',
-            'issue_date',
-            'issue_by',
-            'address_registered',
-            'address_residential'
-        ];
-
-        $headers = [
-            'Пол',
-            'Дата рождения',
-            'Гражданство',
-            'Место рождения',
-            'Серия и номер паспорта',
-            'Дата выдачи паспорта',
-            'Паспорт выдан',
-            'Адрес по прописке',
-            'Адрес проживания'
-        ];
-
-        if (is_null($row)) {
-            return $headers;
-        }
-
-        try {
-            foreach ($attributes as $attribute) {
-
-                if ($attribute === 'nationality_id') {
-                    $data[] = $row->passport->nationality->name;
-                    continue;
-                }
-
-                if ($attribute === 'gender') {
-                    $data[] = $row->passport->gender === 'male' ? 'муж.' : 'жен.';
-                    continue;
-                }
-
-                if ($attribute === 'birthday' || $attribute === 'issue_date') {
-                    $data[] = date('d.m.Y', strtotime($row->passport->$attribute));
-                    continue;
-                }
-
-                $data[] = $row->passport->$attribute;
-            }
-        } catch (\Exception $exception) {
-            return $data;
-        }
-
-        return $data;
-    }
-
-    /**
-     * @param Model|null $row
-     * @return array
-     */
-    private function faculties(model|null $row = null): array
-    {
-        $data = [];
-        $faculties = '';
-        $testingResults = '';
-
-        $headers = ['Специальности', 'Тестирование', 'Дата подачи документов'];
-
-        if (is_null($row)) {
-            return $headers;
-        }
-
-        try {
-            foreach ($row->faculties as $item) {
-
-                $faculties .= $item->name . '; ';
-
-                if (is_null($item->pivot->testing)) {
-                    $testingResults .= '— ; ';
-                } else {
-                    $testingResults .= $item->pivot->testing . '; ';
-                }
-
-            }
-        } catch (\Exception $exception) {
-            return $data;
-        }
-
-        $data[] = substr_replace($faculties, '', strripos($faculties, ';'));
-        $data[] = substr_replace($testingResults, '', strripos($testingResults, ';'));
-        $data[] = date('d.m.Y', strtotime($row->created_at));
-
-        return $data;
-    }
-
-    /**
-     * @param Model|null $row
-     * @return array
-     */
-    private function educational(model|null $row = null): array
-    {
-        $headers = [
-            'Наименование учебного заведения',
-            'Тип учебного заведения',
-            'Документ об образовании',
-            'Серия и номер документа',
-            'Дата выдачи документа',
-            'Средний балл',
-            'Отличник',
-            'СПО впервые'
-        ];
+        $headers = ['Ребёнок/участник СВО', 'Сирота'];
 
         if (is_null($row)) {
             return $headers;
@@ -267,14 +222,8 @@ class ExportReportService
 
         try {
             return [
-                $row->educational->ed_institution_name,
-                $row->educational->educationalInstitutionType->name,
-                $row->educational->educationalDocType->name,
-                $row->educational->ed_doc_number,
-                date('d.m.Y', strtotime($row->educational->issue_date)),
-                $row->educational->avg_rating,
-                $row->educational->is_excellent_student ? 'Да' : 'Нет',
-                $row->educational->is_first_spo ? 'Да' : 'Нет',
+                $row->specialCircumstances[3]->pivot->status ? 'Да' : 'Нет',
+                $row->specialCircumstances[4]->pivot->status ? 'Да' : 'Нет'
             ];
         } catch (\Exception $exception) {
             return [];
@@ -282,12 +231,14 @@ class ExportReportService
     }
 
     /**
+     * [Method description].
+     *
      * @param Model|null $row
      * @return array
      */
-    private function seniority(model|null $row = null): array
+    private function getReportForAccounting(model|null $row = null): array
     {
-        $headers = ['Место работы', 'Должность'];
+        $headers = ['Номер телефона'];
 
         if (is_null($row)) {
             return $headers;
@@ -295,29 +246,81 @@ class ExportReportService
 
         try {
             return [
-                $row->seniority->place_work ?? '—',
-                $row->seniority->profession ?? '—'
+                $row->phone ?? '—',
             ];
         } catch (\Exception $exception) {
-            return $data;
+            return [];
         }
     }
 
     /**
+     * [Method description].
+     *
      * @param Model|null $row
      * @return array
      */
-    private function specialCircumstances(model|null $row = null): array
+    private function getReportForEducational(model|null $row = null): array
     {
-        $data = [];
+        $headers = ['Номер телефона', 'Ребёнок/участник СВО', 'Сирота'];
 
+        if (is_null($row)) {
+            return $headers;
+        }
+
+        try {
+            return [
+                $row->phone ?? '—',
+                $row->specialCircumstances[3]->pivot->status ? 'Да' : 'Нет',
+                $row->specialCircumstances[4]->pivot->status ? 'Да' : 'Нет',
+            ];
+        } catch (\Exception $exception) {
+            return [];
+        }
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param Model|null $row
+     * @return array
+     */
+    private function getReportForInclusive(model|null $row = null): array
+    {
+        $headers = ['Номер телефона', 'СПО впервые', 'Спец. условия'];
+
+        if (is_null($row)) {
+            return $headers;
+        }
+
+        try {
+            return [
+                $row->phone ?? '—',
+                $row->educational->is_first_spo ? 'Да' : 'Нет',
+                $row->specialCircumstances[0]->pivot->status ? 'Да' : 'Нет',
+            ];
+        } catch (\Exception $exception) {
+            return [];
+        }
+    }
+
+    /**
+     * [Method description].
+     *
+     * @param Model|null $row
+     * @return array
+     */
+    private function getReportForCommittee(model|null $row = null): array
+    {
         $headers = [
-            'Спец. условия',
-            'Инвалидность',
-            'Общежитие',
+            'Номер телефона',
+            'СПО впервые',
             'Ребёнок/участник СВО',
             'Сирота',
-            'Иностранец'
+            'Год окончания образ-го учреждения',
+            'Дата выдачи док-та об образовании',
+            'Серия и номер док-та об образовании',
+            'Номер приказа о зачислении',
+            'Дата подачи док-ов',
         ];
 
         if (is_null($row)) {
@@ -325,33 +328,16 @@ class ExportReportService
         }
 
         try {
-            for ($i = 0; $i <= 5; $i++) {
-                $data[] = $row->specialCircumstances[$i]->pivot->status ? 'Да' : 'Нет';
-            }
-        } catch (\Exception $exception) {
-            return $data;
-        }
-
-        return $data;
-    }
-
-    /**
-     * @param Model|null $row
-     * @return array
-     */
-    private function enrollment(model|null $row = null): array
-    {
-        $headers = ['Зачислен на специальность', 'Номер приказа', 'Забрал документы'];
-
-        if (is_null($row)) {
-            return $headers;
-        }
-
-        try {
             return [
-                $row->enrollment->faculty->name ?? '—',
+                $row->phone ?? '—',
+                $row->educational->is_first_spo ? 'Да' : 'Нет',
+                $row->specialCircumstances[3]->pivot->status ? 'Да' : 'Нет',
+                $row->specialCircumstances[4]->pivot->status ? 'Да' : 'Нет',
+                date('Y', strtotime($row->educational->issue_date)),
+                date('d.m.Y', strtotime($row->educational->issue_date)),
+                $row->educational->ed_doc_number,
                 $row->enrollment->decree->name ?? '—',
-                $row->enrollment->is_pickup_docs ? 'Да' : 'Нет'
+                date('d.m.Y', strtotime($row->created_at)),
             ];
         } catch (\Exception $exception) {
             return [];

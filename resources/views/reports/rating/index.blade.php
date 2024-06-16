@@ -40,7 +40,7 @@
                         <a class="btn btn-primary"
                            href="{{ route('reporting.rating.export-list', request()->input('faculty_id')) }}"
                            role="button"
-                           style="min-width: 105px">Печать</a>
+                           style="min-width: 105px">Скачать</a>
                     </div>
                 @endif
             </form>

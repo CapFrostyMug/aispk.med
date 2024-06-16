@@ -9,15 +9,11 @@
             <h2 class="col-auto fw-bold mb-0">Статистика поданных заявлений</h2>
             @if(!empty($data))
                 <div class="col-auto p-0">
-                    <a class="btn btn-primary custom-fn-spinner"
+                    <a class="btn btn-primary"
                        href="{{ route('reporting.statistics.export-list') }}"
                        role="button"
-                       style="min-width: 130px">Печать
+                       style="min-width: 130px">Скачать
                     </a>
-                    <button class="btn btn-primary custom-fn-spinner" type="button" disabled hidden style="min-width: 130px">
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Загрузка...
-                    </button>
                 </div>
             @endif
         </div>

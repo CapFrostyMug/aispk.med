@@ -1,4 +1,4 @@
-<div class="border border-3 rounded py-4 px-3 mb-5">
+<div class="border border-3 rounded py-4 px-3 mb-3">
     <p class="fw-bold fs-5 mb-4">Назначение отчёта</p>
     <div class="form-check mb-2">
         <input id="department-1"

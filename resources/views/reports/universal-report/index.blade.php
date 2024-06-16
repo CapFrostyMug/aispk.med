@@ -18,16 +18,28 @@
                 <form action="{{ route('reporting.universal-report.generate') }}" class="#">
                     @include('reports.universal-report.filter')
                     <div class="d-flex flex-column">
-                        <button type="submit" class="btn btn-success mb-3">Сформировать</button>
+                        @if(isset($students) && $students->isNotEmpty())
+                            <div class="col text-center bg-warning text-dark p-1 mb-4">
+                                <span class="d-inline-block lh-sm">Время экспорта Excel-файла <strong>2&nbsp;минуты</strong></span>
+                            </div>
+                        @endif
+                        <button type="submit" class="btn btn-primary mb-3">Сформировать</button>
                         @if(request()->input('report'))
-                            <a class="btn btn-primary custom-fn-spinner mb-3"
-                               href="{{ route('reporting.universal-report.export-list', request()->input()) }}"
-                               role="button">Печать
-                            </a>
-                            <button class="btn btn-primary custom-fn-spinner mb-3" type="button" disabled hidden>
+                            @if($students->isNotEmpty())
+                                <button class="btn btn-success custom-fn-button-excel mb-3"
+                                        type="button"
+                                        data-report-name="{{ request()->query('report') }}">Экспорт в Excel
+                                </button>
+                            @endif
+                            <button class="btn btn-success custom-fn-button-generate mb-3" type="button" disabled hidden>
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                Загрузка...
+                                Генерация файла...
                             </button>
+                            <a class="btn btn-success custom-fn-button-download mb-3"
+                               href="{{ route('reporting.universal-report.download') }}"
+                               role="button"
+                               hidden>Скачать
+                            </a>
                         @endif
                         <a class="btn btn-secondary"
                            href="{{ route('reporting.universal-report.index') }}"
