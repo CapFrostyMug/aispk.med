@@ -66,7 +66,7 @@
                    name="pickupDocs"
                    value="1"
                    type="radio"
-                   @if (old('pickupDocs') === '1' || (isset($enrollment) && $enrollment->is_pickup_docs === 1)) checked @endif>
+                   @if (old('pickupDocs') == '1' || (isset($enrollment) && $enrollment->is_pickup_docs == '1')) checked @endif>
             <label for="pickup-docs-true-1" class="form-check-label">Да</label>
         </div>
     </div>

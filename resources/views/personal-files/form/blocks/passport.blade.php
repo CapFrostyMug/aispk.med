@@ -57,7 +57,7 @@
                    name="gender"
                    value="female"
                    type="radio"
-                   @if (old('gender') === 'female' || (isset($passport) && ($passport->gender) === 'female')) checked @endif>
+                   @if (old('gender') == 'female' || (isset($passport) && ($passport->gender) == 'female')) checked @endif>
             <label for="genderFemale-1" class="form-check-label">Женский</label>
         </div>
     </div>

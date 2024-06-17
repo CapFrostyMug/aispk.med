@@ -94,7 +94,7 @@
             <label for="excellent-student-1" class="form-check-label fw-bold">Окончил обучение с отличием</label>
             <input id="" type="hidden" name="excellentStudent" value="0">
             <input id="excellent-student-1" class="form-check-input" name="excellentStudent" value="1" type="checkbox"
-                   @if (old('excellentStudent') === '1' || (isset($educational) && $educational->is_excellent_student === 1)) checked @endif>
+                   @if (old('excellentStudent') == '1' || (isset($educational) && $educational->is_excellent_student == '1')) checked @endif>
         </div>
     </div>
 
@@ -167,7 +167,7 @@
                        value="0"
                        type="radio"
                        required
-                       @if (old('firstProfession') === '0' || isset($educational) && $educational->is_first_spo === 0) checked @endif>
+                       @if (old('firstProfession') == '0' || isset($educational) && $educational->is_first_spo == '0') checked @endif>
                 <label for="first-profession-false-1" class="form-check-label">Нет</label>
             </div>
         </div>

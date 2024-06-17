@@ -60,6 +60,7 @@ class ExportStatisticsService
     public function headings(): array
     {
         $result = ['№', 'Специальность'];
+        $currentDate = date('d.m.Y');
 
         foreach ($this->financingNames as $item) {
             $result[] = $item;
@@ -67,7 +68,10 @@ class ExportStatisticsService
 
         $result[] = 'Всего';
 
-        return $result;
+        return [
+            [$currentDate],
+            $result,
+        ];
     }
 
     /**
@@ -77,16 +81,18 @@ class ExportStatisticsService
      */
     public function styles(Worksheet $sheet): array
     {
-        $lastRow = count($this->faculties) + 2;
+        $lastRow = count($this->faculties) + 3;
         $lastColNum = Coordinate::stringFromColumnIndex(count($this->financingNames) + 3);
 
-        $sheet->mergeCells('A' . $lastRow . ':' . 'B' . $lastRow); // Объединение ячеек
+        /* Объединение ячеек */
+        $sheet->mergeCells('A1' . ':' . $lastColNum . '1');
+        $sheet->mergeCells('A' . $lastRow . ':' . 'B' . $lastRow);
 
         return [
-            1 => ['font' => ['bold' => true]],
+            2 => ['font' => ['bold' => true]],
             'A' => ['font' => ['bold' => true]],
             $lastRow => ['font' => ['bold' => true]],
-            'B2:' . 'B' . $lastRow => ['alignment' => ['horizontal' => 'left', 'vertical' => 'center']],
+            'B3:' . 'B' . $lastRow => ['alignment' => ['horizontal' => 'left', 'vertical' => 'center']],
             'A1:' . $lastColNum . $lastRow => [
                 'borders' => [
                     'allBorders' => [

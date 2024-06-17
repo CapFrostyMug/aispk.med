@@ -22,8 +22,8 @@
                            name="circumstance[{{ $circumstance->id }}]"
                            value="1"
                            type="radio"
-                           @if (@old('circumstance')[$circumstance->id] === '1' ||
-                           (isset($circumstance->pivot->status) && $circumstance->pivot->status === 1)) checked @endif>
+                           @if (old('circumstance.' . $circumstance->id) == '1' ||
+                           (isset($circumstance->pivot->status) && $circumstance->pivot->status == '1')) checked @endif>
                     <label for="circumstance-{{ $circumstance->id }}-true" class="form-check-label">Да</label>
                 </div>
             </div>
