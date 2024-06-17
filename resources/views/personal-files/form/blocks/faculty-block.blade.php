@@ -42,7 +42,7 @@ $inputTestingName = isset($facultiesBlocks) && isset($blockName) ? "data[$blockN
                 name="{{ isset($facultiesBlocks) && isset($blockName) ? "data[$blockName][is_original_docs]" : 'data[block_1][is_original_docs]' }}"
                 value="1"
                 type="checkbox"
-                @if (isset($facultiesBlocks) && isset($blockContent) && ($blockContent['is_original_docs'] === 1)) checked @endif>
+                @if (isset($facultiesBlocks) && isset($blockContent) && ($blockContent['is_original_docs'] == '1')) checked @endif>
 
             <label
                 for="{{ isset($facultiesBlocks) && isset($blockName) ? "original_docs_$blockName" : 'original_docs_block_1' }}"
