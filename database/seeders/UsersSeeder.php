@@ -25,7 +25,7 @@ class UsersSeeder extends Seeder
                 'name' => 'Николай',
                 'surname' => 'Яргин',
                 'email' => 'nickolas7159@gmail.com',
-                'password' => '$2y$10$1TVM0vbkw4RjE2TZfMblLOqSd2/25zypbpuIxgsU68f0ZA9Nj2GKi',
+                'password' => '$2y$10$//PFEunZ6d4tU314kxEaD.nXbGfWbKSu2BNDwHGGJB1h1p0woTumq',
                 'is_admin' => 1,
             ],
         ];
