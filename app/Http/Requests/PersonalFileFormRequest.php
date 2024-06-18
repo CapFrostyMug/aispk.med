@@ -88,7 +88,7 @@ class PersonalFileFormRequest extends FormRequest
 
             'fatherSurname' => 'alpha_dash|between:2,30|nullable',
             'fatherName' => 'alpha_dash|between:2,30|nullable',
-            'fatherPatronymic' => 'alpha_dash|between:5,30|nullable',
+            'fatherPatronymic' => 'string|between:5,30|nullable',
             'fatherPhone' => [
                 'digits:11', 'integer', 'nullable',
                 Rule::unique('student_parent_fathers', 'phone')->ignore($this->id, 'student_id'),
@@ -96,7 +96,7 @@ class PersonalFileFormRequest extends FormRequest
 
             'motherSurname' => 'alpha_dash|between:2,30|nullable',
             'motherName' => 'alpha_dash|between:2,30|nullable',
-            'motherPatronymic' => 'alpha_dash|between:5,30|nullable',
+            'motherPatronymic' => 'string|between:5,30|nullable',
             'motherPhone' => [
                 'digits:11', 'integer', 'nullable',
                 Rule::unique('student_parent_mothers', 'phone')->ignore($this->id, 'student_id'),

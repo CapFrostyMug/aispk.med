@@ -223,6 +223,8 @@ class ReportFacade
         $financing = [];
         $totalCountAllFinancing = [];
 
+        $data['countUniqueStudents'] = $this->student->all()->count();
+
         if ($this->faculty->all()->isnotEmpty()) {
 
             foreach ($this->financing->all() as $item) {

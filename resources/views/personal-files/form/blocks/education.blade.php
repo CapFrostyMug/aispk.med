@@ -156,8 +156,7 @@
                        name="firstProfession"
                        value="1"
                        type="radio"
-                       checked
-                       required>
+                       checked>
                 <label for="first-profession-true-1" class="form-check-label">Да</label>
             </div>
             <div class="form-check form-check-inline">
@@ -166,7 +165,6 @@
                        name="firstProfession"
                        value="0"
                        type="radio"
-                       required
                        @if (old('firstProfession') == '0' || isset($educational) && $educational->is_first_spo == '0') checked @endif>
                 <label for="first-profession-false-1" class="form-check-label">Нет</label>
             </div>

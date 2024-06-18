@@ -5,17 +5,8 @@
 @section('content')
     <div class="row">
 
-        <div class="row d-flex justify-content-between align-items-center pt-4 pb-5 pe-0">
-            <h2 class="col-auto fw-bold mb-0">Статистика поданных заявлений</h2>
-            @if(!empty($data))
-                <div class="col-auto p-0">
-                    <a class="btn btn-primary"
-                       href="{{ route('reporting.statistics.export-list') }}"
-                       role="button"
-                       style="min-width: 130px">Скачать
-                    </a>
-                </div>
-            @endif
+        <div class="col-12">
+            <h2 class="fw-bold pt-4 pb-3 pb-lg-5 ps-2 ps-lg-0">Статистика поданных заявлений</h2>
         </div>
 
         {{--<div class="col-12">
@@ -24,6 +15,22 @@
 
         @if(!empty($data))
             @php $counter = 1; @endphp
+
+            <div class="col-12 d-flex justify-content-between align-items-center mb-4">
+                <span class="d-inline-block bg-success py-2 px-3 text-white bg-opacity-75">
+                    Уникальных абитуриентов: {{ $data['countUniqueStudents'] }}
+                </span>
+                @if(!empty($data))
+                    <div class="col-auto p-0">
+                        <a class="btn btn-primary"
+                           href="{{ route('reporting.statistics.export-list') }}"
+                           role="button"
+                           style="min-width: 130px">Скачать
+                        </a>
+                    </div>
+                @endif
+            </div>
+
             <div class="col-12">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped mb-5">
