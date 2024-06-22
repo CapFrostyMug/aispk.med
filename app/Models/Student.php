@@ -145,6 +145,19 @@ class Student extends Model
         );
     }
 
+    /**
+     * @return BelongsToMany
+     */
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,
+            'students_users',
+            'student_id',
+            'user_id'
+        );
+    }
+
     public function updateInformationForAdmissionTable($validatedData, $student)
     {
         $student = $this->find($student->id);
