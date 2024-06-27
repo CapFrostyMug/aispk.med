@@ -219,13 +219,18 @@ class ReportFacade
      */
     public function generateStatistics(): array
     {
-        $data = [];
-        $financing = [];
-        $totalCountAllFinancing = [];
-
-        $data['countUniqueStudents'] = $this->student->all()->count();
+        $data = [
+            'countUniqueStudents' => [],
+            'countOrigDocs' => [],
+            'financingNames' => [],
+            'faculties' => [],
+            'rowTotal' => [],
+        ];
 
         if ($this->faculty->all()->isnotEmpty()) {
+
+            $financing = [];
+            $totalCountAllFinancing = [];
 
             foreach ($this->financing->all() as $item) {
                 // Запись одного значения сразу в две переменные
@@ -236,6 +241,9 @@ class ReportFacade
             foreach ($this->faculty->all() as $faculty) {
 
                 $data['faculties'][$faculty->id]['name'] = $faculty->name;
+
+                // Подсчитываем кол-во оригиналов по КАЖДОЙ специальности
+                $data['countOrigDocs'][] = $faculty->studentsPivotOrigDocs()->get()->count();
 
                 foreach ($financing as $key => $name) {
                     // Запись одного значения сразу в две переменные
@@ -258,7 +266,9 @@ class ReportFacade
                 $totalCountForOneFinancing = [];
             }
 
+            $data['countUniqueStudents'] = $this->student->all()->count();
             $data['rowTotal']['totalCount'] = array_sum($totalCountAllFinancing);
+            $data['countOrigDocs'] = array_sum($data['countOrigDocs']);
 
             return ['data' => $data];
         }
