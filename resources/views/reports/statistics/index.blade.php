@@ -17,9 +17,14 @@
             @php $counter = 1; @endphp
 
             <div class="col-12 d-flex justify-content-between align-items-center mb-4">
-                <span class="d-inline-block bg-success py-2 px-3 text-white bg-opacity-75">
-                    Уникальных абитуриентов: {{ $data['countUniqueStudents'] }}
-                </span>
+                <div class="#">
+                    <span class="d-inline-block bg-success rounded-pill py-2 px-3 text-white bg-opacity-75 me-2">
+                        Уникальных абитуриентов: {{ $data['countUniqueStudents'] }}
+                    </span>
+                    <span class="d-inline-block bg-success rounded-pill py-2 px-3 text-white bg-opacity-75">
+                        Абитуриентов с оригиналами: {{ $data['countOrigDocs'] }}
+                    </span>
+                </div>
                 @if(!empty($data))
                     <div class="col-auto p-0">
                         <a class="btn btn-primary"

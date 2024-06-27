@@ -60,6 +60,19 @@ class Faculty extends Model
     }
 
     /**
+     * @return BelongsToMany
+     */
+    public function studentsPivotOrigDocs(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Student::class,
+            'information_for_admission',
+            'faculty_id',
+            'student_id'
+        )->wherePivot('is_original_docs', '=', 1);
+    }
+
+    /**
      * @return HasMany
      */
     public function enrollment(): HasMany
