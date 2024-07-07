@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Services\Reports\ExportReportService;
-use App\Services\Reports\ExportStatisticsService;
+use App\Services\Reports\LibraryBasedServices\ExportReportService;
+use App\Services\Reports\LibraryBasedServices\ExportStatisticsService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Excel\Concerns\FromCollection;

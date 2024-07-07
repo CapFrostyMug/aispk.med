@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Reports;
+namespace App\Services\Reports\LibraryBasedServices;
 
 use App\Models\Student;
 use Illuminate\Contracts\Queue\ShouldQueue;

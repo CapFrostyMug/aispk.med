@@ -139,6 +139,7 @@
                name="avgRating"
                value="{{ old('avgRating') ?? $educational->avg_rating ?? '' }}"
                type="text"
+               min="0" max="5"
                required>
         @error('avgRating')
         <div id="avg-rating-1-validation" class="invalid-feedback">

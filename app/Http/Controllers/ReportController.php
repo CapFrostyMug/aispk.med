@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Facades\ReportFacade;
-use App\Services\Reports\ExportReportService;
-use App\Services\Reports\ExportStatisticsService;
+use App\Services\Reports\LibraryBasedServices\ExportReportService;
+use App\Services\Reports\LibraryBasedServices\ExportStatisticsService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
@@ -82,7 +82,7 @@ class ReportController extends Controller
     public function showStatistics(ReportFacade $reportFacade): view
     {
         $data = $reportFacade->generateStatistics();
-        return view('reports.statistics.index', $data);
+        return view('reports.statistic.index', $data);
     }
 
     /**

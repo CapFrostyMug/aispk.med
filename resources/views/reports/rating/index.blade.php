@@ -7,6 +7,20 @@
 
         <div class="col-12">
             <h2 class="fw-bold pt-4 pb-3 pb-lg-5 ps-2 ps-lg-0">Рейтинг абитуриентов</h2>
+            <div class="col-lg-7 d-flex justify-content-start align-items-start mb-4">
+                <div class="col-sm-1 d-flex justify-content-center">
+                    @include('icons.other.info-circle-fill')
+                </div>
+                <div class="col-sm-11 ms-2 ms-lg-0 ">
+                    <p class="fw-bold mt-1">Что влияет на&nbsp;рейтинг?</p>
+                    <ol class="ps-3">
+                        <li>Средний балл документа об&nbsp;образовании</li>
+                        <li>Оригинал документа (выс) или копия (низ)</li>
+                        <li>Тестирование</li>
+                    </ol>
+                    <span><strong>Наивысший</strong> приоритет имеет абитуриент, <strong>причастный к&nbsp;СВО</strong> (помечен цветом).</span>
+                </div>
+            </div>
         </div>
 
         {{--<div class="col-12">
