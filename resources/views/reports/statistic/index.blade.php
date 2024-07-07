@@ -19,10 +19,10 @@
             <div class="col-12 d-flex justify-content-between align-items-center mb-4">
                 <div class="#">
                     <span class="d-inline-block bg-success rounded-pill py-2 px-3 text-white bg-opacity-75 me-2">
-                        Уникальных абитуриентов: {{ $data['countUniqueStudents'] }}
+                        Всего абитуриентов: {{ $data['countUniqueStudents'] }}
                     </span>
                     <span class="d-inline-block bg-success rounded-pill py-2 px-3 text-white bg-opacity-75">
-                        Абитуриентов с оригиналами: {{ $data['countOrigDocs'] }}
+                        С оригиналами: {{ $data['countOrigDocs'] }}
                     </span>
                 </div>
                 @if(!empty($data))

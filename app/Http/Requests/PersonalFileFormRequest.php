@@ -63,7 +63,10 @@ class PersonalFileFormRequest extends FormRequest
                 Rule::unique('students', 'email')->ignore($this->id),
             ],
 
-            'data' => 'array|required',
+            'data.*.faculty_id' => 'integer|exists:App\Models\Faculty,id|required',
+            'data.*.is_original_docs' => 'boolean|required',
+            'data.*.financing_type_id' => 'integer|exists:App\Models\FinancingType,id|required',
+            'data.*.testing' => 'numeric|min:1|max:10|nullable',
 
             'educationalInstitutionName' => 'string|between:3,255|required',
             'educationalInstitutionType' => 'integer|exists:App\Models\EducationalInstitutionType,id|required',
@@ -122,7 +125,6 @@ class PersonalFileFormRequest extends FormRequest
             'addressRegistered' => '«Адрес по прописке»',
             'addressResidential' => '«Адрес проживания»',
             'pensionInsurance' => '«СНИЛС»',
-            'data' => '«»',
             'educationalInstitutionName' => '«Наименование учебного заведения»',
             'educationalInstitutionType' => '«Тип учебного заведения»',
             'language' => '«Иностранный язык»',
@@ -149,6 +151,7 @@ class PersonalFileFormRequest extends FormRequest
             'decree' => '«Номер приказа»',
             'facultyWithOrigDocs' => '«Специальность»',
             'pickupDocs' => '«Абитуриент забрал документы»',
+            'data.*.testing' => '«Тестирование»',
         ];
     }
 

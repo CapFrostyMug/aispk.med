@@ -8,11 +8,14 @@
         <div class="row col-12">
             <h2 class="fw-bold pt-4 pb-3 pb-lg-5 ps-2 ps-lg-0">Управление зачислением</h2>
             <div class="col-7 d-flex justify-content-start align-items-center mb-4">
-                @include('icons.other.info-circle-fill')
-                <p class="mb-0 ms-2">
-                    В&nbsp;данном разделе отображаются лишь те&nbsp;абитуриенты, у&nbsp;которых
-                    на&nbsp;выбранную специальность поданы <strong>оригиналы</strong> документов.
-                </p>
+                <div class="col-1 d-flex justify-content-center">
+                    @include('icons.other.info-circle-fill')
+                </div>
+                <div class="col-11 ms-2">
+                    <span>В&nbsp;данном разделе отображаются лишь те&nbsp;абитуриенты, у&nbsp;которых на&nbsp;выбранную специальность
+                        поданы <strong>оригиналы</strong> документов.
+                    </span>
+                </div>
             </div>
         </div>
 

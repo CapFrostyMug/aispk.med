@@ -1,5 +1,6 @@
 @php
 $inputTestingName = isset($facultiesBlocks) && isset($blockName) ? "data[$blockName][testing]" : 'data[block_1][testing]';
+$inputTestingError = isset($facultiesBlocks) && isset($blockName) ? "data.$blockName.testing" : 'data.block_1.testing';
 @endphp
 
 <div class="row my-3 custom-fn-faculty-block-child">
@@ -84,12 +85,13 @@ $inputTestingName = isset($facultiesBlocks) && isset($blockName) ? "data[$blockN
                class="form-label">Тестирование
         </label>
         <input id="{{ isset($facultiesBlocks) && isset($blockName) ? "testing_$blockName" : 'testing_block_1' }}"
-               class="form-control @error('admissionTesting') is-invalid @enderror"
+               class="form-control @error($inputTestingError) is-invalid @enderror"
                name="{{ $inputTestingName }}"
                value="{{ old($inputTestingName) ?? $blockContent['testing'] ?? '' }}"
-               type="text">
-        @error('')
-        <div id="{{ isset($facultiesBlocks) && isset($blockName) ? "testing_validation_$blockName" : 'testing_validation_block_1' }}" class="invalid-feedback">
+               type="text"
+               min="0" max="10">
+        @error($inputTestingError)
+        <div id="{{ $inputTestingError }}" class="invalid-feedback">
             {{ $message }}
         </div>
         @enderror

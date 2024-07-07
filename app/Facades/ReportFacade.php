@@ -266,8 +266,8 @@ class ReportFacade
                 $totalCountForOneFinancing = [];
             }
 
-            $data['countUniqueStudents'] = $this->student->all()->count();
             $data['rowTotal']['totalCount'] = array_sum($totalCountAllFinancing);
+            $data['countUniqueStudents'] = $this->student->all()->count();
             $data['countOrigDocs'] = array_sum($data['countOrigDocs']);
 
             return ['data' => $data];
