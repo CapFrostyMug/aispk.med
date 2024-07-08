@@ -5,13 +5,15 @@ export default function avgCalculator() {
     function handler() {
 
         let result = 0;
+        let totalGrade = 0;
 
         let grade3 = Number(document.getElementById('grade-3').value);
         let grade4 = Number(document.getElementById('grade-4').value);
         let grade5 = Number(document.getElementById('grade-5').value);
 
-        result = ((grade5 * 5) + (grade4 * 4) + (grade3 * 3)) / ((grade5 + grade4 + grade3));
-        result = Math.floor(result * 100) / 100;
+        totalGrade = grade5 + grade4 + grade3;
+        result = ((grade5 * 5) + (grade4 * 4) + (grade3 * 3)) / totalGrade;
+        result = +result.toFixed(2);
 
         document.getElementById('avg-rating-1').value = result;
     }
