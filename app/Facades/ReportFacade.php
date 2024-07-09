@@ -68,6 +68,8 @@ class ReportFacade
             ->orderBy('student_special_circumstance.status', 'desc')
             ->orderBy('information_for_admission.is_original_docs', 'desc')
             ->orderBy('educational.avg_rating', 'desc')
+            ->orderBy('information_for_admission.testing', 'desc')
+            ->orderBy('students.surname', 'asc')
 
             ->get();
     }
@@ -130,6 +132,7 @@ class ReportFacade
 
         if ($request['faculty_id']) {
             $students = $this->generateRating($request['faculty_id'])->toArray();
+            //dd($students);
             $students = $this->customPaginator($request, $students);
         }
 
