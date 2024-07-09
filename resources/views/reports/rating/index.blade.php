@@ -31,7 +31,6 @@
             <form action="{{ route('reporting.rating.generate') }}"
                   method="get"
                   class="row d-lg-flex justify-content-lg-start align-items-lg-end p-2 pb-lg-3">
-                @csrf
                 <div class="col-lg-auto">
                     <label for="faculty-id-1" class="form-label fw-bold">Выберите специальность из списка ниже:</label>
                     <select id="faculty-id-1" class="form-select custom-fn-faculty-select" name="faculty_id" required>
