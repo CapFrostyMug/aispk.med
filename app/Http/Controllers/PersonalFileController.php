@@ -137,9 +137,9 @@ class PersonalFileController extends Controller
      */
     public function search(Request $request, PersonalFileFacade $personalFileFacade): view
     {
-        if ($request->input('passport-number')) {
+        if ($request->input('query')) {
             $data = $personalFileFacade->search($request);
-            return view('personal-files.search.index', ['student' => $data]);
+            return view('personal-files.search.index', ['students' => $data]);
         }
 
         return view('personal-files.search.index');

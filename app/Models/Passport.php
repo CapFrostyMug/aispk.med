@@ -44,11 +44,4 @@ class Passport extends Model
             'id'
         );
     }
-
-    public function findPassportByNumber($number)
-    {
-        if (isset($number)) {
-            return $this::firstWhere('number', $number);
-        }
-    }
 }
