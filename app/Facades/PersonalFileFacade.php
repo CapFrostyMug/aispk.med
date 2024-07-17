@@ -18,6 +18,7 @@ use App\Models\SpecialCircumstance;
 use App\Models\Student;
 use App\Models\StudentsParentFather;
 use App\Models\StudentsParentMother;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -417,14 +418,26 @@ final class PersonalFileFacade extends Facade
      * [Method description].
      *
      * @param Request $request
-     * @return object|array
+     * @return array|Collection
      */
-    public function search(Request $request): object|array
+    public function search(Request $request): array|Collection
     {
-        $validatedData = $request->validate(['passport-number' => 'alpha_dash', 'between:5,20']);
-        $passport = $this->passport->findPassportByNumber($validatedData['passport-number']);
+        $validatedData = $request->validate(['query' => 'alpha_dash', 'between:5,20']);
+        $data = [];
 
-        return $passport ? $passport->student : [];
+        if (preg_match('/\d+/', $validatedData['query'])) {
+
+            $result = $this->passport->where('number', $validatedData['query'])->get();
+
+            foreach ($result as $passport) {
+                $data[] = $passport->student;
+            }
+
+        } else {
+            $data = $this->student->where('surname', $validatedData['query'])->get();
+        }
+
+        return $data;
     }
 
     /**
